@@ -130,49 +130,32 @@ const LANGUAGES = {
   BURMESE: { id: 'my', name: 'Burmese', nativeName: 'မြန်မာ', desc: 'The circular script.', comingSoon: true },
 };
 
-// --- AUDIO ENGINE (High Quality Strategy) ---
+// --- AUDIO ENGINE (Quality-First) ---
 const speak = (text, langCode = 'th-TH') => {
-  // Check if it is an Apple device (iOS/Mac)
   const isApple = /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent);
 
-  // STRATEGY:
-  // 1. Apple Devices -> Use Native `speechSynthesis`. 
-  //    Apple's voices (Kanya, Narisa, Siri) are excellent and work offline.
-  // 2. Non-Apple (Windows/Android) -> Force Google Network TTS.
-  //    System voices on Windows/Android for Thai/Vietnamese are often robotic or missing.
-  //    Google's `client=gtx` endpoint provides natural, neural-like audio.
-
+  // 1. APPLE DEVICES (Use Native)
   if (isApple && window.speechSynthesis) {
-    // Cancel any playing audio to prevent overlap
     window.speechSynthesis.cancel();
-    
-    // Safari/iOS sometimes pauses the engine, need to resume
-    if (window.speechSynthesis.paused) {
-      window.speechSynthesis.resume();
-    }
+    if (window.speechSynthesis.paused) window.speechSynthesis.resume();
 
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = langCode;
-    utterance.rate = 0.8; // Slightly slower for learning
+    utterance.rate = 0.75; // Slow down for tone clarity
 
-    // Try to specifically find a high-quality voice
     const voices = window.speechSynthesis.getVoices();
-    // Look for 'Siri', 'Compact', or 'Enhanced' voices which are usually better
     const preferredVoice = voices.find(v => 
-      v.lang === langCode && (v.name.includes("Siri") || v.name.includes("Enhanced") || v.name.includes("Compact"))
+      v.lang === langCode && (v.name.includes("Siri") || v.name.includes("Enhanced"))
     ) || voices.find(v => v.lang === langCode);
 
-    if (preferredVoice) {
-      utterance.voice = preferredVoice;
-    }
-    
+    if (preferredVoice) utterance.voice = preferredVoice;
     window.speechSynthesis.speak(utterance);
   } else {
-    // Non-Apple or Fallback: Use Google Translate TTS
-    // 'client=gtx' is generally more reliable for Asian languages than 'tw-ob'
-    const isoCode = langCode.split('-')[0]; 
+    // 2. ALL OTHER DEVICES (Force Google Network TTS)
+    // This provides consistent, high-quality Thai audio on Windows/Android
+    const isoCode = langCode.split('-')[0];
     const audio = new Audio(`https://translate.google.com/translate_tts?ie=UTF-8&tl=${isoCode}&client=gtx&q=${encodeURIComponent(text)}`);
-    audio.play().catch(e => console.log("Network audio failed", e));
+    audio.play().catch(e => console.log("Audio failed", e));
   }
 };
 
@@ -183,7 +166,7 @@ const Header = ({ goBack, currentLang }) => (
     <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
       <div 
         className="flex items-center gap-2 text-indigo-600 cursor-pointer hover:opacity-80 transition-opacity"
-        onClick={goBack} // Navigates home
+        onClick={goBack}
       >
         <Globe className="w-6 h-6" />
         <h1 className="font-bold text-xl tracking-tight">lang.bar</h1>
@@ -253,7 +236,6 @@ const CharacterModal = ({ charData, langConfig, onClose }) => {
               {charData.emoji || <div className={langConfig.fontB}>{charData.char.split(' ')[0]}</div>}
             </div>
             <div className="min-w-0">
-              {/* Show THAI full name in header if Thai, otherwise char. Use Traditional font for name */}
               <h2 className={`text-4xl font-bold mb-1 truncate ${langConfig.id === 'thai' ? langConfig.fontA : langConfig.fontB}`}>
                 {langConfig.id === 'thai' ? (charData.thaiName || charData.char) : charData.char}
               </h2>
