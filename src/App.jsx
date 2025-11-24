@@ -102,57 +102,44 @@ const quizQuestions = [
   }
 ];
 
-// --- Audio Helper with iOS Fixes (Updated for strict Autoplay) ---
-const playAudio = (text) => {
-  // 0. Ensure speech synthesis is awake (fixes common iOS bug where it sleeps)
-  if (window.speechSynthesis) {
-    window.speechSynthesis.resume();
-  }
-
-  // 1. Detect if user is on iOS (iPhone/iPad)
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-
-  // 2. iOS STRATEGY: Prefer Native SpeechSynthesis
-  if (isIOS && window.speechSynthesis) {
-    window.speechSynthesis.cancel(); // Stop previous
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'th-TH';
-    utterance.rate = 0.8; 
-    
-    // Attempt to force a Thai voice if available
-    const voices = window.speechSynthesis.getVoices();
-    const thaiVoice = voices.find(v => v.lang.includes('th'));
-    if (thaiVoice) utterance.voice = thaiVoice;
-
-    window.speechSynthesis.speak(utterance);
+// --- Audio Helper ---
+// We define this outside because it doesn't rely on React state
+const speak = (text) => {
+  if (!window.speechSynthesis) {
+    console.error("Speech Synthesis not supported");
+    // Absolute Last Resort: Audio Element
+    new Audio(`https://translate.google.com/translate_tts?ie=UTF-8&tl=th&client=tw-ob&q=${encodeURIComponent(text)}`).play();
     return;
   }
 
-  // 3. ANDROID / DESKTOP STRATEGY: Prefer Google TTS (High Quality MP3)
-  const audio = new Audio(`https://translate.google.com/translate_tts?ie=UTF-8&tl=th&client=tw-ob&q=${encodeURIComponent(text)}`);
+  // 1. Cancel pending speech (Crucial for rapid clicks)
+  window.speechSynthesis.cancel();
   
-  // Try to play
-  const playPromise = audio.play();
+  // 2. Resume if paused (Safari/iOS bug fix)
+  if (window.speechSynthesis.paused) {
+    window.speechSynthesis.resume();
+  }
 
-  if (playPromise !== undefined) {
-    playPromise.catch(error => {
-      console.log("Audio play failed (Autoplay policy or Network), falling back to browser synthesis");
-      
-      // Fallback: If network audio fails, try browser synthesis
-      if (window.speechSynthesis) {
-        window.speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'th-TH';
-        utterance.rate = 0.9;
-        
-        const voices = window.speechSynthesis.getVoices();
-        const thaiVoice = voices.find(v => v.lang === 'th-TH' || v.name.includes('Thai')) || 
-                          voices.find(v => v.lang.includes('th'));
-        
-        if (thaiVoice) utterance.voice = thaiVoice;
-        window.speechSynthesis.speak(utterance);
-      }
-    });
+  // 3. Prepare Utterance
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'th-TH';
+  utterance.rate = 0.8;
+
+  // 4. Voice Selection (The Safari Fix)
+  const voices = window.speechSynthesis.getVoices();
+  // Try to find a Thai voice.
+  // iOS typically has "Kanya" or "Narisa". Android/Desktop Chrome has Google Thai.
+  const thaiVoice = voices.find(v => v.lang === 'th-TH' || v.lang.includes('th'));
+  
+  if (thaiVoice) {
+    utterance.voice = thaiVoice;
+    window.speechSynthesis.speak(utterance);
+  } else {
+    console.warn("No native Thai voice found, trying default or fallback");
+    // If no native voice, try Google Fallback
+    // Note: This 'new Audio' often fails on iOS Silent mode, but it's our only backup if native voice is missing
+    const audio = new Audio(`https://translate.google.com/translate_tts?ie=UTF-8&tl=th&client=tw-ob&q=${encodeURIComponent(text)}`);
+    audio.play().catch(e => console.log("Fallback audio failed", e));
   }
 };
 
@@ -190,12 +177,6 @@ const Header = ({ goBack, currentLang }) => (
 const CharacterModal = ({ charData, onClose }) => {
   if (!charData) return null;
 
-  // REMOVED useEffect for auto-play here. 
-  // We now rely on the 'click' event from the Card to play audio immediately.
-  // This satisfies iOS strict user-interaction requirements.
-
-  const playCharAudio = () => playAudio(charData.thaiName || charData.name);
-
   return (
     <div className="fixed inset-0 bg-black/50 z-[100] flex items-center justify-center p-4 animate-in fade-in duration-200">
       <div 
@@ -220,7 +201,7 @@ const CharacterModal = ({ charData, onClose }) => {
               <p className="text-indigo-100 text-lg opacity-90 truncate">{charData.name}</p>
               <div className="flex items-center gap-2 mt-3">
                  <button 
-                   onClick={playCharAudio}
+                   onClick={() => speak(charData.thaiName || charData.name)}
                    className="flex items-center gap-2 bg-white text-indigo-600 px-4 py-1.5 rounded-full text-sm font-bold shadow-sm hover:bg-indigo-50 transition-colors"
                  >
                    <Volume2 className="w-4 h-4" /> Replay
@@ -235,7 +216,7 @@ const CharacterModal = ({ charData, onClose }) => {
           {/* iOS Warning */}
           <div className="md:hidden flex items-start gap-2 text-xs text-amber-600 bg-amber-50 p-2 rounded-lg mb-4">
              <Smartphone className="w-4 h-4 shrink-0 mt-0.5" />
-             <p>If no sound: Turn off Silent Mode (orange switch) on your iPhone.</p>
+             <p>If sound fails: Check silent switch or tap Replay.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -357,7 +338,7 @@ const Quiz = ({ onComplete }) => {
     setIsCorrect(correct);
     
     // Play sound of the selected option
-    playAudio(option);
+    speak(option);
 
     if (correct) {
       setScore(score + 1);
@@ -491,7 +472,7 @@ const ThaiFontComparison = ({ isModern, setIsModern }) => {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="bg-white p-6 rounded-xl shadow-sm text-center relative group">
           <button 
-            onClick={() => playAudio('สวัสดีครับ')}
+            onClick={() => speak('สวัสดีครับ')}
             className="absolute top-2 right-2 p-2 rounded-full bg-slate-50 text-indigo-500 hover:bg-indigo-100 transition-colors"
             title="Listen"
           >
@@ -525,13 +506,38 @@ const ThaiModule = () => {
   const [selectedChar, setSelectedChar] = useState(null);
   const [isModern, setIsModern] = useState(false); // Lifted state
 
+  // SAFARI FIX: Safari voices load asynchronously. 
+  // We need to force a re-render once voices are ready.
+  const [voiceReady, setVoiceReady] = useState(false);
+
+  useEffect(() => {
+    // This handler fires when voices are loaded (crucial for Safari)
+    const handleVoicesChanged = () => {
+      setVoiceReady(true);
+    };
+
+    if (window.speechSynthesis) {
+       window.speechSynthesis.addEventListener('voiceschanged', handleVoicesChanged);
+       // Trigger immediate check in case they are already loaded
+       if(window.speechSynthesis.getVoices().length > 0) {
+          setVoiceReady(true);
+       }
+    }
+
+    return () => {
+      if (window.speechSynthesis) {
+        window.speechSynthesis.removeEventListener('voiceschanged', handleVoicesChanged);
+      }
+    };
+  }, []);
+
   const filteredConsonants = filter === 'All' 
     ? thaiConsonants 
     : thaiConsonants.filter(c => c.class === filter);
 
   const handleCharClick = (charData) => {
     // 1. Play Audio Immediately on User Interaction (Tap)
-    playAudio(charData.thaiName || charData.name);
+    speak(charData.thaiName || charData.name);
     // 2. Then Open Modal
     setSelectedChar(charData);
   };
