@@ -159,7 +159,7 @@ const Header = ({ goBack, currentLang }) => (
         )}
         <div className="flex items-center gap-2 text-indigo-600">
           <Globe className="w-6 h-6" />
-          <h1 className="font-bold text-xl tracking-tight">LinguaFlow</h1>
+          <h1 className="font-bold text-xl tracking-tight">lang.bar</h1>
         </div>
       </div>
       {currentLang && (
@@ -706,7 +706,7 @@ const App = () => {
                 Master a new <span className="text-indigo-600">script.</span>
               </h2>
               <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-                LinguaFlow focuses on the visual and auditory aspects of language. Learn fonts, alphabets, and sounds before diving into grammar.
+                lang.bar focuses on the visual and auditory aspects of language. Learn fonts, alphabets, and sounds before diving into grammar.
               </p>
             </div>
 
@@ -747,7 +747,7 @@ const App = () => {
 
       <footer className="bg-white border-t border-slate-200 mt-20 py-8">
         <div className="max-w-4xl mx-auto px-4 text-center text-slate-400 text-sm">
-          <p>© 2024 LinguaFlow. Start your journey.</p>
+          <p>© 2024 lang.bar. Start your journey.</p>
         </div>
       </footer>
     </div>
