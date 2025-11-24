@@ -130,33 +130,46 @@ const LANGUAGES = {
   BURMESE: { id: 'my', name: 'Burmese', nativeName: 'မြန်မာ', desc: 'The circular script.', comingSoon: true },
 };
 
-// --- AUDIO ENGINE (Quality-First) ---
+// --- AUDIO ENGINE (Fast & Natural) ---
 const speak = (text, langCode = 'th-TH') => {
-  const isApple = /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent);
-
-  // 1. APPLE DEVICES (Use Native)
-  if (isApple && window.speechSynthesis) {
-    window.speechSynthesis.cancel();
+  // 1. BROWSER SYNTHESIS (NATIVE) - FIRST CHOICE
+  if (window.speechSynthesis) {
+    window.speechSynthesis.cancel(); // Stop previous
     if (window.speechSynthesis.paused) window.speechSynthesis.resume();
 
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = langCode;
-    utterance.rate = 0.75; // Slow down for tone clarity
-
     const voices = window.speechSynthesis.getVoices();
+    
+    // Try to find a "Narisa" (iOS high quality) or "Google" voice
     const preferredVoice = voices.find(v => 
-      v.lang === langCode && (v.name.includes("Siri") || v.name.includes("Enhanced"))
+      v.lang === langCode && (
+        v.name.includes("Narisa") || // High quality iOS Thai
+        v.name.includes("Kanya") ||  // Standard iOS Thai
+        v.name.includes("Google") || // High quality Android/Chrome
+        v.name.includes("Enhanced") || 
+        v.name.includes("Siri") ||
+        v.name.includes("Premium")
+      )
     ) || voices.find(v => v.lang === langCode);
 
-    if (preferredVoice) utterance.voice = preferredVoice;
-    window.speechSynthesis.speak(utterance);
-  } else {
-    // 2. ALL OTHER DEVICES (Force Google Network TTS)
-    // This provides consistent, high-quality Thai audio on Windows/Android
-    const isoCode = langCode.split('-')[0];
-    const audio = new Audio(`https://translate.google.com/translate_tts?ie=UTF-8&tl=${isoCode}&client=gtx&q=${encodeURIComponent(text)}`);
-    audio.play().catch(e => console.log("Audio failed", e));
+    if (preferredVoice) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = langCode;
+      utterance.voice = preferredVoice;
+      // RATE: 1.0 is normal speed. This sounds much more natural than 0.75.
+      // Slowing down digital voices often introduces robotic artifacts.
+      utterance.rate = 1.0; 
+      window.speechSynthesis.speak(utterance);
+      return; 
+    }
   }
+
+  // 2. NETWORK FALLBACK (Google TTS)
+  // 'client=tw-ob' usually provides a cleaner, faster stream for short words.
+  const isoCode = langCode.split('-')[0];
+  const audio = new Audio(`https://translate.google.com/translate_tts?ie=UTF-8&tl=${isoCode}&client=tw-ob&q=${encodeURIComponent(text)}`);
+  // Play back slightly faster to sound more natural/fluent
+  audio.playbackRate = 1.2; 
+  audio.play().catch(e => console.log("Audio failed", e));
 };
 
 // --- COMPONENTS ---
