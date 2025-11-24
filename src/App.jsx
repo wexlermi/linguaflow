@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { BookOpen, GraduationCap, ChevronLeft, Award, Globe, Type, Volume2, Info, Star, X, Image as ImageIcon } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { BookOpen, GraduationCap, ChevronLeft, Award, Globe, Type, Volume2, Info, Star, X, Image as ImageIcon, Smartphone } from 'lucide-react';
 
 // --- Expanded Data: All 44 Thai Consonants with Emoji Images ---
 const thaiConsonants = [
@@ -102,28 +102,47 @@ const quizQuestions = [
   }
 ];
 
-// --- Audio Helper ---
+// --- Audio Helper with iOS Fixes ---
 const playAudio = (text) => {
+  // 1. Detect if user is on iOS (iPhone/iPad)
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+  // 2. iOS STRATEGY: Prefer Native SpeechSynthesis
+  // Why? iOS Safari blocks `new Audio()` (media) if the silent switch is on.
+  // Native SpeechSynthesis (Siri/Voiceover) often bypasses this or behaves more reliably.
+  if (isIOS && window.speechSynthesis) {
+    window.speechSynthesis.cancel(); // Stop previous
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'th-TH';
+    // iOS Voices (like Narisa) are usually high quality by default
+    utterance.rate = 0.8; 
+    window.speechSynthesis.speak(utterance);
+    return;
+  }
+
+  // 3. ANDROID / DESKTOP STRATEGY: Prefer Google TTS (High Quality MP3)
   const audio = new Audio(`https://translate.google.com/translate_tts?ie=UTF-8&tl=th&client=tw-ob&q=${encodeURIComponent(text)}`);
-  
   const playPromise = audio.play();
 
   if (playPromise !== undefined) {
     playPromise.catch(error => {
-      console.log("Network audio failed, falling back to native TTS");
-      if (!window.speechSynthesis) return;
+      console.log("Audio play failed (Autoplay policy or Network), falling back to browser synthesis");
       
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'th-TH';
-      utterance.rate = 0.9;
-      
-      const voices = window.speechSynthesis.getVoices();
-      const thaiVoice = voices.find(v => v.lang === 'th-TH' || v.name.includes('Thai')) || 
-                        voices.find(v => v.lang.includes('th'));
-      
-      if (thaiVoice) utterance.voice = thaiVoice;
-      window.speechSynthesis.speak(utterance);
+      // Fallback: If network audio fails, try browser synthesis
+      if (window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'th-TH';
+        utterance.rate = 0.9;
+        
+        // Try to find a specific Thai voice
+        const voices = window.speechSynthesis.getVoices();
+        const thaiVoice = voices.find(v => v.lang === 'th-TH' || v.name.includes('Thai')) || 
+                          voices.find(v => v.lang.includes('th'));
+        
+        if (thaiVoice) utterance.voice = thaiVoice;
+        window.speechSynthesis.speak(utterance);
+      }
     });
   }
 };
@@ -162,16 +181,23 @@ const Header = ({ goBack, currentLang }) => (
 const CharacterModal = ({ charData, onClose }) => {
   if (!charData) return null;
 
+  // iOS Note: We play audio here, but if the phone is on Silent, 
+  // the user interaction (click) might have 'expired' for the Google TTS.
+  // Our new playAudio function handles this by switching to Native Speech on iOS.
+  useEffect(() => {
+     playAudio(charData.thaiName || charData.name);
+  }, [charData]);
+
   const playCharAudio = () => playAudio(charData.thaiName || charData.name);
 
   return (
     <div className="fixed inset-0 bg-black/50 z-[100] flex items-center justify-center p-4 animate-in fade-in duration-200">
       <div 
-        className="bg-white rounded-3xl shadow-2xl max-w-lg w-full overflow-hidden animate-in zoom-in-95 duration-200"
+        className="bg-white rounded-3xl shadow-2xl max-w-lg w-full overflow-hidden animate-in zoom-in-95 duration-200 flex flex-col max-h-[90vh]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header with Image */}
-        <div className="bg-gradient-to-br from-indigo-500 to-purple-600 p-6 text-white relative">
+        <div className="bg-gradient-to-br from-indigo-500 to-purple-600 p-6 text-white relative shrink-0">
           <button 
             onClick={onClose}
             className="absolute top-4 right-4 p-2 bg-white/20 hover:bg-white/30 rounded-full transition-colors backdrop-blur-sm"
@@ -180,26 +206,32 @@ const CharacterModal = ({ charData, onClose }) => {
           </button>
           
           <div className="flex items-center gap-6">
-            <div className="w-24 h-24 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center text-6xl shadow-inner border border-white/30">
+            <div className="w-24 h-24 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center text-6xl shadow-inner border border-white/30 shrink-0">
               {charData.emoji || <ImageIcon className="w-10 h-10 text-white/50" />}
             </div>
-            <div>
-              <h2 className="text-3xl font-bold mb-1">{charData.thaiName}</h2>
-              <p className="text-indigo-100 text-lg opacity-90">{charData.name}</p>
+            <div className="min-w-0">
+              <h2 className="text-3xl font-bold mb-1 truncate">{charData.thaiName}</h2>
+              <p className="text-indigo-100 text-lg opacity-90 truncate">{charData.name}</p>
               <div className="flex items-center gap-2 mt-3">
                  <button 
                    onClick={playCharAudio}
                    className="flex items-center gap-2 bg-white text-indigo-600 px-4 py-1.5 rounded-full text-sm font-bold shadow-sm hover:bg-indigo-50 transition-colors"
                  >
-                   <Volume2 className="w-4 h-4" /> Play Sound
+                   <Volume2 className="w-4 h-4" /> Replay
                  </button>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Modal Body */}
-        <div className="p-6">
+        {/* Modal Body - Scrollable */}
+        <div className="p-6 overflow-y-auto">
+          {/* iOS Warning */}
+          <div className="md:hidden flex items-start gap-2 text-xs text-amber-600 bg-amber-50 p-2 rounded-lg mb-4">
+             <Smartphone className="w-4 h-4 shrink-0 mt-0.5" />
+             <p>If no sound: Turn off Silent Mode (orange switch) on your iPhone.</p>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
              <div className="bg-slate-50 p-4 rounded-2xl">
                <h4 className="text-xs font-bold text-slate-400 uppercase mb-3 tracking-wider">Details</h4>
@@ -304,7 +336,6 @@ const CharacterCard = ({ char, name, thaiName, meaning, sound, type, obsolete, o
   );
 };
 
-// ... existing Quiz code ...
 const Quiz = ({ onComplete }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(0);
@@ -319,7 +350,7 @@ const Quiz = ({ onComplete }) => {
     const correct = option === quizQuestions[currentIndex].correct;
     setIsCorrect(correct);
     
-    // Play sound of the selected option if it's a thai char
+    // Play sound of the selected option
     playAudio(option);
 
     if (correct) {
@@ -421,10 +452,8 @@ const Quiz = ({ onComplete }) => {
     </div>
   );
 };
-// ... existing ThaiFontComparison code ...
-const ThaiFontComparison = ({ isModern, setIsModern }) => {
-  // Removed local state, using props instead
 
+const ThaiFontComparison = ({ isModern, setIsModern }) => {
   return (
     <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl p-6 mb-8 border border-indigo-100">
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
@@ -496,7 +525,7 @@ const ThaiModule = () => {
 
   const handleCharClick = (charData) => {
     setSelectedChar(charData);
-    playAudio(charData.thaiName || charData.name);
+    // playAudio called in modal useEffect
   };
 
   return (
