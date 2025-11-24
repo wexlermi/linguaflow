@@ -130,38 +130,49 @@ const LANGUAGES = {
   BURMESE: { id: 'my', name: 'Burmese', nativeName: 'မြန်မာ', desc: 'The circular script.', comingSoon: true },
 };
 
-// --- AUDIO ENGINE (Safari Friendly) ---
+// --- AUDIO ENGINE (High Quality Strategy) ---
 const speak = (text, langCode = 'th-TH') => {
-  if (!window.speechSynthesis) {
-    const isoCode = langCode.split('-')[0];
-    const audio = new Audio(`https://translate.google.com/translate_tts?ie=UTF-8&tl=${isoCode}&client=gtx&q=${encodeURIComponent(text)}`);
-    audio.play().catch(e => console.log("Fallback audio error", e));
-    return;
-  }
+  // Check if it is an Apple device (iOS/Mac)
+  const isApple = /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent);
 
-  window.speechSynthesis.cancel();
-  if (window.speechSynthesis.paused) window.speechSynthesis.resume();
+  // STRATEGY:
+  // 1. Apple Devices -> Use Native `speechSynthesis`. 
+  //    Apple's voices (Kanya, Narisa, Siri) are excellent and work offline.
+  // 2. Non-Apple (Windows/Android) -> Force Google Network TTS.
+  //    System voices on Windows/Android for Thai/Vietnamese are often robotic or missing.
+  //    Google's `client=gtx` endpoint provides natural, neural-like audio.
 
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = langCode;
-  utterance.rate = 0.8;
+  if (isApple && window.speechSynthesis) {
+    // Cancel any playing audio to prevent overlap
+    window.speechSynthesis.cancel();
+    
+    // Safari/iOS sometimes pauses the engine, need to resume
+    if (window.speechSynthesis.paused) {
+      window.speechSynthesis.resume();
+    }
 
-  const voices = window.speechSynthesis.getVoices();
-  let preferredVoice = null;
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = langCode;
+    utterance.rate = 0.8; // Slightly slower for learning
 
-  // iOS/Mac Safari Priority
-  preferredVoice = voices.find(v => v.lang === langCode && (v.name.includes("Siri") || v.name.includes("Compact")));
-  if (!preferredVoice) {
-    preferredVoice = voices.find(v => v.lang === langCode);
-  }
+    // Try to specifically find a high-quality voice
+    const voices = window.speechSynthesis.getVoices();
+    // Look for 'Siri', 'Compact', or 'Enhanced' voices which are usually better
+    const preferredVoice = voices.find(v => 
+      v.lang === langCode && (v.name.includes("Siri") || v.name.includes("Enhanced") || v.name.includes("Compact"))
+    ) || voices.find(v => v.lang === langCode);
 
-  if (preferredVoice) {
-    utterance.voice = preferredVoice;
+    if (preferredVoice) {
+      utterance.voice = preferredVoice;
+    }
+    
     window.speechSynthesis.speak(utterance);
   } else {
+    // Non-Apple or Fallback: Use Google Translate TTS
+    // 'client=gtx' is generally more reliable for Asian languages than 'tw-ob'
     const isoCode = langCode.split('-')[0]; 
     const audio = new Audio(`https://translate.google.com/translate_tts?ie=UTF-8&tl=${isoCode}&client=gtx&q=${encodeURIComponent(text)}`);
-    audio.play().catch(e => console.log("Audio fallback failed", e));
+    audio.play().catch(e => console.log("Network audio failed", e));
   }
 };
 
@@ -242,6 +253,7 @@ const CharacterModal = ({ charData, langConfig, onClose }) => {
               {charData.emoji || <div className={langConfig.fontB}>{charData.char.split(' ')[0]}</div>}
             </div>
             <div className="min-w-0">
+              {/* Show THAI full name in header if Thai, otherwise char. Use Traditional font for name */}
               <h2 className={`text-4xl font-bold mb-1 truncate ${langConfig.id === 'thai' ? langConfig.fontA : langConfig.fontB}`}>
                 {langConfig.id === 'thai' ? (charData.thaiName || charData.char) : charData.char}
               </h2>
