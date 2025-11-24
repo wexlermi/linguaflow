@@ -102,26 +102,36 @@ const quizQuestions = [
   }
 ];
 
-// --- Audio Helper with iOS Fixes ---
+// --- Audio Helper with iOS Fixes (Updated for strict Autoplay) ---
 const playAudio = (text) => {
+  // 0. Ensure speech synthesis is awake (fixes common iOS bug where it sleeps)
+  if (window.speechSynthesis) {
+    window.speechSynthesis.resume();
+  }
+
   // 1. Detect if user is on iOS (iPhone/iPad)
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
   // 2. iOS STRATEGY: Prefer Native SpeechSynthesis
-  // Why? iOS Safari blocks `new Audio()` (media) if the silent switch is on.
-  // Native SpeechSynthesis (Siri/Voiceover) often bypasses this or behaves more reliably.
   if (isIOS && window.speechSynthesis) {
     window.speechSynthesis.cancel(); // Stop previous
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = 'th-TH';
-    // iOS Voices (like Narisa) are usually high quality by default
     utterance.rate = 0.8; 
+    
+    // Attempt to force a Thai voice if available
+    const voices = window.speechSynthesis.getVoices();
+    const thaiVoice = voices.find(v => v.lang.includes('th'));
+    if (thaiVoice) utterance.voice = thaiVoice;
+
     window.speechSynthesis.speak(utterance);
     return;
   }
 
   // 3. ANDROID / DESKTOP STRATEGY: Prefer Google TTS (High Quality MP3)
   const audio = new Audio(`https://translate.google.com/translate_tts?ie=UTF-8&tl=th&client=tw-ob&q=${encodeURIComponent(text)}`);
+  
+  // Try to play
   const playPromise = audio.play();
 
   if (playPromise !== undefined) {
@@ -135,7 +145,6 @@ const playAudio = (text) => {
         utterance.lang = 'th-TH';
         utterance.rate = 0.9;
         
-        // Try to find a specific Thai voice
         const voices = window.speechSynthesis.getVoices();
         const thaiVoice = voices.find(v => v.lang === 'th-TH' || v.name.includes('Thai')) || 
                           voices.find(v => v.lang.includes('th'));
@@ -181,12 +190,9 @@ const Header = ({ goBack, currentLang }) => (
 const CharacterModal = ({ charData, onClose }) => {
   if (!charData) return null;
 
-  // iOS Note: We play audio here, but if the phone is on Silent, 
-  // the user interaction (click) might have 'expired' for the Google TTS.
-  // Our new playAudio function handles this by switching to Native Speech on iOS.
-  useEffect(() => {
-     playAudio(charData.thaiName || charData.name);
-  }, [charData]);
+  // REMOVED useEffect for auto-play here. 
+  // We now rely on the 'click' event from the Card to play audio immediately.
+  // This satisfies iOS strict user-interaction requirements.
 
   const playCharAudio = () => playAudio(charData.thaiName || charData.name);
 
@@ -524,8 +530,10 @@ const ThaiModule = () => {
     : thaiConsonants.filter(c => c.class === filter);
 
   const handleCharClick = (charData) => {
+    // 1. Play Audio Immediately on User Interaction (Tap)
+    playAudio(charData.thaiName || charData.name);
+    // 2. Then Open Modal
     setSelectedChar(charData);
-    // playAudio called in modal useEffect
   };
 
   return (
