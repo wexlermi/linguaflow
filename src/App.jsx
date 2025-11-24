@@ -21,65 +21,65 @@ const LANGUAGES = {
     styleHandLabel: 'Handwritten',
     styleOldLabel: 'Old Fashioned',
     chars: [
-      // --- Consonants (audio field explicitly defines what is spoken) ---
-      { char: 'ก', name: 'Gor Gai', thaiName: 'ก ไก่', audio: 'กอ ไก่', meaning: 'Chicken', class: 'Mid', sound: 'k', emoji: '🐔', type: 'Consonant' },
-      { char: 'ข', name: 'Khor Khai', thaiName: 'ข ไข่', audio: 'ขอ ไข่', meaning: 'Egg', class: 'High', sound: 'kh', emoji: '🥚', type: 'Consonant' },
-      { char: 'ฃ', name: 'Khor Khuad', thaiName: 'ฃ ขวด', audio: 'ขอ ขวด', meaning: 'Bottle (Obsolete)', class: 'High', sound: 'kh', emoji: '🍾', type: 'Consonant' },
-      { char: 'ค', name: 'Khor Khwai', thaiName: 'ค ควาย', audio: 'คอ ควาย', meaning: 'Buffalo', class: 'Low', sound: 'kh', emoji: '🐃', type: 'Consonant' },
-      { char: 'ฅ', name: 'Khor Khon', thaiName: 'ฅ คน', audio: 'คอ คน', meaning: 'Person (Obsolete)', class: 'Low', sound: 'kh', emoji: '👤', type: 'Consonant' },
-      { char: 'ฆ', name: 'Khor Rakhang', thaiName: 'ฆ ระฆัง', audio: 'ฆอ ระฆัง', meaning: 'Bell', class: 'Low', sound: 'kh', emoji: '🔔', type: 'Consonant' },
-      { char: 'ง', name: 'Ngor Ngu', thaiName: 'ง งู', audio: 'งอ งู', meaning: 'Snake', class: 'Low', sound: 'ng', emoji: '🐍', type: 'Consonant' },
-      { char: 'จ', name: 'Jor Jaan', thaiName: 'จ จาน', audio: 'จอ จาน', meaning: 'Plate', class: 'Mid', sound: 'j', emoji: '🍽️', type: 'Consonant' },
-      { char: 'ฉ', name: 'Chor Ching', thaiName: 'ฉ ฉิ่ง', audio: 'ฉอ ฉิ่ง', meaning: 'Cymbals', class: 'High', sound: 'ch', emoji: '🥁', type: 'Consonant' },
-      { char: 'ช', name: 'Chor Chang', thaiName: 'ช ช้าง', audio: 'ชอ ช้าง', meaning: 'Elephant', class: 'Low', sound: 'ch', emoji: '🐘', type: 'Consonant' },
-      { char: 'ซ', name: 'Sor So', thaiName: 'ซ โซ่', audio: 'ซอ โซ่', meaning: 'Chain', class: 'Low', sound: 's', emoji: '🔗', type: 'Consonant' },
-      { char: 'ฌ', name: 'Chor Cher', thaiName: 'ฌ เฌอ', audio: 'ชอ เฌอ', meaning: 'Tree', class: 'Low', sound: 'ch', emoji: '🌳', type: 'Consonant' },
-      { char: 'ญ', name: 'Yor Ying', thaiName: 'ญ หญิง', audio: 'ยอ หญิง', meaning: 'Woman', class: 'Low', sound: 'y', emoji: '👩', type: 'Consonant' },
-      { char: 'ฎ', name: 'Dor Chada', thaiName: 'ฎ ชฎา', audio: 'ดอ ชะดา', meaning: 'Headdress', class: 'Mid', sound: 'd', emoji: '👑', type: 'Consonant' },
-      { char: 'ฏ', name: 'Tor Patak', thaiName: 'ฏ ปฏัก', audio: 'ตอ ปะตัก', meaning: 'Goad/Spear', class: 'Mid', sound: 't', emoji: '🔱', type: 'Consonant' },
-      { char: 'ฐ', name: 'Thor Than', thaiName: 'ฐ ฐาน', audio: 'ถอ ฐาน', meaning: 'Pedestal', class: 'High', sound: 'th', emoji: '🏛️', type: 'Consonant' },
-      { char: 'ฑ', name: 'Thor Montho', thaiName: 'ฑ มณโฑ', audio: 'ทอ มณโฑ', meaning: 'Montho (Character)', class: 'Low', sound: 'th', emoji: '👸', type: 'Consonant' },
-      { char: 'ฒ', name: 'Thor Phuthao', thaiName: 'ฒ ผู้เฒ่า', audio: 'ทอ ผู้เฒ่า', meaning: 'Elder', class: 'Low', sound: 'th', emoji: '👴', type: 'Consonant' },
-      { char: 'ณ', name: 'Nor Nen', thaiName: 'ณ เณร', audio: 'นอ เณร', meaning: 'Novice Monk', class: 'Low', sound: 'n', emoji: '📿', type: 'Consonant' },
-      { char: 'ด', name: 'Dor Dek', thaiName: 'ด เด็ก', audio: 'ดอ เด็ก', meaning: 'Child', class: 'Mid', sound: 'd', emoji: '🧒', type: 'Consonant' },
-      { char: 'ต', name: 'Tor Tao', thaiName: 'ต เต่า', audio: 'ตอ เต่า', meaning: 'Turtle', class: 'Mid', sound: 't', emoji: '🐢', type: 'Consonant' },
-      { char: 'ถ', name: 'Thor Thung', thaiName: 'ถ ถุง', audio: 'ถอ ถุง', meaning: 'Sack', class: 'High', sound: 'th', emoji: '💰', type: 'Consonant' },
-      { char: 'ท', name: 'Thor Thahan', thaiName: 'ท ทหาร', audio: 'ทอ ทหาร', meaning: 'Soldier', class: 'Low', sound: 'th', emoji: '💂', type: 'Consonant' },
-      { char: 'ธ', name: 'Thor Thong', thaiName: 'ธ ธง', audio: 'ทอ ธง', meaning: 'Flag', class: 'Low', sound: 'th', emoji: '🚩', type: 'Consonant' },
-      { char: 'น', name: 'Nor Nu', thaiName: 'น หนู', audio: 'นอ หนู', meaning: 'Mouse', class: 'Low', sound: 'n', emoji: '🐁', type: 'Consonant' },
-      { char: 'บ', name: 'Bor Baimai', thaiName: 'บ ใบไม้', audio: 'บอ ใบไม้', meaning: 'Leaf', class: 'Mid', sound: 'b', emoji: '🍃', type: 'Consonant' },
-      { char: 'ป', name: 'Por Pla', thaiName: 'ป ปลา', audio: 'ปอ ปลา', meaning: 'Fish', class: 'Mid', sound: 'p', emoji: '🐟', type: 'Consonant' },
-      { char: 'ผ', name: 'Phor Phueng', thaiName: 'ผ ผึ้ง', audio: 'ผอ ผึ้ง', meaning: 'Bee', class: 'High', sound: 'ph', emoji: '🐝', type: 'Consonant' },
-      { char: 'ฝ', name: 'For Fa', thaiName: 'ฝ ฝา', audio: 'ฝอ ฝา', meaning: 'Lid', class: 'High', sound: 'f', emoji: '🍲', type: 'Consonant' },
-      { char: 'พ', name: 'Phor Phan', thaiName: 'พ พาน', audio: 'พอ พาน', meaning: 'Tray', class: 'Low', sound: 'ph', emoji: '🏺', type: 'Consonant' },
-      { char: 'ฟ', name: 'For Fan', thaiName: 'ฟ ฟัน', audio: 'ฟอ ฟัน', meaning: 'Teeth', class: 'Low', sound: 'f', emoji: '🦷', type: 'Consonant' },
-      { char: 'ภ', name: 'Phor Samphao', thaiName: 'ภ สำเภา', audio: 'พอ สำเภา', meaning: 'Sailboat', class: 'Low', sound: 'ph', emoji: '⛵', type: 'Consonant' },
-      { char: 'ม', name: 'Mor Maa', thaiName: 'ม ม้า', audio: 'มอ ม้า', meaning: 'Horse', class: 'Low', sound: 'm', emoji: '🐎', type: 'Consonant' },
-      { char: 'ย', name: 'Yor Yak', thaiName: 'ย ยักษ์', audio: 'ยอ ยักษ์', meaning: 'Giant', class: 'Low', sound: 'y', emoji: '👹', type: 'Consonant' },
-      { char: 'ร', name: 'Ror Ruea', thaiName: 'ร เรือ', audio: 'รอ เรือ', meaning: 'Boat', class: 'Low', sound: 'r', emoji: '🚣', type: 'Consonant' },
-      { char: 'ล', name: 'Lor Ling', thaiName: 'ล ลิง', audio: 'ลอ ลิง', meaning: 'Monkey', class: 'Low', sound: 'l', emoji: '🐒', type: 'Consonant' },
-      { char: 'ว', name: 'Wor Waen', thaiName: 'ว แหวน', audio: 'วอ แหวน', meaning: 'Ring', class: 'Low', sound: 'w', emoji: '💍', type: 'Consonant' },
-      { char: 'ศ', name: 'Sor Sala', thaiName: 'ศ ศาลา', audio: 'สอ ศาลา', meaning: 'Pavilion', class: 'High', sound: 's', emoji: '🛖', type: 'Consonant' },
-      { char: 'ษ', name: 'Sor Ruesi', thaiName: 'ษ ฤๅษี', audio: 'สอ ฤๅษี', meaning: 'Hermit', class: 'High', sound: 's', emoji: '🧔', type: 'Consonant' },
-      { char: 'ส', name: 'Sor Suea', thaiName: 'ส เสือ', audio: 'สอ เสือ', meaning: 'Tiger', class: 'High', sound: 's', emoji: '🐅', type: 'Consonant' },
-      { char: 'ห', name: 'Hor Hip', thaiName: 'ห หีบ', audio: 'หอ หีบ', meaning: 'Chest/Box', class: 'High', sound: 'h', emoji: '📦', type: 'Consonant' },
-      { char: 'ฬ', name: 'Lor Chula', thaiName: 'ฬ จุฬา', audio: 'ลอ จุฬา', meaning: 'Kite', class: 'Low', sound: 'l', emoji: '🪁', type: 'Consonant' },
-      { char: 'อ', name: 'Or Ang', thaiName: 'อ อ่าง', audio: 'ออ อ่าง', meaning: 'Basin', class: 'Mid', sound: 'o', emoji: '🛁', type: 'Consonant' },
-      { char: 'ฮ', name: 'Hor Nokhuk', thaiName: 'ฮ นกฮูก', audio: 'ฮอ นกฮูก', meaning: 'Owl', class: 'Low', sound: 'h', emoji: '🦉', type: 'Consonant' },
+      // --- Consonants ---
+      { char: 'ก', name: 'Gor Gai', thaiName: 'ก ไก่', meaning: 'Chicken', class: 'Mid', sound: 'k', emoji: '🐔', type: 'Consonant' },
+      { char: 'ข', name: 'Khor Khai', thaiName: 'ข ไข่', meaning: 'Egg', class: 'High', sound: 'kh', emoji: '🥚', type: 'Consonant' },
+      { char: 'ฃ', name: 'Khor Khuad', thaiName: 'ฃ ขวด', meaning: 'Bottle (Obs)', class: 'High', sound: 'kh', emoji: '🍾', type: 'Consonant' },
+      { char: 'ค', name: 'Khor Khwai', thaiName: 'ค ควาย', meaning: 'Buffalo', class: 'Low', sound: 'kh', emoji: '🐃', type: 'Consonant' },
+      { char: 'ฅ', name: 'Khor Khon', thaiName: 'ฅ คน', meaning: 'Person (Obs)', class: 'Low', sound: 'kh', emoji: '👤', type: 'Consonant' },
+      { char: 'ฆ', name: 'Khor Rakhang', thaiName: 'ฆ ระฆัง', meaning: 'Bell', class: 'Low', sound: 'kh', emoji: '🔔', type: 'Consonant' },
+      { char: 'ง', name: 'Ngor Ngu', thaiName: 'ง งู', meaning: 'Snake', class: 'Low', sound: 'ng', emoji: '🐍', type: 'Consonant' },
+      { char: 'จ', name: 'Jor Jaan', thaiName: 'จ จาน', meaning: 'Plate', class: 'Mid', sound: 'j', emoji: '🍽️', type: 'Consonant' },
+      { char: 'ฉ', name: 'Chor Ching', thaiName: 'ฉ ฉิ่ง', meaning: 'Cymbals', class: 'High', sound: 'ch', emoji: '🥁', type: 'Consonant' },
+      { char: 'ช', name: 'Chor Chang', thaiName: 'ช ช้าง', meaning: 'Elephant', class: 'Low', sound: 'ch', emoji: '🐘', type: 'Consonant' },
+      { char: 'ซ', name: 'Sor So', thaiName: 'ซ โซ่', meaning: 'Chain', class: 'Low', sound: 's', emoji: '🔗', type: 'Consonant' },
+      { char: 'ฌ', name: 'Chor Cher', thaiName: 'ฌ เฌอ', meaning: 'Tree', class: 'Low', sound: 'ch', emoji: '🌳', type: 'Consonant' },
+      { char: 'ญ', name: 'Yor Ying', thaiName: 'ญ หญิง', meaning: 'Woman', class: 'Low', sound: 'y', emoji: '👩', type: 'Consonant' },
+      { char: 'ฎ', name: 'Dor Chada', thaiName: 'ฎ ชฎา', meaning: 'Headdress', class: 'Mid', sound: 'd', emoji: '👑', type: 'Consonant' },
+      { char: 'ฏ', name: 'Tor Patak', thaiName: 'ฏ ปฏัก', meaning: 'Goad/Spear', class: 'Mid', sound: 't', emoji: '🔱', type: 'Consonant' },
+      { char: 'ฐ', name: 'Thor Than', thaiName: 'ฐ ฐาน', meaning: 'Pedestal', class: 'High', sound: 'th', emoji: '🏛️', type: 'Consonant' },
+      { char: 'ฑ', name: 'Thor Montho', thaiName: 'ฑ มณโฑ', meaning: 'Montho', class: 'Low', sound: 'th', emoji: '👸', type: 'Consonant' },
+      { char: 'ฒ', name: 'Thor Phuthao', thaiName: 'ฒ ผู้เฒ่า', meaning: 'Elder', class: 'Low', sound: 'th', emoji: '👴', type: 'Consonant' },
+      { char: 'ณ', name: 'Nor Nen', thaiName: 'ณ เณร', meaning: 'Novice Monk', class: 'Low', sound: 'n', emoji: '📿', type: 'Consonant' },
+      { char: 'ด', name: 'Dor Dek', thaiName: 'ด เด็ก', meaning: 'Child', class: 'Mid', sound: 'd', emoji: '🧒', type: 'Consonant' },
+      { char: 'ต', name: 'Tor Tao', thaiName: 'ต เต่า', meaning: 'Turtle', class: 'Mid', sound: 't', emoji: '🐢', type: 'Consonant' },
+      { char: 'ถ', name: 'Thor Thung', thaiName: 'ถ ถุง', meaning: 'Sack', class: 'High', sound: 'th', emoji: '💰', type: 'Consonant' },
+      { char: 'ท', name: 'Thor Thahan', thaiName: 'ท ทหาร', meaning: 'Soldier', class: 'Low', sound: 'th', emoji: '💂', type: 'Consonant' },
+      { char: 'ธ', name: 'Thor Thong', thaiName: 'ธ ธง', meaning: 'Flag', class: 'Low', sound: 'th', emoji: '🚩', type: 'Consonant' },
+      { char: 'น', name: 'Nor Nu', thaiName: 'น หนู', meaning: 'Mouse', class: 'Low', sound: 'n', emoji: '🐁', type: 'Consonant' },
+      { char: 'บ', name: 'Bor Baimai', thaiName: 'บ ใบไม้', meaning: 'Leaf', class: 'Mid', sound: 'b', emoji: '🍃', type: 'Consonant' },
+      { char: 'ป', name: 'Por Pla', thaiName: 'ป ปลา', meaning: 'Fish', class: 'Mid', sound: 'p', emoji: '🐟', type: 'Consonant' },
+      { char: 'ผ', name: 'Phor Phueng', thaiName: 'ผ ผึ้ง', meaning: 'Bee', class: 'High', sound: 'ph', emoji: '🐝', type: 'Consonant' },
+      { char: 'ฝ', name: 'For Fa', thaiName: 'ฝ ฝา', meaning: 'Lid', class: 'High', sound: 'f', emoji: '🍲', type: 'Consonant' },
+      { char: 'พ', name: 'Phor Phan', thaiName: 'พ พาน', meaning: 'Tray', class: 'Low', sound: 'ph', emoji: '🏺', type: 'Consonant' },
+      { char: 'ฟ', name: 'For Fan', thaiName: 'ฟ ฟัน', meaning: 'Teeth', class: 'Low', sound: 'f', emoji: '🦷', type: 'Consonant' },
+      { char: 'ภ', name: 'Phor Samphao', thaiName: 'ภ สำเภา', meaning: 'Sailboat', class: 'Low', sound: 'ph', emoji: '⛵', type: 'Consonant' },
+      { char: 'ม', name: 'Mor Maa', thaiName: 'ม ม้า', meaning: 'Horse', class: 'Low', sound: 'm', emoji: '🐎', type: 'Consonant' },
+      { char: 'ย', name: 'Yor Yak', thaiName: 'ย ยักษ์', meaning: 'Giant', class: 'Low', sound: 'y', emoji: '👹', type: 'Consonant' },
+      { char: 'ร', name: 'Ror Ruea', thaiName: 'ร เรือ', meaning: 'Boat', class: 'Low', sound: 'r', emoji: '🚣', type: 'Consonant' },
+      { char: 'ล', name: 'Lor Ling', thaiName: 'ล ลิง', meaning: 'Monkey', class: 'Low', sound: 'l', emoji: '🐒', type: 'Consonant' },
+      { char: 'ว', name: 'Wor Waen', thaiName: 'ว แหวน', meaning: 'Ring', class: 'Low', sound: 'w', emoji: '💍', type: 'Consonant' },
+      { char: 'ศ', name: 'Sor Sala', thaiName: 'ศ ศาลา', meaning: 'Pavilion', class: 'High', sound: 's', emoji: '🛖', type: 'Consonant' },
+      { char: 'ษ', name: 'Sor Ruesi', thaiName: 'ษ ฤๅษี', meaning: 'Hermit', class: 'High', sound: 's', emoji: '🧔', type: 'Consonant' },
+      { char: 'ส', name: 'Sor Suea', thaiName: 'ส เสือ', meaning: 'Tiger', class: 'High', sound: 's', emoji: '🐅', type: 'Consonant' },
+      { char: 'ห', name: 'Hor Hip', thaiName: 'ห หีบ', meaning: 'Chest/Box', class: 'High', sound: 'h', emoji: '📦', type: 'Consonant' },
+      { char: 'ฬ', name: 'Lor Chula', thaiName: 'ฬ จุฬา', meaning: 'Kite', class: 'Low', sound: 'l', emoji: '🪁', type: 'Consonant' },
+      { char: 'อ', name: 'Or Ang', thaiName: 'อ อ่าง', meaning: 'Basin', class: 'Mid', sound: 'o', emoji: '🛁', type: 'Consonant' },
+      { char: 'ฮ', name: 'Hor Nokhuk', thaiName: 'ฮ นกฮูก', meaning: 'Owl', class: 'Low', sound: 'h', emoji: '🦉', type: 'Consonant' },
 
-      // --- Vowels (Using 'O' placeholder for natural sound) ---
-      { char: '−ะ', name: 'Sara A', thaiName: 'สระ อะ', audio: 'อะ', meaning: 'Short A', type: 'Vowel', sound: 'a' },
-      { char: '−า', name: 'Sara Aa', thaiName: 'สระ อา', audio: 'อา', meaning: 'Long Aa', type: 'Vowel', sound: 'aa' },
-      { char: '−ิ', name: 'Sara I', thaiName: 'สระ อิ', audio: 'อิ', meaning: 'Short I', type: 'Vowel', sound: 'i' },
-      { char: '−ี', name: 'Sara Ii', thaiName: 'สระ อี', audio: 'อี', meaning: 'Long Ii', type: 'Vowel', sound: 'ii' },
-      { char: '−ึ', name: 'Sara Ue', thaiName: 'สระ อึ', audio: 'อึ', meaning: 'Short Ue', type: 'Vowel', sound: 'ue' },
-      { char: '−ื', name: 'Sara Uee', thaiName: 'สระ อือ', audio: 'อือ', meaning: 'Long Uee', type: 'Vowel', sound: 'uee' },
-      { char: '−ุ', name: 'Sara U', thaiName: 'สระ อุ', audio: 'อุ', meaning: 'Short U', type: 'Vowel', sound: 'u' },
-      { char: '−ู', name: 'Sara Uu', thaiName: 'สระ อู', audio: 'อู', meaning: 'Long Uu', type: 'Vowel', sound: 'uu' },
-      { char: 'เ−', name: 'Sara E', thaiName: 'สระ เอ', audio: 'เอ', meaning: 'Long E', type: 'Vowel', sound: 'e' },
-      { char: 'แ−', name: 'Sara Ae', thaiName: 'สระ แอ', audio: 'แอ', meaning: 'Long Ae', type: 'Vowel', sound: 'ae' },
-      { char: 'โ−', name: 'Sara O', thaiName: 'สระ โอ', audio: 'โอ', meaning: 'Long O', type: 'Vowel', sound: 'o' },
-      { char: 'ไ−', name: 'Sara Ai', thaiName: 'สระ ไอ ไม้มลาย', audio: 'ไอ', meaning: 'Ai (Malai)', type: 'Vowel', sound: 'ai' },
+      // --- Vowels ---
+      { char: '−ะ', name: 'Sara A', thaiName: 'สระ อะ', type: 'Vowel', sound: 'a' },
+      { char: '−า', name: 'Sara Aa', thaiName: 'สระ อา', type: 'Vowel', sound: 'aa' },
+      { char: '−ิ', name: 'Sara I', thaiName: 'สระ อิ', type: 'Vowel', sound: 'i' },
+      { char: '−ี', name: 'Sara Ii', thaiName: 'สระ อี', type: 'Vowel', sound: 'ii' },
+      { char: '−ึ', name: 'Sara Ue', thaiName: 'สระ อึ', type: 'Vowel', sound: 'ue' },
+      { char: '−ื', name: 'Sara Uee', thaiName: 'สระ อือ', type: 'Vowel', sound: 'uee' },
+      { char: '−ุ', name: 'Sara U', thaiName: 'สระ อุ', type: 'Vowel', sound: 'u' },
+      { char: '−ู', name: 'Sara Uu', thaiName: 'สระ อู', type: 'Vowel', sound: 'uu' },
+      { char: 'เ−', name: 'Sara E', thaiName: 'สระ เอ', type: 'Vowel', sound: 'e' },
+      { char: 'แ−', name: 'Sara Ae', thaiName: 'สระ แอ', type: 'Vowel', sound: 'ae' },
+      { char: 'โ−', name: 'Sara O', thaiName: 'สระ โอ', type: 'Vowel', sound: 'o' },
+      { char: 'ไ−', name: 'Sara Ai', thaiName: 'สระ ไอ ไม้มลาย', type: 'Vowel', sound: 'ai' },
     ],
     quiz: [
       { question: "Which letter represents 'Chicken'?", options: ['ข', 'ก', 'ค', 'ง'], correct: 'ก' },
@@ -137,7 +137,7 @@ const speak = (text, langCode = 'th-TH') => {
 
   // 1. BROWSER SYNTHESIS (NATIVE)
   if (window.speechSynthesis) {
-    window.speechSynthesis.cancel();
+    window.speechSynthesis.cancel(); // Stop previous
     if (window.speechSynthesis.paused) window.speechSynthesis.resume();
 
     const voices = window.speechSynthesis.getVoices();
@@ -158,17 +158,19 @@ const speak = (text, langCode = 'th-TH') => {
       const utterance = new SpeechSynthesisUtterance(cleanText);
       utterance.lang = langCode;
       utterance.voice = preferredVoice;
-      utterance.rate = 0.9; // Optimal speed for clarity without robotic artifacts
+      // RATE: 0.9 is slightly slower for clarity without being robotic. 
+      utterance.rate = 0.9; 
       window.speechSynthesis.speak(utterance);
       return; 
     }
   }
 
   // 2. NETWORK FALLBACK (Google TTS)
-  // 'client=gtx' is robust for non-English scripts
+  // 'client=tw-ob' usually provides a cleaner, faster stream for short words.
   const isoCode = langCode.split('-')[0];
-  const audio = new Audio(`https://translate.google.com/translate_tts?ie=UTF-8&tl=${isoCode}&client=gtx&q=${encodeURIComponent(cleanText)}`);
-  audio.playbackRate = 1.0; 
+  const audio = new Audio(`https://translate.google.com/translate_tts?ie=UTF-8&tl=${isoCode}&client=tw-ob&q=${encodeURIComponent(cleanText)}`);
+  // Play back slightly slower (0.9)
+  audio.playbackRate = 0.9; 
   audio.play().catch(e => console.log("Audio failed", e));
 };
 
@@ -249,13 +251,14 @@ const CharacterModal = ({ charData, langConfig, onClose }) => {
               {charData.emoji || <div className={langConfig.fontB}>{charData.char.split(' ')[0]}</div>}
             </div>
             <div className="min-w-0">
-              <h2 className={`text-4xl font-bold mb-1 truncate ${langConfig.id === 'thai' ? langConfig.fontA : langConfig.fontB}`}>
+              {/* Ensure full name for Thai is shown, remove truncate to prevent clipping */}
+              <h2 className={`text-4xl font-bold mb-1 leading-relaxed ${langConfig.id === 'thai' ? langConfig.fontA : langConfig.fontB}`}>
                 {langConfig.id === 'thai' ? (charData.thaiName || charData.char) : charData.char}
               </h2>
-              <p className="text-indigo-100 text-lg opacity-90 truncate">{charData.name}</p>
+              <p className="text-indigo-100 text-lg opacity-90">{charData.name}</p>
               <div className="flex items-center gap-2 mt-3">
                  <button 
-                   onClick={() => speak(charData.audio || charData.thaiName || charData.name, langConfig.langCode)}
+                   onClick={() => speak(charData.thaiName || (charData.type === 'Tone' ? charData.char : charData.char), langConfig.langCode)}
                    className="flex items-center gap-2 bg-white text-indigo-600 px-4 py-1.5 rounded-full text-sm font-bold shadow-sm hover:bg-indigo-50 transition-colors"
                  >
                    <Volume2 className="w-4 h-4" /> Replay
@@ -303,20 +306,20 @@ const CharacterModal = ({ charData, langConfig, onClose }) => {
                <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Styles</h4>
                <div className="flex items-center justify-between p-2 rounded-lg hover:bg-slate-50 transition-colors">
                  <span className="text-xs font-medium text-slate-500 w-24">{langConfig.styleALabel}</span>
-                 <span className={`text-4xl text-indigo-900 ${langConfig.fontA}`}>{charData.char.split(' ')[0]}</span>
+                 <span className={`text-4xl text-indigo-900 leading-relaxed py-2 ${langConfig.fontA}`}>{charData.char.split(' ')[0]}</span>
                </div>
                <div className="flex items-center justify-between p-2 rounded-lg hover:bg-slate-50 transition-colors">
                  <span className="text-xs font-medium text-slate-500 w-24">{langConfig.styleBLabel}</span>
-                 <span className={`text-4xl text-indigo-900 ${langConfig.fontB}`}>{charData.char.split(' ')[0]}</span>
+                 <span className={`text-4xl text-indigo-900 leading-relaxed py-2 ${langConfig.fontB}`}>{charData.char.split(' ')[0]}</span>
                </div>
                <div className="flex items-center justify-between p-2 rounded-lg hover:bg-slate-50 transition-colors">
                  <span className="text-xs font-medium text-slate-500 w-24">{langConfig.styleHandLabel || 'Handwritten'}</span>
-                 <span className={`text-4xl text-indigo-900 ${langConfig.fontHand}`}>{charData.char.split(' ')[0]}</span>
+                 <span className={`text-4xl text-indigo-900 leading-relaxed py-2 ${langConfig.fontHand}`}>{charData.char.split(' ')[0]}</span>
                </div>
                {langConfig.fontOld && (
                  <div className="flex items-center justify-between p-2 rounded-lg hover:bg-slate-50 transition-colors">
                    <span className="text-xs font-medium text-slate-500 w-24">{langConfig.styleOldLabel}</span>
-                   <span className={`text-4xl text-indigo-900 ${langConfig.fontOld}`}>{charData.char.split(' ')[0]}</span>
+                   <span className={`text-4xl text-indigo-900 leading-relaxed py-2 ${langConfig.fontOld}`}>{charData.char.split(' ')[0]}</span>
                  </div>
                )}
              </div>
@@ -581,11 +584,13 @@ const LanguageModule = ({ config, onBack }) => {
   }, []);
 
   const handlePlayAudio = (charData) => {
-    let textToSpeak = charData.audio || charData.char;
+    let textToSpeak = charData.char;
 
-    if (config.id === 'thai' && !charData.audio) {
+    if (config.id === 'thai') {
        textToSpeak = charData.thaiName || charData.name;
-    } 
+    } else if (config.id === 'vietnamese') {
+       textToSpeak = (charData.type === 'Tone' || charData.type === 'Grammar') ? charData.char : charData.char; 
+    }
 
     speak(textToSpeak, config.langCode);
   };
