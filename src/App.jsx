@@ -13,13 +13,15 @@ const LANGUAGES = {
     fontA: 'font-sarabun', // Traditional (Looped)
     fontB: 'font-kanit',   // Modern (Loopless)
     fontHand: 'font-mali', // Handwritten
+    fontOld: 'font-charm', // Old Fashioned
     exampleText: 'สวัสดีครับ',
     exampleMeaning: 'Hello (Sawatdee)',
     styleALabel: 'Traditional',
     styleBLabel: 'Modern',
     styleHandLabel: 'Handwritten',
+    styleOldLabel: 'Old Fashioned',
     chars: [
-      // --- Consonants (Grouped via 'type') ---
+      // --- Consonants ---
       { char: 'ก', name: 'Gor Gai', thaiName: 'ก ไก่', meaning: 'Chicken', class: 'Mid', sound: 'k', emoji: '🐔', type: 'Consonant' },
       { char: 'ข', name: 'Khor Khai', thaiName: 'ข ไข่', meaning: 'Egg', class: 'High', sound: 'kh', emoji: '🥚', type: 'Consonant' },
       { char: 'ฃ', name: 'Khor Khuad', thaiName: 'ฃ ขวด', meaning: 'Bottle (Obs)', class: 'High', sound: 'kh', emoji: '🍾', type: 'Consonant' },
@@ -128,46 +130,33 @@ const LANGUAGES = {
   BURMESE: { id: 'my', name: 'Burmese', nativeName: 'မြန်မာ', desc: 'The circular script.', comingSoon: true },
 };
 
-// --- AUDIO ENGINE ---
+// --- AUDIO ENGINE (Safari Friendly) ---
 const speak = (text, langCode = 'th-TH') => {
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-
-  // 1. THAI SPECIAL HANDLING
-  if (langCode === 'th-TH') {
-    if (isIOS && window.speechSynthesis) {
-      const voices = window.speechSynthesis.getVoices();
-      const nativeVoice = voices.find(v => v.lang === langCode);
-      if (nativeVoice) {
-        window.speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = langCode;
-        utterance.voice = nativeVoice;
-        utterance.rate = 0.8;
-        window.speechSynthesis.speak(utterance);
-        return;
-      }
-    }
-    // Force Google Cloud TTS for Thai on non-iOS or fallback
-    const isoCode = langCode.split('-')[0]; 
+  if (!window.speechSynthesis) {
+    const isoCode = langCode.split('-')[0];
     const audio = new Audio(`https://translate.google.com/translate_tts?ie=UTF-8&tl=${isoCode}&client=gtx&q=${encodeURIComponent(text)}`);
-    audio.play().catch(e => console.log("Audio failed", e));
+    audio.play().catch(e => console.log("Fallback audio error", e));
     return;
   }
-
-  // 2. STANDARD HANDLING
-  if (!window.speechSynthesis) return;
 
   window.speechSynthesis.cancel();
   if (window.speechSynthesis.paused) window.speechSynthesis.resume();
 
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = langCode;
+  utterance.rate = 0.8;
+
   const voices = window.speechSynthesis.getVoices();
-  let preferredVoice = voices.find(v => v.lang === langCode);
+  let preferredVoice = null;
+
+  // iOS/Mac Safari Priority
+  preferredVoice = voices.find(v => v.lang === langCode && (v.name.includes("Siri") || v.name.includes("Compact")));
+  if (!preferredVoice) {
+    preferredVoice = voices.find(v => v.lang === langCode);
+  }
 
   if (preferredVoice) {
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = langCode;
     utterance.voice = preferredVoice;
-    utterance.rate = 0.85;
     window.speechSynthesis.speak(utterance);
   } else {
     const isoCode = langCode.split('-')[0]; 
@@ -181,16 +170,12 @@ const speak = (text, langCode = 'th-TH') => {
 const Header = ({ goBack, currentLang }) => (
   <header className="bg-white shadow-sm sticky top-0 z-50">
     <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-      <div className="flex items-center gap-2">
-        {currentLang && (
-          <button onClick={goBack} className="p-2 hover:bg-slate-100 rounded-full transition-colors mr-2">
-            <ChevronLeft className="w-5 h-5 text-slate-600" />
-          </button>
-        )}
-        <div className="flex items-center gap-2 text-indigo-600">
-          <Globe className="w-6 h-6" />
-          <h1 className="font-bold text-xl tracking-tight">lang.bar</h1>
-        </div>
+      <div 
+        className="flex items-center gap-2 text-indigo-600 cursor-pointer hover:opacity-80 transition-opacity"
+        onClick={goBack} // Navigates home
+      >
+        <Globe className="w-6 h-6" />
+        <h1 className="font-bold text-xl tracking-tight">lang.bar</h1>
       </div>
       {currentLang && (
         <div className="flex items-center gap-3">
@@ -210,17 +195,21 @@ const LanguageCard = ({ data, onClick }) => (
     className={`group relative bg-white rounded-2xl p-6 shadow-md border-2 border-transparent transition-all duration-300 ${
       !data.comingSoon 
         ? 'hover:border-indigo-500 hover:shadow-xl cursor-pointer hover:-translate-y-1' 
-        : 'opacity-60 cursor-not-allowed'
+        : 'opacity-60 cursor-not-allowed bg-slate-50'
     }`}
   >
     <div className="flex justify-between items-start mb-4">
-      <div className={`p-3 rounded-xl ${!data.comingSoon ? 'bg-indigo-50 text-indigo-600' : 'bg-slate-100 text-slate-400'}`}>
+      <div className={`p-3 rounded-xl ${!data.comingSoon ? 'bg-indigo-50 text-indigo-600' : 'bg-slate-200 text-slate-400'}`}>
         <span className="font-bold text-xl">{data.nativeName.charAt(0)}</span>
       </div>
-      {data.comingSoon && <span className="text-xs font-bold bg-slate-200 text-slate-500 px-2 py-1 rounded">SOON</span>}
+      {data.comingSoon && (
+        <span className="text-[10px] font-bold bg-slate-200 text-slate-600 px-2 py-1 rounded uppercase tracking-wide">
+          Not Yet Supported
+        </span>
+      )}
     </div>
-    <h3 className="text-xl font-bold text-slate-800 mb-1">{data.name}</h3>
-    <p className="text-sm font-medium text-indigo-600 mb-2">{data.nativeName}</p>
+    <h3 className={`text-xl font-bold mb-1 ${!data.comingSoon ? 'text-slate-800' : 'text-slate-500'}`}>{data.name}</h3>
+    <p className={`text-sm font-medium mb-2 ${!data.comingSoon ? 'text-indigo-600' : 'text-slate-400'}`}>{data.nativeName}</p>
     <p className="text-slate-500 text-sm leading-relaxed mb-4 min-h-[40px]">{data.desc}</p>
     
     {!data.comingSoon && (
@@ -253,7 +242,6 @@ const CharacterModal = ({ charData, langConfig, onClose }) => {
               {charData.emoji || <div className={langConfig.fontB}>{charData.char.split(' ')[0]}</div>}
             </div>
             <div className="min-w-0">
-              {/* Show THAI full name in header if Thai, otherwise char. Use Traditional font for name */}
               <h2 className={`text-4xl font-bold mb-1 truncate ${langConfig.id === 'thai' ? langConfig.fontA : langConfig.fontB}`}>
                 {langConfig.id === 'thai' ? (charData.thaiName || charData.char) : charData.char}
               </h2>
@@ -318,6 +306,12 @@ const CharacterModal = ({ charData, langConfig, onClose }) => {
                  <span className="text-xs font-medium text-slate-500 w-24">{langConfig.styleHandLabel || 'Handwritten'}</span>
                  <span className={`text-4xl text-indigo-900 ${langConfig.fontHand}`}>{charData.char.split(' ')[0]}</span>
                </div>
+               {langConfig.fontOld && (
+                 <div className="flex items-center justify-between p-2 rounded-lg hover:bg-slate-50 transition-colors">
+                   <span className="text-xs font-medium text-slate-500 w-24">{langConfig.styleOldLabel}</span>
+                   <span className={`text-4xl text-indigo-900 ${langConfig.fontOld}`}>{charData.char.split(' ')[0]}</span>
+                 </div>
+               )}
              </div>
           </div>
         </div>
@@ -327,12 +321,17 @@ const CharacterModal = ({ charData, langConfig, onClose }) => {
 };
 
 const CharacterCard = ({ charData, langConfig, onClick, fontMode, onAudioClick }) => {
+  // Determine current font class based on fontMode state
+  let fontClass = langConfig.fontA;
+  if (fontMode === 'B') fontClass = langConfig.fontB;
+  else if (fontMode === 'Hand') fontClass = langConfig.fontHand;
+  else if (fontMode === 'Old') fontClass = langConfig.fontOld;
+
   return (
     <div 
       onClick={onClick}
       className="relative bg-white p-4 rounded-xl border-2 border-slate-200 hover:border-indigo-400 hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer group select-none flex flex-col items-center justify-between h-36"
     >
-      {/* Audio Button - Stops propagation to prevent modal opening */}
       <button 
          onClick={(e) => {
            e.stopPropagation();
@@ -343,7 +342,6 @@ const CharacterCard = ({ charData, langConfig, onClick, fontMode, onAudioClick }
          <Volume2 className="w-3 h-3" />
       </button>
       
-      {/* Category Badge */}
       {charData.type && (
         <div className="absolute top-2 left-2">
            <span className={`text-[10px] font-bold uppercase px-1.5 py-0.5 rounded ${
@@ -359,11 +357,7 @@ const CharacterCard = ({ charData, langConfig, onClick, fontMode, onAudioClick }
       )}
 
       <div className="text-center py-1 flex-grow flex flex-col justify-center mt-2">
-        <div className={`text-4xl text-slate-800 mb-2 transition-all duration-300 ${
-          fontMode === 'B' ? langConfig.fontB : 
-          fontMode === 'Hand' ? langConfig.fontHand : 
-          langConfig.fontA
-        }`}>
+        <div className={`text-4xl text-slate-800 mb-2 transition-all duration-300 ${fontClass}`}>
           {charData.char}
         </div>
         <div className="text-sm font-bold text-indigo-700 leading-tight px-2 line-clamp-1">{charData.name}</div>
@@ -382,9 +376,8 @@ const Quiz = ({ questions, langCode, onComplete }) => {
   const [showScore, setShowScore] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
 
-  // Shuffle questions on mount
   useEffect(() => {
-    const shuffled = [...questions].sort(() => 0.5 - Math.random()).slice(0, 5); // Pick 5 random
+    const shuffled = [...questions].sort(() => 0.5 - Math.random()).slice(0, 5);
     setShuffledQuestions(shuffled);
     setCurrentIndex(0);
     setScore(0);
@@ -396,7 +389,6 @@ const Quiz = ({ questions, langCode, onComplete }) => {
     if (selectedOption) return;
     setSelectedOption(option);
     
-    // Attempt to speak the answer if it's short text
     if(option.length < 15) speak(option, langCode);
 
     if (option === shuffledQuestions[currentIndex].correct) setScore(score + 1);
@@ -484,7 +476,7 @@ const FontComparison = ({ config, fontMode, setFontMode }) => (
           Choose a script style to update all cards below.
         </p>
       </div>
-      <div className="flex bg-white p-1 rounded-lg shadow-sm border border-slate-200 self-start">
+      <div className="flex flex-wrap bg-white p-1 rounded-lg shadow-sm border border-slate-200 self-start gap-1">
         <button
           onClick={() => setFontMode('A')}
           className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${fontMode === 'A' ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50'}`}
@@ -503,6 +495,14 @@ const FontComparison = ({ config, fontMode, setFontMode }) => (
         >
           {config.styleHandLabel || 'Handwritten'}
         </button>
+        {config.styleOldLabel && (
+          <button
+            onClick={() => setFontMode('Old')}
+            className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${fontMode === 'Old' ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50'}`}
+          >
+            {config.styleOldLabel}
+          </button>
+        )}
       </div>
     </div>
 
@@ -518,6 +518,7 @@ const FontComparison = ({ config, fontMode, setFontMode }) => (
         <p className={`text-4xl md:text-5xl text-slate-800 transition-all duration-500 ${
           fontMode === 'B' ? config.fontB : 
           fontMode === 'Hand' ? config.fontHand : 
+          fontMode === 'Old' ? config.fontOld :
           config.fontA
         }`}>
           {config.exampleText}
@@ -529,12 +530,14 @@ const FontComparison = ({ config, fontMode, setFontMode }) => (
           <Info className="w-5 h-5 text-indigo-500 shrink-0 mt-0.5" />
           <p className="text-sm text-slate-600">
             <span className="font-bold text-slate-800">
-              {fontMode === 'B' ? config.styleBLabel : fontMode === 'Hand' ? (config.styleHandLabel || 'Handwritten') : config.styleALabel}:
+              {fontMode === 'B' ? config.styleBLabel : fontMode === 'Hand' ? (config.styleHandLabel || 'Handwritten') : fontMode === 'Old' ? config.styleOldLabel : config.styleALabel}:
             </span>
             {fontMode === 'B' 
               ? " Often used in screens, modern signage, and informal writing. Cleaner lines."
               : fontMode === 'Hand'
               ? " Simulate casual handwriting. Good for reading notes and signs."
+              : fontMode === 'Old'
+              ? " Classic or retro style, typically found in formal contexts or traditional signage."
               : " Often used in books, newspapers, and formal documents. More intricate details."}
           </p>
         </div>
@@ -547,15 +550,24 @@ const FontComparison = ({ config, fontMode, setFontMode }) => (
 const LanguageModule = ({ config, onBack }) => {
   const [activeTab, setActiveTab] = useState('lessons');
   const [selectedChar, setSelectedChar] = useState(null);
-  const [fontMode, setFontMode] = useState('A'); // 'A' | 'B' | 'Hand'
+  const [fontMode, setFontMode] = useState('A'); // 'A' | 'B' | 'Hand' | 'Old'
 
-  // Safari Voice Fix
   useEffect(() => {
-    const initVoices = () => { window.speechSynthesis.getVoices(); };
-    initVoices();
-    if (window.speechSynthesis.onvoiceschanged !== undefined) {
-      window.speechSynthesis.onvoiceschanged = initVoices;
-    }
+    const unlockAudio = () => {
+      if (window.speechSynthesis) {
+        window.speechSynthesis.resume();
+      }
+      document.removeEventListener('click', unlockAudio);
+      document.removeEventListener('touchstart', unlockAudio);
+    };
+
+    document.addEventListener('click', unlockAudio);
+    document.addEventListener('touchstart', unlockAudio);
+
+    return () => {
+      document.removeEventListener('click', unlockAudio);
+      document.removeEventListener('touchstart', unlockAudio);
+    };
   }, []);
 
   const handlePlayAudio = (charData) => {
@@ -575,7 +587,6 @@ const LanguageModule = ({ config, onBack }) => {
     setSelectedChar(charData);
   };
 
-  // Grouping Logic
   const groupedChars = useMemo(() => {
     if (!config.chars) return {};
     return config.chars.reduce((acc, curr) => {
@@ -663,30 +674,19 @@ const App = () => {
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
       <style>{`
-        /* General & Handwriting */
-        @import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap');
-        .font-caveat { font-family: 'Caveat', cursive !important; }
+        /* Combine Google Fonts into a single request to avoid blocking behavior */
+        @import url('https://fonts.googleapis.com/css2?family=Caveat&family=Charm:wght@400;700&family=Kanit:wght@300;400;600&family=Mali:wght@400;600&family=Noto+Sans:wght@400;700&family=Noto+Serif:wght@400;700&family=Sarabun:wght@300;400;600&family=UnifrakturMaguntia&display=swap&subset=thai,cyrillic,greek,vietnamese');
 
-        /* Thai - Force Separate Imports to Ensure Loading */
-        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Mali:wght@400;600&display=swap');
-        
+        /* --- Class Definitions --- */
         .font-kanit { font-family: 'Kanit', sans-serif !important; }
         .font-sarabun { font-family: 'Sarabun', sans-serif !important; }
         .font-mali { font-family: 'Mali', cursive !important; }
-        
-        /* Cyrillic, Greek (Latin Ext) */
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&family=Noto+Sans:wght@400;700&display=swap');
+        .font-charm { font-family: 'Charm', cursive !important; }
+        .font-caveat { font-family: 'Caveat', cursive !important; }
         .font-noto { font-family: 'Noto Sans', sans-serif !important; }
         .font-notoserif { font-family: 'Noto Serif', serif !important; }
-
-        /* Vietnamese */
         .font-sans-vn { font-family: 'Noto Sans', sans-serif !important; }
         .font-serif-vn { font-family: 'Noto Serif', serif !important; }
-
-        /* German */
-        @import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap');
         .font-blackletter { font-family: 'UnifrakturMaguntia', cursive !important; }
         .font-sans-de { font-family: 'Noto Sans', sans-serif !important; }
       `}</style>
