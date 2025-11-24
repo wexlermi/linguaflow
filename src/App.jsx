@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { BookOpen, GraduationCap, ChevronLeft, Award, Globe, Type, Volume2, Info, Star, X, Image as ImageIcon, Smartphone, Menu } from 'lucide-react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { BookOpen, GraduationCap, ChevronLeft, Award, Globe, Type, Volume2, Info, Star, X, Image as ImageIcon, Smartphone, Menu, RefreshCw, PenTool } from 'lucide-react';
 
-// --- CONFIGURATION: The Massive Language Database ---
+// --- CONFIGURATION: The Language Database ---
 const LANGUAGES = {
   THAI: {
     id: 'thai',
@@ -10,670 +10,169 @@ const LANGUAGES = {
     scriptName: 'Thai Script',
     desc: 'The beautiful looped script of Thailand. 44 Consonants.',
     langCode: 'th-TH',
-    fontA: 'font-sarabun', // Traditional
-    fontB: 'font-kanit',   // Modern
-    fontHand: 'font-mali',
+    fontA: 'font-sarabun', // Traditional (Looped)
+    fontB: 'font-kanit',   // Modern (Loopless)
+    fontHand: 'font-mali', // Handwritten
     exampleText: 'สวัสดีครับ',
     exampleMeaning: 'Hello (Sawatdee)',
     styleALabel: 'Traditional',
     styleBLabel: 'Modern',
+    styleHandLabel: 'Handwritten',
     chars: [
-      { char: 'ก', name: 'Gor Gai', meaning: 'Chicken', sound: 'k', emoji: '🐔', class: 'Mid' },
-      { char: 'ข', name: 'Khor Khai', meaning: 'Egg', sound: 'kh', emoji: '🥚', class: 'High' },
-      { char: 'ฃ', name: 'Khor Khuad', meaning: 'Bottle (Obsolete)', sound: 'kh', emoji: '🍾', class: 'High' },
-      { char: 'ค', name: 'Khor Khwai', meaning: 'Buffalo', sound: 'kh', emoji: '🐃', class: 'Low' },
-      { char: 'ฅ', name: 'Khor Khon', meaning: 'Person (Obsolete)', sound: 'kh', emoji: '👤', class: 'Low' },
-      { char: 'ฆ', name: 'Khor Rakhang', meaning: 'Bell', sound: 'kh', emoji: '🔔', class: 'Low' },
-      { char: 'ง', name: 'Ngor Ngu', meaning: 'Snake', sound: 'ng', emoji: '🐍', class: 'Low' },
-      { char: 'จ', name: 'Jor Jaan', meaning: 'Plate', sound: 'j', emoji: '🍽️', class: 'Mid' },
-      { char: 'ฉ', name: 'Chor Ching', meaning: 'Cymbals', sound: 'ch', emoji: '🥁', class: 'High' },
-      { char: 'ช', name: 'Chor Chang', meaning: 'Elephant', sound: 'ch', emoji: '🐘', class: 'Low' },
-      { char: 'ซ', name: 'Sor So', meaning: 'Chain', sound: 's', emoji: '⛓️', class: 'Low' },
-      { char: 'ฌ', name: 'Chor Cher', meaning: 'Tree', sound: 'ch', emoji: '🌳', class: 'Low' },
-      { char: 'ญ', name: 'Yor Ying', meaning: 'Woman', sound: 'y', emoji: '👩', class: 'Low' },
-      { char: 'ฎ', name: 'Dor Chada', meaning: 'Headdress', sound: 'd', emoji: '👑', class: 'Mid' },
-      { char: 'ฏ', name: 'Tor Patak', meaning: 'Goad/Spear', sound: 't', emoji: '🔱', class: 'Mid' },
-      { char: 'ฐ', name: 'Thor Than', meaning: 'Pedestal', sound: 'th', emoji: '🏛️', class: 'High' },
-      { char: 'ฑ', name: 'Thor Montho', meaning: 'Montho (Name)', sound: 'th', emoji: '👸', class: 'Low' },
-      { char: 'ฒ', name: 'Thor Phuthao', meaning: 'Elder', sound: 'th', emoji: '👴', class: 'Low' },
-      { char: 'ณ', name: 'Nor Nen', meaning: 'Novice Monk', sound: 'n', emoji: '🧘', class: 'Low' },
-      { char: 'ด', name: 'Dor Dek', meaning: 'Child', sound: 'd', emoji: '👶', class: 'Mid' },
-      { char: 'ต', name: 'Tor Tao', meaning: 'Turtle', sound: 't', emoji: '🐢', class: 'Mid' },
-      { char: 'ถ', name: 'Thor Thung', meaning: 'Sack', sound: 'th', emoji: '💰', class: 'High' },
-      { char: 'ท', name: 'Thor Thahan', meaning: 'Soldier', sound: 'th', emoji: '💂', class: 'Low' },
-      { char: 'ธ', name: 'Thor Thong', meaning: 'Flag', sound: 'th', emoji: '🚩', class: 'Low' },
-      { char: 'น', name: 'Nor Nu', meaning: 'Mouse', sound: 'n', emoji: '🐁', class: 'Low' },
-      { char: 'บ', name: 'Bor Baimai', meaning: 'Leaf', sound: 'b', emoji: '🍃', class: 'Mid' },
-      { char: 'ป', name: 'Por Pla', meaning: 'Fish', sound: 'p', emoji: '🐟', class: 'Mid' },
-      { char: 'ผ', name: 'Phor Phueng', meaning: 'Bee', sound: 'ph', emoji: '🐝', class: 'High' },
-      { char: 'ฝ', name: 'For Fa', meaning: 'Lid', sound: 'f', emoji: '🍲', class: 'High' },
-      { char: 'พ', name: 'Phor Phan', meaning: 'Tray', sound: 'ph', emoji: '🏺', class: 'Low' },
-      { char: 'ฟ', name: 'For Fan', meaning: 'Teeth', sound: 'f', emoji: '🦷', class: 'Low' },
-      { char: 'ภ', name: 'Phor Samphao', meaning: 'Sailboat', sound: 'ph', emoji: '⛵', class: 'Low' },
-      { char: 'ม', name: 'Mor Maa', meaning: 'Horse', sound: 'm', emoji: '🐎', class: 'Low' },
-      { char: 'ย', name: 'Yor Yak', meaning: 'Giant', sound: 'y', emoji: '👹', class: 'Low' },
-      { char: 'ร', name: 'Ror Ruea', meaning: 'Boat', sound: 'r', emoji: '🚣', class: 'Low' },
-      { char: 'ล', name: 'Lor Ling', meaning: 'Monkey', sound: 'l', emoji: '🐒', class: 'Low' },
-      { char: 'ว', name: 'Wor Waen', meaning: 'Ring', sound: 'w', emoji: '💍', class: 'Low' },
-      { char: 'ศ', name: 'Sor Sala', meaning: 'Pavilion', sound: 's', emoji: '🛖', class: 'High' },
-      { char: 'ษ', name: 'Sor Ruesi', meaning: 'Hermit', sound: 's', emoji: '🧔', class: 'High' },
-      { char: 'ส', name: 'Sor Suea', meaning: 'Tiger', sound: 's', emoji: '🐅', class: 'High' },
-      { char: 'ห', name: 'Hor Hip', meaning: 'Chest/Box', sound: 'h', emoji: '📦', class: 'High' },
-      { char: 'ฬ', name: 'Lor Chula', meaning: 'Kite', sound: 'l', emoji: '🪁', class: 'Low' },
-      { char: 'อ', name: 'Or Ang', meaning: 'Basin', sound: 'o', emoji: '🛁', class: 'Mid' },
-      { char: 'ฮ', name: 'Hor Nokhuk', meaning: 'Owl', sound: 'h', emoji: '🦉', class: 'Low' },
+      // --- Consonants (Grouped via 'type') ---
+      { char: 'ก', name: 'Gor Gai', thaiName: 'ก ไก่', meaning: 'Chicken', class: 'Mid', sound: 'k', emoji: '🐔', type: 'Consonant' },
+      { char: 'ข', name: 'Khor Khai', thaiName: 'ข ไข่', meaning: 'Egg', class: 'High', sound: 'kh', emoji: '🥚', type: 'Consonant' },
+      { char: 'ฃ', name: 'Khor Khuad', thaiName: 'ฃ ขวด', meaning: 'Bottle (Obs)', class: 'High', sound: 'kh', emoji: '🍾', type: 'Consonant' },
+      { char: 'ค', name: 'Khor Khwai', thaiName: 'ค ควาย', meaning: 'Buffalo', class: 'Low', sound: 'kh', emoji: '🐃', type: 'Consonant' },
+      { char: 'ฅ', name: 'Khor Khon', thaiName: 'ฅ คน', meaning: 'Person (Obs)', class: 'Low', sound: 'kh', emoji: '👤', type: 'Consonant' },
+      { char: 'ฆ', name: 'Khor Rakhang', thaiName: 'ฆ ระฆัง', meaning: 'Bell', class: 'Low', sound: 'kh', emoji: '🔔', type: 'Consonant' },
+      { char: 'ง', name: 'Ngor Ngu', thaiName: 'ง งู', meaning: 'Snake', class: 'Low', sound: 'ng', emoji: '🐍', type: 'Consonant' },
+      { char: 'จ', name: 'Jor Jaan', thaiName: 'จ จาน', meaning: 'Plate', class: 'Mid', sound: 'j', emoji: '🍽️', type: 'Consonant' },
+      { char: 'ฉ', name: 'Chor Ching', thaiName: 'ฉ ฉิ่ง', meaning: 'Cymbals', class: 'High', sound: 'ch', emoji: '🥁', type: 'Consonant' },
+      { char: 'ช', name: 'Chor Chang', thaiName: 'ช ช้าง', meaning: 'Elephant', class: 'Low', sound: 'ch', emoji: '🐘', type: 'Consonant' },
+      { char: 'ซ', name: 'Sor So', thaiName: 'ซ โซ่', meaning: 'Chain', class: 'Low', sound: 's', emoji: '🔗', type: 'Consonant' },
+      { char: 'ฌ', name: 'Chor Cher', thaiName: 'ฌ เฌอ', meaning: 'Tree', class: 'Low', sound: 'ch', emoji: '🌳', type: 'Consonant' },
+      { char: 'ญ', name: 'Yor Ying', thaiName: 'ญ หญิง', meaning: 'Woman', class: 'Low', sound: 'y', emoji: '👩', type: 'Consonant' },
+      { char: 'ฎ', name: 'Dor Chada', thaiName: 'ฎ ชฎา', meaning: 'Headdress', class: 'Mid', sound: 'd', emoji: '👑', type: 'Consonant' },
+      { char: 'ฏ', name: 'Tor Patak', thaiName: 'ฏ ปฏัก', meaning: 'Goad/Spear', class: 'Mid', sound: 't', emoji: '🔱', type: 'Consonant' },
+      { char: 'ฐ', name: 'Thor Than', thaiName: 'ฐ ฐาน', meaning: 'Pedestal', class: 'High', sound: 'th', emoji: '🏛️', type: 'Consonant' },
+      { char: 'ฑ', name: 'Thor Montho', thaiName: 'ฑ มณโฑ', meaning: 'Montho', class: 'Low', sound: 'th', emoji: '👸', type: 'Consonant' },
+      { char: 'ฒ', name: 'Thor Phuthao', thaiName: 'ฒ ผู้เฒ่า', meaning: 'Elder', class: 'Low', sound: 'th', emoji: '👴', type: 'Consonant' },
+      { char: 'ณ', name: 'Nor Nen', thaiName: 'ณ เณร', meaning: 'Novice Monk', class: 'Low', sound: 'n', emoji: '📿', type: 'Consonant' },
+      { char: 'ด', name: 'Dor Dek', thaiName: 'ด เด็ก', meaning: 'Child', class: 'Mid', sound: 'd', emoji: '🧒', type: 'Consonant' },
+      { char: 'ต', name: 'Tor Tao', thaiName: 'ต เต่า', meaning: 'Turtle', class: 'Mid', sound: 't', emoji: '🐢', type: 'Consonant' },
+      { char: 'ถ', name: 'Thor Thung', thaiName: 'ถ ถุง', meaning: 'Sack', class: 'High', sound: 'th', emoji: '💰', type: 'Consonant' },
+      { char: 'ท', name: 'Thor Thahan', thaiName: 'ท ทหาร', meaning: 'Soldier', class: 'Low', sound: 'th', emoji: '💂', type: 'Consonant' },
+      { char: 'ธ', name: 'Thor Thong', thaiName: 'ธ ธง', meaning: 'Flag', class: 'Low', sound: 'th', emoji: '🚩', type: 'Consonant' },
+      { char: 'น', name: 'Nor Nu', thaiName: 'น หนู', meaning: 'Mouse', class: 'Low', sound: 'n', emoji: '🐁', type: 'Consonant' },
+      { char: 'บ', name: 'Bor Baimai', thaiName: 'บ ใบไม้', meaning: 'Leaf', class: 'Mid', sound: 'b', emoji: '🍃', type: 'Consonant' },
+      { char: 'ป', name: 'Por Pla', thaiName: 'ป ปลา', meaning: 'Fish', class: 'Mid', sound: 'p', emoji: '🐟', type: 'Consonant' },
+      { char: 'ผ', name: 'Phor Phueng', thaiName: 'ผ ผึ้ง', meaning: 'Bee', class: 'High', sound: 'ph', emoji: '🐝', type: 'Consonant' },
+      { char: 'ฝ', name: 'For Fa', thaiName: 'ฝ ฝา', meaning: 'Lid', class: 'High', sound: 'f', emoji: '🍲', type: 'Consonant' },
+      { char: 'พ', name: 'Phor Phan', thaiName: 'พ พาน', meaning: 'Tray', class: 'Low', sound: 'ph', emoji: '🏺', type: 'Consonant' },
+      { char: 'ฟ', name: 'For Fan', thaiName: 'ฟ ฟัน', meaning: 'Teeth', class: 'Low', sound: 'f', emoji: '🦷', type: 'Consonant' },
+      { char: 'ภ', name: 'Phor Samphao', thaiName: 'ภ สำเภา', meaning: 'Sailboat', class: 'Low', sound: 'ph', emoji: '⛵', type: 'Consonant' },
+      { char: 'ม', name: 'Mor Maa', thaiName: 'ม ม้า', meaning: 'Horse', class: 'Low', sound: 'm', emoji: '🐎', type: 'Consonant' },
+      { char: 'ย', name: 'Yor Yak', thaiName: 'ย ยักษ์', meaning: 'Giant', class: 'Low', sound: 'y', emoji: '👹', type: 'Consonant' },
+      { char: 'ร', name: 'Ror Ruea', thaiName: 'ร เรือ', meaning: 'Boat', class: 'Low', sound: 'r', emoji: '🚣', type: 'Consonant' },
+      { char: 'ล', name: 'Lor Ling', thaiName: 'ล ลิง', meaning: 'Monkey', class: 'Low', sound: 'l', emoji: '🐒', type: 'Consonant' },
+      { char: 'ว', name: 'Wor Waen', thaiName: 'ว แหวน', meaning: 'Ring', class: 'Low', sound: 'w', emoji: '💍', type: 'Consonant' },
+      { char: 'ศ', name: 'Sor Sala', thaiName: 'ศ ศาลา', meaning: 'Pavilion', class: 'High', sound: 's', emoji: '🛖', type: 'Consonant' },
+      { char: 'ษ', name: 'Sor Ruesi', thaiName: 'ษ ฤๅษี', meaning: 'Hermit', class: 'High', sound: 's', emoji: '🧔', type: 'Consonant' },
+      { char: 'ส', name: 'Sor Suea', thaiName: 'ส เสือ', meaning: 'Tiger', class: 'High', sound: 's', emoji: '🐅', type: 'Consonant' },
+      { char: 'ห', name: 'Hor Hip', thaiName: 'ห หีบ', meaning: 'Chest/Box', class: 'High', sound: 'h', emoji: '📦', type: 'Consonant' },
+      { char: 'ฬ', name: 'Lor Chula', thaiName: 'ฬ จุฬา', meaning: 'Kite', class: 'Low', sound: 'l', emoji: '🪁', type: 'Consonant' },
+      { char: 'อ', name: 'Or Ang', thaiName: 'อ อ่าง', meaning: 'Basin', class: 'Mid', sound: 'o', emoji: '🛁', type: 'Consonant' },
+      { char: 'ฮ', name: 'Hor Nokhuk', thaiName: 'ฮ นกฮูก', meaning: 'Owl', class: 'Low', sound: 'h', emoji: '🦉', type: 'Consonant' },
+
+      // --- Vowels ---
+      { char: '−ะ', name: 'Sara A', thaiName: 'สระ อะ', type: 'Vowel', sound: 'a' },
+      { char: '−า', name: 'Sara Aa', thaiName: 'สระ อา', type: 'Vowel', sound: 'aa' },
+      { char: '−ิ', name: 'Sara I', thaiName: 'สระ อิ', type: 'Vowel', sound: 'i' },
+      { char: '−ี', name: 'Sara Ii', thaiName: 'สระ อี', type: 'Vowel', sound: 'ii' },
+      { char: '−ึ', name: 'Sara Ue', thaiName: 'สระ อึ', type: 'Vowel', sound: 'ue' },
+      { char: '−ื', name: 'Sara Uee', thaiName: 'สระ อือ', type: 'Vowel', sound: 'uee' },
+      { char: '−ุ', name: 'Sara U', thaiName: 'สระ อุ', type: 'Vowel', sound: 'u' },
+      { char: '−ู', name: 'Sara Uu', thaiName: 'สระ อู', type: 'Vowel', sound: 'uu' },
+      { char: 'เ−', name: 'Sara E', thaiName: 'สระ เอ', type: 'Vowel', sound: 'e' },
+      { char: 'แ−', name: 'Sara Ae', thaiName: 'สระ แอ', type: 'Vowel', sound: 'ae' },
+      { char: 'โ−', name: 'Sara O', thaiName: 'สระ โอ', type: 'Vowel', sound: 'o' },
+      { char: 'ไ−', name: 'Sara Ai', thaiName: 'สระ ไอ ไม้มลาย', type: 'Vowel', sound: 'ai' },
     ],
     quiz: [
       { question: "Which letter represents 'Chicken'?", options: ['ข', 'ก', 'ค', 'ง'], correct: 'ก' },
       { question: "What sound does 'จ' make?", options: ['K', 'M', 'J', 'S'], correct: 'J' },
       { question: "Identify 'Mor Maa' (Horse)", options: ['ม', 'น', 'ย', 'ร'], correct: 'ม' },
+      { question: "Which class is 'Gor Gai' (ก)?", options: ['Mid', 'High', 'Low', 'None'], correct: 'Mid' },
+      { question: "Which consonant means 'Turtle'?", options: ['ด', 'ต', 'ถ', 'ท'], correct: 'ต' },
+      { question: "What does 'Ngor Ngu' (ง) mean?", options: ['Snake', 'Elephant', 'Mouse', 'Horse'], correct: 'Snake' },
+      { question: "Which consonant sounds like 'Ch' but is High Class?", options: ['ช', 'ฌ', 'ฉ', 'จ'], correct: 'ฉ' },
+      { question: "Which is the 'Basin' character?", options: ['อ', 'ฮ', 'ย', 'ว'], correct: 'อ' },
+      { question: "Which letter is an obsolete 'Bottle'?", options: ['ข', 'ฃ', 'ค', 'ฅ'], correct: 'ฃ' },
+      { question: "Find the 'Elephant' (Chor Chang)", options: ['ช', 'ซ', 'ฌ', 'ญ'], correct: 'ช' },
+      { question: "Which is NOT a Low Class consonant?", options: ['ค', 'ง', 'ข', 'ช'], correct: 'ข' },
+      { question: "Which vowel makes a long 'Aa' sound?", options: ['−ะ', '−า', '−ิ', '−ุ'], correct: '−า' },
+      { question: "What sound does 'Por Pla' (ป) make?", options: ['P', 'B', 'F', 'M'], correct: 'P' },
+      { question: "Which consonant means 'Tiger'?", options: ['ศ', 'ษ', 'ส', 'ห'], correct: 'ส' },
+      { question: "Identify 'Yor Yak' (Giant)", options: ['ย', 'ร', 'ล', 'ว'], correct: 'ย' },
+      { question: "What does 'Lor Ling' (ล) mean?", options: ['Monkey', 'Boat', 'Ring', 'Kite'], correct: 'Monkey' },
+      { question: "Which character is used for 'Child'?", options: ['ด', 'ต', 'ถ', 'ท'], correct: 'ด' },
+      { question: "Which class determines the tone of 'Khor Khai'?", options: ['High', 'Mid', 'Low', 'Rising'], correct: 'High' },
+      { question: "Which vowel represents 'Sara O'?", options: ['โ−', 'ไ−', 'เ−', 'แ−'], correct: 'โ−' },
+      { question: "What is the meaning of 'For Fan' (ฟ)?", options: ['Teeth', 'Tray', 'Sailboat', 'Lid'], correct: 'Teeth' },
+      { question: "What is the class of 'Sor Suea' (ส)?", options: ['High', 'Low', 'Mid', 'Sonorant'], correct: 'High' },
+      { question: "Which letter is used for 'Leaf'?", options: ['บ', 'ป', 'ผ', 'ฝ'], correct: 'บ' },
+      { question: "Which High class consonant means 'Bee'?", options: ['ผ', 'ฝ', 'ถ', 'ฐ'], correct: 'ผ' },
+      { question: "What sound does 'Yor Ying' (ญ) make?", options: ['Y', 'N', 'M', 'R'], correct: 'Y' },
+      { question: "Which letter is 'Owl' (Hor Nokhuk)?", options: ['ฮ', 'อ', 'ห', 'ฬ'], correct: 'ฮ' },
+      { question: "Which consonant is 'Khor Khon' (Person)?", options: ['ฅ', 'ต', 'ค', 'ด'], correct: 'ฅ' },
+      { question: "What does 'Jor Jaan' mean?", options: ['Plate', 'Bowl', 'Spoon', 'Fork'], correct: 'Plate' },
+      { question: "Which letter makes the 'F' sound (Lid)?", options: ['ฝ', 'ฟ', 'ผ', 'พ'], correct: 'ฝ' },
+      { question: "Which vowel is 'Sara Ue' (Short)?", options: ['−ึ', '−ื', '−ุ', '−ู'], correct: '−ึ' },
+      { question: "Identify 'Chor Ching' (Cymbals)", options: ['ฉ', 'ช', 'ฌ', 'จ'], correct: 'ฉ' }
     ]
   },
-  KOREAN: {
-    id: 'korean',
-    name: 'Korean',
-    nativeName: '한글',
-    scriptName: 'Hangul',
-    desc: 'The logical alphabet of Korea.',
-    langCode: 'ko-KR',
-    fontA: 'font-batang', 
-    fontB: 'font-notokr', 
-    fontHand: 'font-gamja',
-    exampleText: '안녕하세요',
-    exampleMeaning: 'Hello (Annyeonghaseyo)',
-    styleALabel: 'Serif',
-    styleBLabel: 'Sans',
-    chars: [
-      // Consonants
-      { char: 'ㄱ', name: 'Giyeok', meaning: 'G/K', sound: 'g', emoji: 'Gun' },
-      { char: 'ㄴ', name: 'Nieun', meaning: 'N', sound: 'n', emoji: 'Nose' },
-      { char: 'ㄷ', name: 'Digeut', meaning: 'D/T', sound: 'd', emoji: 'Door' },
-      { char: 'ㄹ', name: 'Rieul', meaning: 'R/L', sound: 'r', emoji: 'Rattlesnake' },
-      { char: 'ㅁ', name: 'Mieum', meaning: 'M', sound: 'm', emoji: 'Mouth' },
-      { char: 'ㅂ', name: 'Bieup', meaning: 'B/P', sound: 'b', emoji: 'Bucket' },
-      { char: 'ㅅ', name: 'Siot', meaning: 'S', sound: 's', emoji: 'Ski' },
-      { char: 'ㅇ', name: 'Ieung', meaning: 'Silent/Ng', sound: 'ng', emoji: 'Zero' },
-      { char: 'ㅈ', name: 'Jieut', meaning: 'J', sound: 'j', emoji: 'Jug' },
-      { char: 'ㅊ', name: 'Chieut', meaning: 'Ch', sound: 'ch', emoji: 'Church' },
-      { char: 'ㅋ', name: 'Kieuk', meaning: 'K', sound: 'k', emoji: 'Key' },
-      { char: 'ㅌ', name: 'Tieut', meaning: 'T', sound: 't', emoji: 'Teeth' },
-      { char: 'ㅍ', name: 'Pieup', meaning: 'P', sound: 'p', emoji: 'Part' },
-      { char: 'ㅎ', name: 'Hieut', meaning: 'H', sound: 'h', emoji: 'Hat' },
-      // Basic Vowels
-      { char: 'ㅏ', name: 'A', meaning: 'A', sound: 'a', emoji: 'Father' },
-      { char: 'ㅑ', name: 'Ya', meaning: 'Ya', sound: 'ya', emoji: 'Yacht' },
-      { char: 'ㅓ', name: 'Eo', meaning: 'Eo', sound: 'eo', emoji: 'Bus' },
-      { char: 'ㅕ', name: 'Yeo', meaning: 'Yeo', sound: 'yeo', emoji: 'Young' },
-      { char: 'ㅗ', name: 'O', meaning: 'O', sound: 'o', emoji: 'Home' },
-      { char: 'ㅛ', name: 'Yo', meaning: 'Yo', sound: 'yo', emoji: 'Yoyo' },
-      { char: 'ㅜ', name: 'U', meaning: 'U', sound: 'u', emoji: 'Moon' },
-      { char: 'ㅠ', name: 'Yu', meaning: 'Yu', sound: 'yu', emoji: 'You' },
-      { char: 'ㅡ', name: 'Eu', meaning: 'Eu', sound: 'eu', emoji: 'Brook' },
-      { char: 'ㅣ', name: 'I', meaning: 'I', sound: 'i', emoji: 'Tree' },
-    ],
-    quiz: [
-      { question: "Which character sounds like 'M'?", options: ['ㄱ', 'ㅁ', 'ㅇ', 'ㄹ'], correct: 'ㅁ' },
-      { question: "Which is the vowel 'A'?", options: ['ㅏ', 'ㅓ', 'ㅗ', 'ㅜ'], correct: 'ㅏ' },
-    ]
-  },
-  RUSSIAN: {
-    id: 'russian',
-    name: 'Russian',
-    nativeName: 'Русский',
-    scriptName: 'Cyrillic',
-    desc: 'The alphabet used across Eastern Europe and North Asia.',
-    langCode: 'ru-RU',
-    fontA: 'font-notoserif', 
-    fontB: 'font-noto',
-    fontHand: 'font-caveat',
-    exampleText: 'Привет',
-    exampleMeaning: 'Hi (Privet)',
-    styleALabel: 'Serif',
-    styleBLabel: 'Sans',
-    chars: [
-      { char: 'А', name: 'A', meaning: 'A', sound: 'a', emoji: '🅰️' },
-      { char: 'Б', name: 'Be', meaning: 'B', sound: 'b', emoji: '🥁' },
-      { char: 'В', name: 'Ve', meaning: 'V', sound: 'v', emoji: '🚐' },
-      { char: 'Г', name: 'Ge', meaning: 'G', sound: 'g', emoji: '🎸' },
-      { char: 'Д', name: 'De', meaning: 'D', sound: 'd', emoji: '🏠' },
-      { char: 'Е', name: 'Ye', meaning: 'Ye', sound: 'ye', emoji: '🇾' },
-      { char: 'Ё', name: 'Yo', meaning: 'Yo', sound: 'yo', emoji: '🪀' },
-      { char: 'Ж', name: 'Zhe', meaning: 'Zh (measure)', sound: 'zh', emoji: '🐞' },
-      { char: 'З', name: 'Ze', meaning: 'Z', sound: 'z', emoji: '🦓' },
-      { char: 'И', name: 'I', meaning: 'Ee', sound: 'i', emoji: '🦕' },
-      { char: 'Й', name: 'Short I', meaning: 'Y', sound: 'y', emoji: '🍦' },
-      { char: 'К', name: 'Ka', meaning: 'K', sound: 'k', emoji: '🔑' },
-      { char: 'Л', name: 'El', meaning: 'L', sound: 'l', emoji: '🦁' },
-      { char: 'М', name: 'Em', meaning: 'M', sound: 'm', emoji: '🗺️' },
-      { char: 'Н', name: 'En', meaning: 'N', sound: 'n', emoji: '👃' },
-      { char: 'О', name: 'O', meaning: 'O', sound: 'o', emoji: '🥯' },
-      { char: 'П', name: 'Pe', meaning: 'P', sound: 'p', emoji: '🐧' },
-      { char: 'Р', name: 'Er', meaning: 'R (rolled)', sound: 'r', emoji: '🚀' },
-      { char: 'С', name: 'Es', meaning: 'S', sound: 's', emoji: '🐍' },
-      { char: 'Т', name: 'Te', meaning: 'T', sound: 't', emoji: '🐯' },
-      { char: 'У', name: 'U', meaning: 'U', sound: 'u', emoji: '👻' },
-      { char: 'Ф', name: 'Ef', meaning: 'F', sound: 'f', emoji: '📸' },
-      { char: 'Х', name: 'Kha', meaning: 'Kh (Bach)', sound: 'kh', emoji: '🎅' },
-      { char: 'Ц', name: 'Tse', meaning: 'Ts', sound: 'ts', emoji: '🍕' },
-      { char: 'Ч', name: 'Che', meaning: 'Ch', sound: 'ch', emoji: '🍫' },
-      { char: 'Ш', name: 'Sha', meaning: 'Sh', sound: 'sh', emoji: '🤫' },
-      { char: 'Щ', name: 'Shcha', meaning: 'Shch', sound: 'shch', emoji: '🍲' },
-      { char: 'Ъ', name: 'Hard Sign', meaning: 'Silent', sound: '-', emoji: '🛑' },
-      { char: 'Ы', name: 'Yery', meaning: 'i (deep)', sound: 'y', emoji: '🧀' },
-      { char: 'Ь', name: 'Soft Sign', meaning: 'Silent', sound: '-', emoji: '☁️' },
-      { char: 'Э', name: 'E', meaning: 'E', sound: 'e', emoji: '📧' },
-      { char: 'Ю', name: 'Yu', meaning: 'Yu', sound: 'yu', emoji: '🪐' },
-      { char: 'Я', name: 'Ya', meaning: 'Ya', sound: 'ya', emoji: '🍎' },
-    ],
-    quiz: [
-      { question: "Which letter sounds like 'V'?", options: ['Б', 'В', 'Г', 'Д'], correct: 'В' },
-      { question: "What sound does 'Р' make?", options: ['P', 'R', 'S', 'B'], correct: 'R' },
-    ]
-  },
-  GREEK: {
-    id: 'greek',
-    name: 'Greek',
-    nativeName: 'Ελληνικά',
-    scriptName: 'Greek',
-    desc: 'The ancestor of Latin and Cyrillic.',
-    langCode: 'el-GR',
-    fontA: 'font-notoserif', 
-    fontB: 'font-noto',
-    fontHand: 'font-caveat',
-    exampleText: 'Γεια σας',
-    exampleMeaning: 'Hello (Yia sas)',
-    styleALabel: 'Serif',
-    styleBLabel: 'Sans',
-    chars: [
-      { char: 'Α', name: 'Alpha', meaning: 'A', sound: 'a', emoji: '🅰️' },
-      { char: 'Β', name: 'Beta', meaning: 'V', sound: 'v', emoji: '🎻' },
-      { char: 'Γ', name: 'Gamma', meaning: 'G/Y', sound: 'g', emoji: '🐐' },
-      { char: 'Δ', name: 'Delta', meaning: 'Th (soft)', sound: 'th', emoji: '🔺' },
-      { char: 'Ε', name: 'Epsilon', meaning: 'E', sound: 'e', emoji: '🥚' },
-      { char: 'Ζ', name: 'Zeta', meaning: 'Z', sound: 'z', emoji: '⚡' },
-      { char: 'Η', name: 'Eta', meaning: 'i', sound: 'i', emoji: '☀️' },
-      { char: 'Θ', name: 'Theta', meaning: 'Th (hard)', sound: 'th', emoji: '💭' },
-      { char: 'Ι', name: 'Iota', meaning: 'i', sound: 'i', emoji: '📍' },
-      { char: 'Κ', name: 'Kappa', meaning: 'K', sound: 'k', emoji: '🔑' },
-      { char: 'Λ', name: 'Lambda', meaning: 'L', sound: 'l', emoji: '🦁' },
-      { char: 'Μ', name: 'Mu', meaning: 'M', sound: 'm', emoji: '🗺️' },
-      { char: 'Ν', name: 'Nu', meaning: 'N', sound: 'n', emoji: '👃' },
-      { char: 'Ξ', name: 'Xi', meaning: 'Ks/X', sound: 'ks', emoji: '🚕' },
-      { char: 'Ο', name: 'Omicron', meaning: 'O', sound: 'o', emoji: '🍩' },
-      { char: 'Π', name: 'Pi', meaning: 'P', sound: 'p', emoji: '🥧' },
-      { char: 'Ρ', name: 'Rho', meaning: 'R', sound: 'r', emoji: '🌹' },
-      { char: 'Σ', name: 'Sigma', meaning: 'S', sound: 's', emoji: '🐍' },
-      { char: 'Τ', name: 'Tau', meaning: 'T', sound: 't', emoji: '🐢' },
-      { char: 'Υ', name: 'Upsilon', meaning: 'i', sound: 'i', emoji: '🍷' },
-      { char: 'Φ', name: 'Phi', meaning: 'F', sound: 'f', emoji: '📸' },
-      { char: 'Χ', name: 'Chi', meaning: 'H/Kh', sound: 'h', emoji: '🎄' },
-      { char: 'Ψ', name: 'Psi', meaning: 'Ps', sound: 'ps', emoji: '🔱' },
-      { char: 'Ω', name: 'Omega', meaning: 'O', sound: 'o', emoji: '🔚' },
-    ],
-    quiz: [
-      { question: "In modern Greek, 'Beta' (Β) makes which sound?", options: ['B', 'V', 'G', 'D'], correct: 'V' },
-      { question: "Which symbol represents the 'Ps' sound?", options: ['Φ', 'Ψ', 'Χ', 'Ξ'], correct: 'Ψ' },
-    ]
-  },
-  JAPANESE: {
-    id: 'jp',
-    name: 'Japanese',
-    nativeName: '日本語',
-    scriptName: 'Hiragana',
-    desc: 'The basic phonetic syllabary of Japan.',
-    langCode: 'ja-JP',
-    fontA: 'font-serif-jp',
-    fontB: 'font-sans-jp',
-    fontHand: 'font-caveat', // Handwriting placeholder
-    exampleText: 'こんにちは',
-    exampleMeaning: 'Hello (Konnichiwa)',
-    styleALabel: 'Mincho',
-    styleBLabel: 'Gothic',
-    chars: [
-      { char: 'あ', name: 'A', meaning: 'A', sound: 'a', emoji: '🐜' },
-      { char: 'い', name: 'I', meaning: 'I', sound: 'i', emoji: '🦅' },
-      { char: 'う', name: 'U', meaning: 'U', sound: 'u', emoji: '🐇' },
-      { char: 'え', name: 'E', meaning: 'E', sound: 'e', emoji: '✏️' },
-      { char: 'お', name: 'O', meaning: 'O', sound: 'o', emoji: '🍙' },
-      { char: 'か', name: 'Ka', meaning: 'Ka', sound: 'ka', emoji: '🦀' },
-      { char: 'き', name: 'Ki', meaning: 'Ki', sound: 'ki', emoji: '🔑' },
-      { char: 'く', name: 'Ku', meaning: 'Ku', sound: 'ku', emoji: '☁️' },
-      { char: 'け', name: 'Ke', meaning: 'Ke', sound: 'ke', emoji: '🧶' },
-      { char: 'こ', name: 'Ko', meaning: 'Ko', sound: 'ko', emoji: '🥤' },
-      { char: 'さ', name: 'Sa', meaning: 'Sa', sound: 'sa', emoji: '🌸' },
-      { char: 'し', name: 'Shi', meaning: 'Shi', sound: 'shi', emoji: '🦌' },
-      { char: 'す', name: 'Su', meaning: 'Su', sound: 'su', emoji: '🍉' },
-      { char: 'せ', name: 'Se', meaning: 'Se', sound: 'se', emoji: '🌏' },
-      { char: 'そ', name: 'So', meaning: 'So', sound: 'so', emoji: '🥤' },
-      { char: 'た', name: 'Ta', meaning: 'Ta', sound: 'ta', emoji: '🌮' },
-      { char: 'ち', name: 'Chi', meaning: 'Chi', sound: 'chi', emoji: '🧀' },
-      { char: 'つ', name: 'Tsu', meaning: 'Tsu', sound: 'tsu', emoji: '🌊' },
-      { char: 'て', name: 'Te', meaning: 'Te', sound: 'te', emoji: '📺' },
-      { char: 'と', name: 'To', meaning: 'To', sound: 'to', emoji: '🍅' },
-      { char: 'な', name: 'Na', meaning: 'Na', sound: 'na', emoji: '🍆' },
-      { char: 'に', name: 'Ni', meaning: 'Ni', sound: 'ni', emoji: '🥩' },
-      { char: 'ぬ', name: 'Nu', meaning: 'Nu', sound: 'nu', emoji: '🍜' },
-      { char: 'ね', name: 'Ne', meaning: 'Ne', sound: 'ne', emoji: '🐱' },
-      { char: 'の', name: 'No', meaning: 'No', sound: 'no', emoji: '⛔' },
-      { char: 'は', name: 'Ha', meaning: 'Ha', sound: 'ha', emoji: '🦷' },
-      { char: 'ひ', name: 'Hi', meaning: 'Hi', sound: 'hi', emoji: '🔥' },
-      { char: 'ふ', name: 'Fu', meaning: 'Fu', sound: 'fu', emoji: '🗻' },
-      { char: 'へ', name: 'He', meaning: 'He', sound: 'he', emoji: '🐍' },
-      { char: 'ほ', name: 'Ho', meaning: 'Ho', sound: 'ho', emoji: '🦴' },
-      { char: 'ま', name: 'Ma', meaning: 'Ma', sound: 'ma', emoji: '🧙' },
-      { char: 'み', name: 'Mi', meaning: 'Mi', sound: 'mi', emoji: '🍊' },
-      { char: 'む', name: 'Mu', meaning: 'Mu', sound: 'mu', emoji: '🐛' },
-      { char: 'め', name: 'Me', meaning: 'Me', sound: 'me', emoji: '👀' },
-      { char: 'も', name: 'Mo', meaning: 'Mo', sound: 'mo', emoji: '🍑' },
-      { char: 'や', name: 'Ya', meaning: 'Ya', sound: 'ya', emoji: '🏔️' },
-      { char: 'ゆ', name: 'Yu', meaning: 'Yu', sound: 'yu', emoji: '❄️' },
-      { char: 'よ', name: 'Yo', meaning: 'Yo', sound: 'yo', emoji: '🛥️' },
-      { char: 'ら', name: 'Ra', meaning: 'Ra', sound: 'ra', emoji: '🦁' },
-      { char: 'り', name: 'Ri', meaning: 'Ri', sound: 'ri', emoji: '🐿️' },
-      { char: 'る', name: 'Ru', meaning: 'Ru', sound: 'ru', emoji: '💎' },
-      { char: 'れ', name: 'Re', meaning: 'Re', sound: 're', emoji: '🍋' },
-      { char: 'ろ', name: 'Ro', meaning: 'Ro', sound: 'ro', emoji: '🤖' },
-      { char: 'わ', name: 'Wa', meaning: 'Wa', sound: 'wa', emoji: '🐊' },
-      { char: 'を', name: 'Wo', meaning: 'Wo', sound: 'o', emoji: '🔗' },
-      { char: 'ん', name: 'N', meaning: 'N', sound: 'n', emoji: '🥜' },
-    ],
-    quiz: [
-      { question: "Which character is 'Ka'?", options: ['か', 'き', 'く', 'け'], correct: 'か' },
-      { question: "Which character looks like a smiley face?", options: ['し', 'つ', 'ん', 'そ'], correct: 'し' },
-    ]
-  },
-  HINDI: {
-    id: 'hi',
-    name: 'Hindi',
-    nativeName: 'हिन्दी',
-    scriptName: 'Devanagari',
-    desc: 'The script used for Hindi, Sanskrit, and Marathi.',
-    langCode: 'hi-IN',
-    fontA: 'font-serif-in',
-    fontB: 'font-sans-in',
-    fontHand: 'font-caveat',
-    exampleText: 'नमस्ते',
-    exampleMeaning: 'Hello (Namaste)',
-    styleALabel: 'Serif',
-    styleBLabel: 'Sans',
-    chars: [
-      { char: 'अ', name: 'A', meaning: 'A', sound: 'a', emoji: '🍍' },
-      { char: 'आ', name: 'Aa', meaning: 'Aa', sound: 'aa', emoji: '🥭' },
-      { char: 'इ', name: 'I', meaning: 'I', sound: 'i', emoji: '🧊' },
-      { char: 'ई', name: 'Ee', meaning: 'Ee', sound: 'ee', emoji: '🍬' },
-      { char: 'क', name: 'Ka', meaning: 'Ka', sound: 'ka', emoji: '🪷' },
-      { char: 'ख', name: 'Kha', meaning: 'Kha', sound: 'kha', emoji: '🐇' },
-      { char: 'ग', name: 'Ga', meaning: 'Ga', sound: 'ga', emoji: '🪴' },
-      { char: 'घ', name: 'Gha', meaning: 'Gha', sound: 'gha', emoji: '🏠' },
-      { char: 'च', name: 'Cha', meaning: 'Cha', sound: 'cha', emoji: '🥄' },
-      { char: 'छ', name: 'Chha', meaning: 'Chha', sound: 'chha', emoji: '☂️' },
-      { char: 'ज', name: 'Ja', meaning: 'Ja', sound: 'ja', emoji: '🚢' },
-      { char: 'झ', name: 'Jha', meaning: 'Jha', sound: 'jha', emoji: '🏁' },
-      { char: 'ट', name: 'Ta', meaning: 'Ta (Retroflex)', sound: 'ta', emoji: '🍅' },
-      { char: 'ठ', name: 'Tha', meaning: 'Tha', sound: 'tha', emoji: '🔨' },
-      { char: 'ड', name: 'Da', meaning: 'Da', sound: 'da', emoji: '🥁' },
-      { char: 'ढ', name: 'Dha', meaning: 'Dha', sound: 'dha', emoji: '🛡️' },
-      { char: 'ण', name: 'Na', meaning: 'Na', sound: 'na', emoji: '🏹' },
-      { char: 'त', name: 'Ta', meaning: 'Ta (Dental)', sound: 'ta', emoji: '🍉' },
-      { char: 'थ', name: 'Tha', meaning: 'Tha', sound: 'tha', emoji: '🌡️' },
-      { char: 'द', name: 'Da', meaning: 'Da', sound: 'da', emoji: '🦷' },
-      { char: 'ध', name: 'Dha', meaning: 'Dha', sound: 'dha', emoji: '🏹' },
-      { char: 'न', name: 'Na', meaning: 'Na', sound: 'na', emoji: '🧂' },
-      { char: 'प', name: 'Pa', meaning: 'Pa', sound: 'pa', emoji: '🪁' },
-      { char: 'फ', name: 'Pha', meaning: 'Pha', sound: 'pha', emoji: '🍌' },
-      { char: 'ब', name: 'Ba', meaning: 'Ba', sound: 'ba', emoji: '🐐' },
-      { char: 'भ', name: 'Bha', meaning: 'Bha', sound: 'bha', emoji: '🐻' },
-      { char: 'म', name: 'Ma', meaning: 'Ma', sound: 'ma', emoji: '🐟' },
-      { char: 'य', name: 'Ya', meaning: 'Ya', sound: 'ya', emoji: '🧘' },
-      { char: 'र', name: 'Ra', meaning: 'Ra', sound: 'ra', emoji: '🚂' },
-      { char: 'ल', name: 'La', meaning: 'La', sound: 'la', emoji: '👦' },
-      { char: 'व', name: 'Va', meaning: 'Va', sound: 'va', emoji: '🌧️' },
-      { char: 'श', name: 'Sha', meaning: 'Sha', sound: 'sha', emoji: '🦁' },
-      { char: 'ष', name: 'Sha', meaning: 'Sha (Retro)', sound: 'sha', emoji: '🛑' },
-      { char: 'स', name: 'Sa', meaning: 'Sa', sound: 'sa', emoji: '🍏' },
-      { char: 'ह', name: 'Ha', meaning: 'Ha', sound: 'ha', emoji: '🐘' },
-    ],
-    quiz: [
-      { question: "Which letter is 'Ka'?", options: ['क', 'ख', 'ग', 'घ'], correct: 'क' },
-      { question: "Identify the letter 'Ra'", options: ['र', 'ल', 'व', 'श'], correct: 'र' },
-    ]
-  },
-  ARABIC: {
-    id: 'ar',
-    name: 'Arabic',
-    nativeName: 'العربية',
-    scriptName: 'Arabic',
-    desc: 'A right-to-left cursive script with 28 letters.',
-    langCode: 'ar-SA',
-    fontA: 'font-serif-ar', // Naskh
-    fontB: 'font-sans-ar',  // Sans
-    fontHand: 'font-caveat',
-    exampleText: 'مرحبا',
-    exampleMeaning: 'Hello (Marhaban)',
-    styleALabel: 'Naskh',
-    styleBLabel: 'Kufi/Sans',
-    chars: [
-      { char: 'ا', name: 'Alif', meaning: 'A', sound: 'a', emoji: '🦁' },
-      { char: 'ب', name: 'Ba', meaning: 'B', sound: 'b', emoji: '🦆' },
-      { char: 'ت', name: 'Ta', meaning: 'T', sound: 't', emoji: '🍎' },
-      { char: 'ث', name: 'Tha', meaning: 'Th', sound: 'th', emoji: '🦊' },
-      { char: 'ج', name: 'Jim', meaning: 'J', sound: 'j', emoji: '🐫' },
-      { char: 'ح', name: 'Ha', meaning: 'H (Deep)', sound: 'h', emoji: '🐎' },
-      { char: 'خ', name: 'Kha', meaning: 'Kh', sound: 'kh', emoji: '🐑' },
-      { char: 'د', name: 'Dal', meaning: 'D', sound: 'd', emoji: '🐓' },
-      { char: 'ذ', name: 'Dhal', meaning: 'Dh', sound: 'dh', emoji: '🌽' },
-      { char: 'ر', name: 'Ra', meaning: 'R', sound: 'r', emoji: '🚀' },
-      { char: 'ز', name: 'Zay', meaning: 'Z', sound: 'z', emoji: '🦒' },
-      { char: 'س', name: 'Sin', meaning: 'S', sound: 's', emoji: '🐟' },
-      { char: 'ش', name: 'Shin', meaning: 'Sh', sound: 'sh', emoji: '☀️' },
-      { char: 'ص', name: 'Sad', meaning: 'S (Deep)', sound: 's', emoji: '🦅' },
-      { char: 'ض', name: 'Dad', meaning: 'D (Deep)', sound: 'd', emoji: '🐸' },
-      { char: 'ط', name: 'Ta', meaning: 'T (Deep)', sound: 't', emoji: '✈️' },
-      { char: 'ظ', name: 'Zha', meaning: 'Zh (Deep)', sound: 'z', emoji: '✉️' },
-      { char: 'ع', name: 'Ain', meaning: 'Ain', sound: 'aa', emoji: '🍇' },
-      { char: 'غ', name: 'Ghain', meaning: 'Gh', sound: 'gh', emoji: '☁️' },
-      { char: 'ف', name: 'Fa', meaning: 'F', sound: 'f', emoji: '🐘' },
-      { char: 'ق', name: 'Qaf', meaning: 'Q', sound: 'q', emoji: '🖊️' },
-      { char: 'ك', name: 'Kaf', meaning: 'K', sound: 'k', emoji: '📖' },
-      { char: 'ل', name: 'Lam', meaning: 'L', sound: 'l', emoji: '🍋' },
-      { char: 'm', name: 'Mim', meaning: 'M', sound: 'm', emoji: '🗝️' },
-      { char: 'ن', name: 'Nun', meaning: 'N', sound: 'n', emoji: '🐅' },
-      { char: 'ه', name: 'Ha', meaning: 'H', sound: 'h', emoji: '🌛' },
-      { char: 'و', name: 'Waw', meaning: 'W', sound: 'w', emoji: '🌹' },
-      { char: 'ي', name: 'Ya', meaning: 'Y', sound: 'y', emoji: '✋' },
-    ],
-    quiz: [
-      { question: "Which letter has a single dot below?", options: ['ب', 'ت', 'ث', 'ي'], correct: 'ب' },
-      { question: "Which letter represents 'S'?", options: ['س', 'ش', 'ص', 'ز'], correct: 'س' },
-    ]
-  },
-  HEBREW: {
-    id: 'he',
-    name: 'Hebrew',
-    nativeName: 'עִבְרִית',
-    scriptName: 'Hebrew',
-    desc: 'Ancient right-to-left script revived for modern use.',
-    langCode: 'he-IL',
-    fontA: 'font-serif-he',
-    fontB: 'font-sans-he',
-    fontHand: 'font-caveat',
-    exampleText: 'שלום',
-    exampleMeaning: 'Peace/Hello (Shalom)',
-    styleALabel: 'Serif',
-    styleBLabel: 'Sans',
-    chars: [
-      { char: 'א', name: 'Aleph', meaning: 'Silent', sound: '-', emoji: '👑' },
-      { char: 'ב', name: 'Bet', meaning: 'B/V', sound: 'b/v', emoji: '🏠' },
-      { char: 'ג', name: 'Gimel', meaning: 'G', sound: 'g', emoji: '🐫' },
-      { char: 'ד', name: 'Dalet', meaning: 'D', sound: 'd', emoji: '🚪' },
-      { char: 'ה', name: 'He', meaning: 'H', sound: 'h', emoji: '👋' },
-      { char: 'ו', name: 'Vav', meaning: 'V/O/U', sound: 'v', emoji: '🎣' },
-      { char: 'ז', name: 'Zayin', meaning: 'Z', sound: 'z', emoji: '🗡️' },
-      { char: 'ח', name: 'Het', meaning: 'Kh', sound: 'kh', emoji: '🥖' },
-      { char: 'ט', name: 'Tet', meaning: 'T', sound: 't', emoji: '🧱' },
-      { char: 'י', name: 'Yod', meaning: 'Y', sound: 'y', emoji: '🖐️' },
-      { char: 'כ', name: 'Kaf', meaning: 'K/Kh', sound: 'k', emoji: '🥄' },
-      { char: 'ל', name: 'Lamed', meaning: 'L', sound: 'l', emoji: '📉' },
-      { char: 'מ', name: 'Mem', meaning: 'M', sound: 'm', emoji: '💧' },
-      { char: 'נ', name: 'Nun', meaning: 'N', sound: 'n', emoji: '🕯️' },
-      { char: 'ס', name: 'Samekh', meaning: 'S', sound: 's', emoji: '🛡️' },
-      { char: 'ע', name: 'Ayin', meaning: 'Silent', sound: '-', emoji: '👁️' },
-      { char: 'פ', name: 'Pe', meaning: 'P/F', sound: 'p/f', emoji: '👄' },
-      { char: 'צ', name: 'Tsade', meaning: 'Ts', sound: 'ts', emoji: '🌱' },
-      { char: 'ק', name: 'Qof', meaning: 'K', sound: 'k', emoji: '🐒' },
-      { char: 'ר', name: 'Resh', meaning: 'R', sound: 'r', emoji: '🤕' },
-      { char: 'ש', name: 'Shin', meaning: 'Sh/S', sound: 'sh', emoji: '🦷' },
-      { char: 'ת', name: 'Tav', meaning: 'T', sound: 't', emoji: '🎵' },
-    ],
-    quiz: [
-      { question: "Which is the first letter?", options: ['א', 'ב', 'ג', 'ד'], correct: 'א' },
-      { question: "Which letter makes the 'Sh' sound?", options: ['ש', 'ס', 'צ', 'ז'], correct: 'ש' },
-    ]
-  },
-  GEORGIAN: {
-    id: 'ka',
-    name: 'Georgian',
-    nativeName: 'ქართული',
-    scriptName: 'Mkhedruli',
-    desc: 'A unique script unrelated to any other in the world.',
-    langCode: 'ka-GE',
-    fontA: 'font-serif-ka',
-    fontB: 'font-sans-ka',
-    fontHand: 'font-caveat',
-    exampleText: 'გამარჯობა',
-    exampleMeaning: 'Hello (Gamarjoba)',
-    styleALabel: 'Serif',
-    styleBLabel: 'Sans',
-    chars: [
-      { char: 'ა', name: 'An', meaning: 'A', sound: 'a', emoji: '🅰️' },
-      { char: 'ბ', name: 'Ban', meaning: 'B', sound: 'b', emoji: '🅱️' },
-      { char: 'გ', name: 'Gan', meaning: 'G', sound: 'g', emoji: '🇬' },
-      { char: 'დ', name: 'Don', meaning: 'D', sound: 'd', emoji: '🇩' },
-      { char: 'ე', name: 'En', meaning: 'E', sound: 'e', emoji: '🇪' },
-      { char: 'ვ', name: 'Vin', meaning: 'V', sound: 'v', emoji: '🇻' },
-      { char: 'ზ', name: 'Zen', meaning: 'Z', sound: 'z', emoji: '🇿' },
-      { char: 'თ', name: 'Tan', meaning: 'T', sound: 't', emoji: '🍵' },
-      { char: 'ი', name: 'In', meaning: 'I', sound: 'i', emoji: '🇮' },
-      { char: 'კ', name: 'Kan', meaning: 'K', sound: 'k', emoji: '🔑' },
-      { char: 'ლ', name: 'Las', meaning: 'L', sound: 'l', emoji: '🦁' },
-      { char: 'მ', name: 'Man', meaning: 'M', sound: 'm', emoji: '👨' },
-      { char: 'ნ', name: 'Nar', meaning: 'N', sound: 'n', emoji: '👃' },
-      { char: 'ო', name: 'On', meaning: 'O', sound: 'o', emoji: '🅾️' },
-      { char: 'პ', name: 'Par', meaning: 'P', sound: 'p', emoji: '🅿️' },
-      { char: 'ჟ', name: 'Zhan', meaning: 'Zh', sound: 'zh', emoji: '🐞' },
-      { char: 'რ', name: 'Rae', meaning: 'R', sound: 'r', emoji: '🛤️' },
-      { char: 'ს', name: 'San', meaning: 'S', sound: 's', emoji: '🐍' },
-      { char: 'ტ', name: 'Tar', meaning: 'T', sound: 't', emoji: '🗼' },
-      { char: 'უ', name: 'Un', meaning: 'U', sound: 'u', emoji: '🍇' },
-      { char: 'ფ', name: 'Phar', meaning: 'P', sound: 'p', emoji: '🐼' },
-      { char: 'ქ', name: 'Khar', meaning: 'K', sound: 'k', emoji: '🏰' },
-      { char: 'ღ', name: 'Ghan', meaning: 'Gh', sound: 'gh', emoji: '👻' },
-      { char: 'ყ', name: 'Qar', meaning: 'Q', sound: 'q', emoji: '🦅' },
-      { char: 'შ', name: 'Shin', meaning: 'Sh', sound: 'sh', emoji: '🤫' },
-      { char: 'ჩ', name: 'Chin', meaning: 'Ch', sound: 'ch', emoji: '🚂' },
-      { char: 'ც', name: 'Tsan', meaning: 'Ts', sound: 'ts', emoji: '🌲' },
-      { char: 'ძ', name: 'Dzil', meaning: 'Dz', sound: 'dz', emoji: '🌪️' },
-      { char: 'წ', name: 'Tsil', meaning: 'Ts', sound: 'ts', emoji: '💧' },
-      { char: 'ჭ', name: 'Char', meaning: 'Ch', sound: 'ch', emoji: '🐛' },
-      { char: 'ხ', name: 'Khan', meaning: 'Kh', sound: 'kh', emoji: '🖐️' },
-      { char: 'ჯ', name: 'Jhan', meaning: 'J', sound: 'j', emoji: '🧞' },
-      { char: 'ჰ', name: 'Hae', meaning: 'H', sound: 'h', emoji: '🏡' },
-    ],
-    quiz: [
-      { question: "Which letter looks like a 3?", options: ['ვ', 'კ', 'პ', 'რ'], correct: 'ვ' },
-      { question: "What is the first letter?", options: ['ა', 'ბ', 'გ', 'დ'], correct: 'ა' },
-    ]
-  },
-  ARMENIAN: {
-    id: 'hy',
-    name: 'Armenian',
-    nativeName: 'Հայերեն',
-    scriptName: 'Armenian',
-    desc: 'Created in 405 AD by Mesrop Mashtots.',
-    langCode: 'hy-AM',
-    fontA: 'font-serif-hy',
-    fontB: 'font-sans-hy',
-    fontHand: 'font-caveat',
-    exampleText: 'Բարեւ',
-    exampleMeaning: 'Hello (Barev)',
-    styleALabel: 'Serif',
-    styleBLabel: 'Sans',
-    chars: [
-      { char: 'Ա', name: 'Ayb', meaning: 'A', sound: 'a', emoji: '🅰️' },
-      { char: 'Բ', name: 'Ben', meaning: 'B', sound: 'b', emoji: '🅱️' },
-      { char: 'Գ', name: 'Gim', meaning: 'G', sound: 'g', emoji: '🇬' },
-      { char: 'Դ', name: 'Da', meaning: 'D', sound: 'd', emoji: '🇩' },
-      { char: 'Ե', name: 'Ech', meaning: 'E', sound: 'e', emoji: '🇪' },
-      { char: 'Զ', name: 'Za', meaning: 'Z', sound: 'z', emoji: '🇿' },
-      { char: 'Է', name: 'Eh', meaning: 'E', sound: 'e', emoji: '👂' },
-      { char: 'Ը', name: 'Et', meaning: 'E', sound: 'e', emoji: '🤏' },
-      { char: 'Թ', name: 'To', meaning: 'T', sound: 't', emoji: '🍵' },
-      { char: 'Ժ', name: 'Zhe', meaning: 'Zh', sound: 'zh', emoji: '🦒' },
-      { char: 'Ի', name: 'Ini', meaning: 'I', sound: 'i', emoji: '🇮' },
-      { char: 'Լ', name: 'Liun', meaning: 'L', sound: 'l', emoji: '🦁' },
-      { char: 'Խ', name: 'Xeh', meaning: 'Kh', sound: 'kh', emoji: '🍇' },
-      { char: 'Ծ', name: 'Tsa', meaning: 'Ts', sound: 'ts', emoji: '🌳' },
-      { char: 'Կ', name: 'Ken', meaning: 'K', sound: 'k', emoji: '🥛' },
-      { char: 'Հ', name: 'Ho', meaning: 'H', sound: 'h', emoji: '🏠' },
-      { char: 'Ձ', name: 'Dza', meaning: 'Dz', sound: 'dz', emoji: '🔔' },
-      { char: 'Ղ', name: 'Ghat', meaning: 'Gh', sound: 'gh', emoji: '🌧️' },
-      { char: 'Ճ', name: 'Cheh', meaning: 'Ch', sound: 'ch', emoji: '🥣' },
-      { char: 'Մ', name: 'Men', meaning: 'M', sound: 'm', emoji: '👨' },
-      { char: 'Յ', name: 'Yi', meaning: 'Y', sound: 'y', emoji: '🛥️' },
-      { char: 'Ն', name: 'Nu', meaning: 'N', sound: 'n', emoji: '👃' },
-      { char: 'Շ', name: 'Sha', meaning: 'Sh', sound: 'sh', emoji: '👞' },
-      { char: 'Ո', name: 'Vo', meaning: 'O', sound: 'o', emoji: '🦴' },
-      { char: 'Չ', name: 'Cha', meaning: 'Ch', sound: 'ch', emoji: '🍫' },
-      { char: 'Պ', name: 'Peh', meaning: 'P', sound: 'p', emoji: '🐧' },
-      { char: 'Ջ', name: 'Jheh', meaning: 'J', sound: 'j', emoji: '👖' },
-      { char: 'Ռ', name: 'Ra', meaning: 'R', sound: 'r', emoji: '🚀' },
-      { char: 'Ս', name: 'Seh', meaning: 'S', sound: 's', emoji: '🐍' },
-      { char: 'Վ', name: 'Vew', meaning: 'V', sound: 'v', emoji: '🚐' },
-      { char: 'Տ', name: 'Tiun', meaning: 'T', sound: 't', emoji: '🐯' },
-      { char: 'Ր', name: 'Reh', meaning: 'R', sound: 'r', emoji: '🛣️' },
-      { char: 'Ց', name: 'Tso', meaning: 'Ts', sound: 'ts', emoji: '🦗' },
-      { char: 'Ւ', name: 'Yiun', meaning: 'W', sound: 'w', emoji: '💧' },
-      { char: 'Փ', name: 'Piur', meaning: 'P', sound: 'p', emoji: '🅿️' },
-      { char: 'Ք', name: 'Keh', meaning: 'K', sound: 'k', emoji: '🏰' },
-    ],
-    quiz: [
-      { question: "Which letter is 'A'?", options: ['Ա', 'Բ', 'Գ', 'Դ'], correct: 'Ա' },
-      { question: "Which letter sounds like 'S'?", options: ['Ս', 'Զ', 'Շ', 'Ժ'], correct: 'Ս' },
-    ]
-  },
-  KHMER: {
-    id: 'km',
-    name: 'Khmer',
-    nativeName: 'ខ្មែរ',
-    scriptName: 'Khmer',
-    desc: 'The script of Cambodia, famous for its subscript consonants.',
-    langCode: 'km-KH',
-    fontA: 'font-serif-km',
-    fontB: 'font-sans-km',
-    fontHand: 'font-caveat',
-    exampleText: 'សួស្តី',
-    exampleMeaning: 'Hello (Suostei)',
-    styleALabel: 'Serif',
-    styleBLabel: 'Sans',
-    chars: [
-      { char: 'ក', name: 'Ka', meaning: 'K', sound: 'k', emoji: '🐔' },
-      { char: 'ខ', name: 'Kha', meaning: 'Kh', sound: 'kh', emoji: '🥚' },
-      { char: 'គ', name: 'Ko', meaning: 'K (low)', sound: 'k', emoji: '🐄' },
-      { char: 'ឃ', name: 'Kho', meaning: 'Kh (low)', sound: 'kh', emoji: '🔔' },
-      { char: 'ង', name: 'Ngo', meaning: 'Ng', sound: 'ng', emoji: '🐍' },
-      { char: 'ច', name: 'Cha', meaning: 'Ch', sound: 'ch', emoji: '🍽️' },
-      { char: 'ឆ', name: 'Chha', meaning: 'Chh', sound: 'chh', emoji: '🐈' },
-      { char: 'ជ', name: 'Cho', meaning: 'Ch (low)', sound: 'ch', emoji: '🐘' },
-      { char: 'ឈ', name: 'Chho', meaning: 'Chh (low)', sound: 'chh', emoji: '🌲' },
-      { char: 'ញ', name: 'Nho', meaning: 'Nh', sound: 'nh', emoji: '🔨' },
-      { char: 'ដ', name: 'Da', meaning: 'D', sound: 'd', emoji: '🕸️' },
-      { char: 'ឋ', name: 'Tha', meaning: 'Th', sound: 'th', emoji: '🏛️' },
-      { char: 'ឌ', name: 'Do', meaning: 'D (low)', sound: 'd', emoji: '🥁' },
-      { char: 'ឍ', name: 'Tho', meaning: 'Th (low)', sound: 'th', emoji: '👵' },
-      { char: 'ណ', name: 'Na', meaning: 'N', sound: 'n', emoji: '🧒' },
-      { char: 'ត', name: 'Ta', meaning: 'T', sound: 't', emoji: '🦁' },
-      { char: 'ថ', name: 'Tha', meaning: 'Th', sound: 'th', emoji: '👜' },
-      { char: 'ទ', name: 'To', meaning: 'T (low)', sound: 't', emoji: '🦆' },
-      { char: 'ធ', name: 'Tho', meaning: 'Th (low)', sound: 'th', emoji: '🦷' },
-      { char: 'ន', name: 'No', meaning: 'N', sound: 'n', emoji: '👮' },
-      { char: 'ប', name: 'Ba', meaning: 'B', sound: 'b', emoji: '🖊️' },
-      { char: 'ផ', name: 'Pha', meaning: 'Ph', sound: 'ph', emoji: '🌸' },
-      { char: 'ព', name: 'Po', meaning: 'P', sound: 'p', emoji: '🐐' },
-      { char: 'ភ', name: 'Pho', meaning: 'Ph', sound: 'ph', emoji: '⛰️' },
-      { char: 'ម', name: 'Mo', meaning: 'M', sound: 'm', emoji: '🐔' },
-      { char: 'យ', name: 'Yo', meaning: 'Y', sound: 'y', emoji: '🚗' },
-      { char: 'រ', name: 'Ro', meaning: 'R', sound: 'r', emoji: '🛤️' },
-      { char: 'ល', name: 'Lo', meaning: 'L', sound: 'l', emoji: '🐌' },
-      { char: 'វ', name: 'Vo', meaning: 'V', sound: 'v', emoji: '🐂' },
-      { char: 'ស', name: 'Sa', meaning: 'S', sound: 's', emoji: '🏰' },
-      { char: 'ហ', name: 'Ha', meaning: 'H', sound: 'h', emoji: '✈️' },
-      { char: 'ឡ', name: 'La', meaning: 'L', sound: 'l', emoji: '🚛' },
-      { char: 'អ', name: 'Qa', meaning: 'Q/Glottal', sound: 'q', emoji: '🥣' },
-    ],
-    quiz: [
-      { question: "What is the first consonant?", options: ['ក', 'ខ', 'គ', 'ឃ'], correct: 'ក' },
-      { question: "Which letter is 'Ba'?", options: ['ប', 'ផ', 'ព', 'ភ'], correct: 'ប' },
-    ]
-  },
-  BURMESE: {
-    id: 'my',
-    name: 'Burmese',
-    nativeName: 'မြန်မာ',
-    scriptName: 'Burmese',
-    desc: 'A script composed of circular shapes.',
-    langCode: 'my-MM',
-    fontA: 'font-serif-my',
-    fontB: 'font-sans-my',
-    fontHand: 'font-caveat',
-    exampleText: 'မင်္ဂလာပါ',
-    exampleMeaning: 'Hello (Mingalabar)',
-    styleALabel: 'Serif',
-    styleBLabel: 'Sans',
-    chars: [
-      { char: 'က', name: 'Ka', meaning: 'K', sound: 'k', emoji: '🐔' },
-      { char: 'ခ', name: 'Kha', meaning: 'Kh', sound: 'kh', emoji: '🐌' },
-      { char: 'ဂ', name: 'Ga', meaning: 'G', sound: 'g', emoji: '🌍' },
-      { char: 'ဃ', name: 'Gha', meaning: 'Gh', sound: 'gh', emoji: '🏠' },
-      { char: 'င', name: 'Nga', meaning: 'Ng', sound: 'ng', emoji: '🐟' },
-      { char: 'စ', name: 'Sa', meaning: 'S', sound: 's', emoji: '📝' },
-      { char: 'ဆ', name: 'Hsa', meaning: 'Hs', sound: 'hs', emoji: '🐘' },
-      { char: 'ဇ', name: 'Za', meaning: 'Z', sound: 'z', emoji: '🦓' },
-      { char: 'ဈ', name: 'Zha', meaning: 'Zh', sound: 'zh', emoji: '🛒' },
-      { char: 'ည', name: 'Nya', meaning: 'Ny', sound: 'ny', emoji: '🌙' },
-      { char: 'ဋ', name: 'Tta', meaning: 'Tt', sound: 'tt', emoji: '📦' },
-      { char: 'ဌ', name: 'Httha', meaning: 'Htth', sound: 'htth', emoji: '🏛️' },
-      { char: 'ဍ', name: 'Dda', meaning: 'Dd', sound: 'dd', emoji: '🦗' },
-      { char: 'ဎ', name: 'Ddha', meaning: 'Ddh', sound: 'ddh', emoji: '🌊' },
-      { char: 'ဏ', name: 'Nna', meaning: 'Nn', sound: 'nn', emoji: '🎡' },
-      { char: 'တ', name: 'Ta', meaning: 'T', sound: 't', emoji: '🌲' },
-      { char: 'ထ', name: 'Hta', meaning: 'Ht', sound: 'ht', emoji: '🚂' },
-      { char: 'ဒ', name: 'Da', meaning: 'D', sound: 'd', emoji: '🚪' },
-      { char: 'ဓ', name: 'Dha', meaning: 'Dh', sound: 'dh', emoji: '🔪' },
-      { char: 'န', name: 'Na', meaning: 'N', sound: 'n', emoji: '👂' },
-      { char: 'ပ', name: 'Pa', meaning: 'P', sound: 'p', emoji: '🦉' },
-      { char: 'ဖ', name: 'Hpa', meaning: 'Hp', sound: 'hp', emoji: '🐸' },
-      { char: 'ဗ', name: 'Ba', meaning: 'B', sound: 'b', emoji: '🥁' },
-      { char: 'ဘ', name: 'Bha', meaning: 'Bh', sound: 'bh', emoji: '🧙' },
-      { char: 'မ', name: 'Ma', meaning: 'M', sound: 'm', emoji: '🇲' },
-      { char: 'ယ', name: 'Ya', meaning: 'Y', sound: 'y', emoji: '🚜' },
-      { char: 'ရ', name: 'Ra', meaning: 'R', sound: 'r', emoji: '📻' },
-      { char: 'လ', name: 'La', meaning: 'L', sound: 'l', emoji: '🌝' },
-      { char: 'ဝ', name: 'Wa', meaning: 'W', sound: 'w', emoji: '🐻' },
-      { char: 'သ', name: 'Tha', meaning: 'Th', sound: 'th', emoji: '🍎' },
-      { char: 'ဟ', name: 'Ha', meaning: 'H', sound: 'h', emoji: '🦁' },
-      { char: 'ဠ', name: 'La', meaning: 'L (Great)', sound: 'l', emoji: '👑' },
-      { char: 'အ', name: 'A', meaning: 'A', sound: 'a', emoji: '🏠' },
-    ],
-    quiz: [
-      { question: "Which letter is 'Ka'?", options: ['က', 'ခ', 'ဂ', 'ဃ'], correct: 'က' },
-      { question: "Which letter represents 'Ma'?", options: ['မ', 'န', 'ပ', 'ဗ'], correct: 'မ' },
-    ]
-  },
+  // --- Coming Soon ---
+  VIETNAMESE: { id: 'vietnamese', name: 'Vietnamese', nativeName: 'Tiếng Việt', desc: 'Tones, vowels, and pronunciation.', comingSoon: true },
+  GERMAN: { id: 'german', name: 'German', nativeName: 'Deutsch', desc: 'Umlauts and grammar.', comingSoon: true },
+  RUSSIAN: { id: 'russian', name: 'Russian', nativeName: 'Русский', desc: 'Cyrillic alphabet.', comingSoon: true },
+  JAPANESE: { id: 'jp', name: 'Japanese', nativeName: '日本語', desc: 'Hiragana & Katakana.', comingSoon: true },
+  KOREAN: { id: 'korean', name: 'Korean', nativeName: '한글', desc: 'The logical alphabet.', comingSoon: true },
+  HINDI: { id: 'hi', name: 'Hindi', nativeName: 'हिन्दी', desc: 'Devanagari script.', comingSoon: true },
+  ARABIC: { id: 'ar', name: 'Arabic', nativeName: 'العربية', desc: 'Right-to-left cursive.', comingSoon: true },
+  HEBREW: { id: 'he', name: 'Hebrew', nativeName: 'עִבְרִית', desc: 'Ancient script.', comingSoon: true },
+  GREEK: { id: 'greek', name: 'Greek', nativeName: 'Ελληνικά', desc: 'The ancestor of Latin.', comingSoon: true },
+  GEORGIAN: { id: 'ka', name: 'Georgian', nativeName: 'ქართული', desc: 'Unique Mkhedruli script.', comingSoon: true },
+  ARMENIAN: { id: 'hy', name: 'Armenian', nativeName: 'Հայերեն', desc: 'Distinct script.', comingSoon: true },
+  KHMER: { id: 'km', name: 'Khmer', nativeName: 'ខ្មែរ', desc: 'Script of Cambodia.', comingSoon: true },
+  BURMESE: { id: 'my', name: 'Burmese', nativeName: 'မြန်မာ', desc: 'The circular script.', comingSoon: true },
 };
 
-// --- AUDIO ENGINE (Safari/iOS Optimized) ---
+// --- AUDIO ENGINE ---
 const speak = (text, langCode = 'th-TH') => {
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+  // 1. THAI SPECIAL HANDLING
+  if (langCode === 'th-TH') {
+    if (isIOS && window.speechSynthesis) {
+      const voices = window.speechSynthesis.getVoices();
+      const nativeVoice = voices.find(v => v.lang === langCode);
+      if (nativeVoice) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = langCode;
+        utterance.voice = nativeVoice;
+        utterance.rate = 0.8;
+        window.speechSynthesis.speak(utterance);
+        return;
+      }
+    }
+    // Force Google Cloud TTS for Thai on non-iOS or fallback
+    const isoCode = langCode.split('-')[0]; 
+    const audio = new Audio(`https://translate.google.com/translate_tts?ie=UTF-8&tl=${isoCode}&client=gtx&q=${encodeURIComponent(text)}`);
+    audio.play().catch(e => console.log("Audio failed", e));
+    return;
+  }
+
+  // 2. STANDARD HANDLING
   if (!window.speechSynthesis) return;
 
   window.speechSynthesis.cancel();
   if (window.speechSynthesis.paused) window.speechSynthesis.resume();
 
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = langCode;
-  utterance.rate = 0.8;
-
   const voices = window.speechSynthesis.getVoices();
-  // Try to find exact match first, then partial match
-  const specificVoice = voices.find(v => v.lang === langCode) || voices.find(v => v.lang.includes(langCode.split('-')[0]));
-  
-  if (specificVoice) {
-    utterance.voice = specificVoice;
+  let preferredVoice = voices.find(v => v.lang === langCode);
+
+  if (preferredVoice) {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = langCode;
+    utterance.voice = preferredVoice;
+    utterance.rate = 0.85;
     window.speechSynthesis.speak(utterance);
   } else {
-    // Fallback URL based on language code prefix (th, ko, ru, etc)
-    const isoCode = langCode.split('-')[0];
-    new Audio(`https://translate.google.com/translate_tts?ie=UTF-8&tl=${isoCode}&client=tw-ob&q=${encodeURIComponent(text)}`).play()
-      .catch(e => console.log("Audio fallback failed", e));
+    const isoCode = langCode.split('-')[0]; 
+    const audio = new Audio(`https://translate.google.com/translate_tts?ie=UTF-8&tl=${isoCode}&client=gtx&q=${encodeURIComponent(text)}`);
+    audio.play().catch(e => console.log("Audio fallback failed", e));
   }
 };
 
@@ -736,7 +235,10 @@ const CharacterModal = ({ charData, langConfig, onClose }) => {
   if (!charData) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/50 z-[100] flex items-center justify-center p-4 animate-in fade-in duration-200">
+    <div 
+      className="fixed inset-0 bg-black/50 z-[100] flex items-center justify-center p-4 animate-in fade-in duration-200"
+      onClick={onClose}
+    >
       <div 
         className="bg-white rounded-3xl shadow-2xl max-w-lg w-full overflow-hidden animate-in zoom-in-95 duration-200 flex flex-col max-h-[90vh]"
         onClick={(e) => e.stopPropagation()}
@@ -748,14 +250,17 @@ const CharacterModal = ({ charData, langConfig, onClose }) => {
           
           <div className="flex items-center gap-6">
             <div className="w-24 h-24 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center text-6xl shadow-inner border border-white/30 shrink-0">
-              {charData.emoji || <div className={langConfig.fontB}>{charData.char}</div>}
+              {charData.emoji || <div className={langConfig.fontB}>{charData.char.split(' ')[0]}</div>}
             </div>
             <div className="min-w-0">
-              <h2 className={`text-4xl font-bold mb-1 truncate ${langConfig.fontB}`}>{charData.char}</h2>
+              {/* Show THAI full name in header if Thai, otherwise char. Use Traditional font for name */}
+              <h2 className={`text-4xl font-bold mb-1 truncate ${langConfig.id === 'thai' ? langConfig.fontA : langConfig.fontB}`}>
+                {langConfig.id === 'thai' ? (charData.thaiName || charData.char) : charData.char}
+              </h2>
               <p className="text-indigo-100 text-lg opacity-90 truncate">{charData.name}</p>
               <div className="flex items-center gap-2 mt-3">
                  <button 
-                   onClick={() => speak(charData.char, langConfig.langCode)}
+                   onClick={() => speak(charData.thaiName || (charData.type === 'Tone' ? charData.char : charData.char), langConfig.langCode)}
                    className="flex items-center gap-2 bg-white text-indigo-600 px-4 py-1.5 rounded-full text-sm font-bold shadow-sm hover:bg-indigo-50 transition-colors"
                  >
                    <Volume2 className="w-4 h-4" /> Replay
@@ -778,6 +283,24 @@ const CharacterModal = ({ charData, langConfig, onClose }) => {
                    <span className="text-slate-500">Sound</span>
                    <span className="font-medium text-slate-800">/{charData.sound}/</span>
                  </div>
+                 {charData.type && (
+                   <div className="flex justify-between text-sm">
+                     <span className="text-slate-500">Type</span>
+                     <span className="font-bold text-indigo-600 bg-indigo-50 px-2 rounded text-xs">{charData.type}</span>
+                   </div>
+                 )}
+                 {charData.class && (
+                   <div className="flex justify-between text-sm">
+                     <span className="text-slate-500">Class</span>
+                     <span className={`font-bold px-2 py-0.5 rounded text-xs ${
+                        charData.class === 'High' ? 'bg-red-100 text-red-600' :
+                        charData.class === 'Mid' ? 'bg-green-100 text-green-600' :
+                        'bg-blue-100 text-blue-600'
+                     }`}>
+                       {charData.class}
+                     </span>
+                   </div>
+                 )}
                </div>
              </div>
 
@@ -785,15 +308,15 @@ const CharacterModal = ({ charData, langConfig, onClose }) => {
                <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Styles</h4>
                <div className="flex items-center justify-between p-2 rounded-lg hover:bg-slate-50 transition-colors">
                  <span className="text-xs font-medium text-slate-500 w-24">{langConfig.styleALabel}</span>
-                 <span className={`text-4xl text-indigo-900 ${langConfig.fontA}`}>{charData.char}</span>
+                 <span className={`text-4xl text-indigo-900 ${langConfig.fontA}`}>{charData.char.split(' ')[0]}</span>
                </div>
                <div className="flex items-center justify-between p-2 rounded-lg hover:bg-slate-50 transition-colors">
                  <span className="text-xs font-medium text-slate-500 w-24">{langConfig.styleBLabel}</span>
-                 <span className={`text-4xl text-indigo-900 ${langConfig.fontB}`}>{charData.char}</span>
+                 <span className={`text-4xl text-indigo-900 ${langConfig.fontB}`}>{charData.char.split(' ')[0]}</span>
                </div>
                <div className="flex items-center justify-between p-2 rounded-lg hover:bg-slate-50 transition-colors">
-                 <span className="text-xs font-medium text-slate-500 w-24">Handwritten</span>
-                 <span className={`text-4xl text-indigo-900 ${langConfig.fontHand}`}>{charData.char}</span>
+                 <span className="text-xs font-medium text-slate-500 w-24">{langConfig.styleHandLabel || 'Handwritten'}</span>
+                 <span className={`text-4xl text-indigo-900 ${langConfig.fontHand}`}>{charData.char.split(' ')[0]}</span>
                </div>
              </div>
           </div>
@@ -803,53 +326,98 @@ const CharacterModal = ({ charData, langConfig, onClose }) => {
   );
 };
 
-const CharacterCard = ({ charData, langConfig, onClick, isModern }) => {
+const CharacterCard = ({ charData, langConfig, onClick, fontMode, onAudioClick }) => {
   return (
     <div 
       onClick={onClick}
-      className="relative bg-white p-4 rounded-xl border-2 border-slate-200 hover:border-indigo-400 hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer group select-none flex flex-col items-center justify-between h-32"
+      className="relative bg-white p-4 rounded-xl border-2 border-slate-200 hover:border-indigo-400 hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer group select-none flex flex-col items-center justify-between h-36"
     >
-      <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-         <div className="bg-indigo-100 p-1.5 rounded-full text-indigo-600">
-           <Volume2 className="w-3 h-3" />
-         </div>
-      </div>
-      <div className="text-center py-1 flex-grow flex flex-col justify-center">
-        <div className={`text-5xl text-slate-800 mb-1 transition-all duration-300 ${isModern ? langConfig.fontB : langConfig.fontA}`}>
+      {/* Audio Button - Stops propagation to prevent modal opening */}
+      <button 
+         onClick={(e) => {
+           e.stopPropagation();
+           onAudioClick(charData);
+         }}
+         className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-indigo-50 hover:bg-indigo-100 p-1.5 rounded-full text-indigo-600"
+      >
+         <Volume2 className="w-3 h-3" />
+      </button>
+      
+      {/* Category Badge */}
+      {charData.type && (
+        <div className="absolute top-2 left-2">
+           <span className={`text-[10px] font-bold uppercase px-1.5 py-0.5 rounded ${
+             charData.type === 'Tone' ? 'bg-yellow-100 text-yellow-700' :
+             charData.type === 'Vowel' ? 'bg-green-100 text-green-700' :
+             charData.type === 'Grammar' || charData.type === 'Rule' ? 'bg-purple-100 text-purple-700' :
+             charData.type === 'Diphthong' ? 'bg-orange-100 text-orange-700' :
+             'bg-slate-100 text-slate-500'
+           }`}>
+             {charData.type}
+           </span>
+        </div>
+      )}
+
+      <div className="text-center py-1 flex-grow flex flex-col justify-center mt-2">
+        <div className={`text-4xl text-slate-800 mb-2 transition-all duration-300 ${
+          fontMode === 'B' ? langConfig.fontB : 
+          fontMode === 'Hand' ? langConfig.fontHand : 
+          langConfig.fontA
+        }`}>
           {charData.char}
         </div>
-        <div className="text-sm font-bold text-indigo-700 leading-tight">{charData.name}</div>
+        <div className="text-sm font-bold text-indigo-700 leading-tight px-2 line-clamp-1">{charData.name}</div>
       </div>
-      <div className="w-full mt-1 pt-2 border-t border-slate-100 text-center text-xs font-medium text-slate-500">
-         /{charData.sound}/
+      <div className="w-full mt-1 pt-2 border-t border-slate-100 text-center text-xs font-medium text-slate-500 truncate px-2">
+         {charData.meaning}
       </div>
     </div>
   );
 };
 
 const Quiz = ({ questions, langCode, onComplete }) => {
+  const [shuffledQuestions, setShuffledQuestions] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [showScore, setShowScore] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
 
+  // Shuffle questions on mount
+  useEffect(() => {
+    const shuffled = [...questions].sort(() => 0.5 - Math.random()).slice(0, 5); // Pick 5 random
+    setShuffledQuestions(shuffled);
+    setCurrentIndex(0);
+    setScore(0);
+    setShowScore(false);
+    setSelectedOption(null);
+  }, [questions]);
+
   const handleAnswer = (option) => {
     if (selectedOption) return;
     setSelectedOption(option);
     
-    // Attempt to speak the answer if it's a character
-    if(option.length < 5) speak(option, langCode);
+    // Attempt to speak the answer if it's short text
+    if(option.length < 15) speak(option, langCode);
 
-    if (option === questions[currentIndex].correct) setScore(score + 1);
+    if (option === shuffledQuestions[currentIndex].correct) setScore(score + 1);
 
     setTimeout(() => {
-      if (currentIndex + 1 < questions.length) {
+      if (currentIndex + 1 < shuffledQuestions.length) {
         setCurrentIndex(currentIndex + 1);
         setSelectedOption(null);
       } else {
         setShowScore(true);
       }
     }, 1500);
+  };
+
+  const restartQuiz = () => {
+    const shuffled = [...questions].sort(() => 0.5 - Math.random()).slice(0, 5);
+    setShuffledQuestions(shuffled);
+    setCurrentIndex(0);
+    setScore(0);
+    setShowScore(false);
+    setSelectedOption(null);
   };
 
   if (showScore) {
@@ -859,19 +427,26 @@ const Quiz = ({ questions, langCode, onComplete }) => {
           <Award className="w-10 h-10 text-yellow-600" />
         </div>
         <h2 className="text-2xl font-bold text-slate-800 mb-2">Quiz Complete!</h2>
-        <p className="text-slate-600 mb-6">You scored {score} out of {questions.length}</p>
-        <button onClick={onComplete} className="px-6 py-2 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition-colors">
-          Back to Learn
-        </button>
+        <p className="text-slate-600 mb-6">You scored {score} out of {shuffledQuestions.length}</p>
+        <div className="flex gap-3 justify-center">
+          <button onClick={restartQuiz} className="px-6 py-2 bg-slate-100 text-slate-700 font-medium rounded-lg hover:bg-slate-200 transition-colors flex items-center gap-2">
+            <RefreshCw className="w-4 h-4" /> Try Again
+          </button>
+          <button onClick={onComplete} className="px-6 py-2 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition-colors">
+            Back to Learn
+          </button>
+        </div>
       </div>
     );
   }
 
-  const q = questions[currentIndex];
+  if (shuffledQuestions.length === 0) return <div className="p-8 text-center">Loading Quiz...</div>;
+
+  const q = shuffledQuestions[currentIndex];
   return (
     <div className="max-w-xl mx-auto mt-8">
        <div className="mb-4 flex justify-between text-sm font-medium text-slate-500">
-        <span>Question {currentIndex + 1}/{questions.length}</span>
+        <span>Question {currentIndex + 1}/{shuffledQuestions.length}</span>
         <span>Score: {score}</span>
       </div>
       <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
@@ -897,7 +472,7 @@ const Quiz = ({ questions, langCode, onComplete }) => {
   );
 };
 
-const FontComparison = ({ config, isModern, setIsModern }) => (
+const FontComparison = ({ config, fontMode, setFontMode }) => (
   <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl p-6 mb-8 border border-indigo-100">
     <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
       <div>
@@ -906,21 +481,27 @@ const FontComparison = ({ config, isModern, setIsModern }) => (
           Style Comparison
         </h3>
         <p className="text-slate-600 text-sm mt-1">
-          Toggle to compare {config.styleALabel} vs {config.styleBLabel}.
+          Choose a script style to update all cards below.
         </p>
       </div>
       <div className="flex bg-white p-1 rounded-lg shadow-sm border border-slate-200 self-start">
         <button
-          onClick={() => setIsModern(false)}
-          className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${!isModern ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50'}`}
+          onClick={() => setFontMode('A')}
+          className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${fontMode === 'A' ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50'}`}
         >
           {config.styleALabel}
         </button>
         <button
-          onClick={() => setIsModern(true)}
-          className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${isModern ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50'}`}
+          onClick={() => setFontMode('B')}
+          className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${fontMode === 'B' ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50'}`}
         >
           {config.styleBLabel}
+        </button>
+        <button
+          onClick={() => setFontMode('Hand')}
+          className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${fontMode === 'Hand' ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50'}`}
+        >
+          {config.styleHandLabel || 'Handwritten'}
         </button>
       </div>
     </div>
@@ -934,7 +515,11 @@ const FontComparison = ({ config, isModern, setIsModern }) => (
            <Volume2 className="w-4 h-4" />
         </button>
         <p className="text-sm text-slate-400 uppercase tracking-wider font-bold mb-4">Sample</p>
-        <p className={`text-4xl md:text-5xl text-slate-800 transition-all duration-500 ${isModern ? config.fontB : config.fontA}`}>
+        <p className={`text-4xl md:text-5xl text-slate-800 transition-all duration-500 ${
+          fontMode === 'B' ? config.fontB : 
+          fontMode === 'Hand' ? config.fontHand : 
+          config.fontA
+        }`}>
           {config.exampleText}
         </p>
         <p className="mt-4 text-slate-500 font-medium">{config.exampleMeaning}</p>
@@ -943,9 +528,13 @@ const FontComparison = ({ config, isModern, setIsModern }) => (
         <div className="flex items-start gap-3">
           <Info className="w-5 h-5 text-indigo-500 shrink-0 mt-0.5" />
           <p className="text-sm text-slate-600">
-            <span className="font-bold text-slate-800">{isModern ? config.styleBLabel : config.styleALabel}:</span>
-            {isModern 
+            <span className="font-bold text-slate-800">
+              {fontMode === 'B' ? config.styleBLabel : fontMode === 'Hand' ? (config.styleHandLabel || 'Handwritten') : config.styleALabel}:
+            </span>
+            {fontMode === 'B' 
               ? " Often used in screens, modern signage, and informal writing. Cleaner lines."
+              : fontMode === 'Hand'
+              ? " Simulate casual handwriting. Good for reading notes and signs."
               : " Often used in books, newspapers, and formal documents. More intricate details."}
           </p>
         </div>
@@ -958,7 +547,7 @@ const FontComparison = ({ config, isModern, setIsModern }) => (
 const LanguageModule = ({ config, onBack }) => {
   const [activeTab, setActiveTab] = useState('lessons');
   const [selectedChar, setSelectedChar] = useState(null);
-  const [isModern, setIsModern] = useState(false);
+  const [fontMode, setFontMode] = useState('A'); // 'A' | 'B' | 'Hand'
 
   // Safari Voice Fix
   useEffect(() => {
@@ -969,10 +558,33 @@ const LanguageModule = ({ config, onBack }) => {
     }
   }, []);
 
+  const handlePlayAudio = (charData) => {
+    let textToSpeak = charData.char;
+
+    if (config.id === 'thai') {
+       textToSpeak = charData.thaiName || charData.name;
+    } else if (config.id === 'vietnamese') {
+       textToSpeak = (charData.type === 'Tone' || charData.type === 'Grammar') ? charData.char : charData.char; 
+    }
+
+    speak(textToSpeak, config.langCode);
+  };
+
   const handleCharClick = (charData) => {
-    speak(charData.char, config.langCode);
+    handlePlayAudio(charData);
     setSelectedChar(charData);
   };
+
+  // Grouping Logic
+  const groupedChars = useMemo(() => {
+    if (!config.chars) return {};
+    return config.chars.reduce((acc, curr) => {
+      const type = curr.type || 'General';
+      if (!acc[type]) acc[type] = [];
+      acc[type].push(curr);
+      return acc;
+    }, {});
+  }, [config]);
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 relative">
@@ -1010,25 +622,28 @@ const LanguageModule = ({ config, onBack }) => {
 
       {activeTab === 'lessons' ? (
         <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-          <FontComparison config={config} isModern={isModern} setIsModern={setIsModern} />
+          <FontComparison config={config} fontMode={fontMode} setFontMode={setFontMode} />
           
-          <div className="mb-12">
-            <h3 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-              <Star className="w-5 h-5 text-yellow-500 fill-current" />
-              Characters
-            </h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-              {config.chars.map((c, idx) => (
-                <CharacterCard 
-                  key={idx} 
-                  charData={c} 
-                  langConfig={config}
-                  isModern={isModern}
-                  onClick={() => handleCharClick(c)}
-                />
-              ))}
+          {Object.entries(groupedChars).map(([type, chars]) => (
+            <div key={type} className="mb-12">
+              <h3 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+                <Star className="w-5 h-5 text-yellow-500 fill-current" />
+                {type === 'General' ? 'Characters' : type + 's'}
+              </h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                {chars.map((c, idx) => (
+                  <CharacterCard 
+                    key={idx} 
+                    charData={c} 
+                    langConfig={config}
+                    fontMode={fontMode}
+                    onClick={() => handleCharClick(c)}
+                    onAudioClick={handlePlayAudio}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
+          ))}
         </div>
       ) : (
         <div className="animate-in fade-in slide-in-from-right-4 duration-500">
@@ -1050,64 +665,30 @@ const App = () => {
       <style>{`
         /* General & Handwriting */
         @import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap');
-        .font-caveat { font-family: 'Caveat', cursive; }
+        .font-caveat { font-family: 'Caveat', cursive !important; }
 
-        /* Thai */
-        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&family=Sarabun:wght@300;400;600&family=Mali:wght@400;600&display=swap');
-        .font-kanit { font-family: 'Kanit', sans-serif; }
-        .font-sarabun { font-family: 'Sarabun', sans-serif; }
-        .font-mali { font-family: 'Mali', cursive; }
+        /* Thai - Force Separate Imports to Ensure Loading */
+        @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Mali:wght@400;600&display=swap');
         
-        /* Korean */
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&family=Gowun+Batang&family=Gamja+Flower&display=swap');
-        .font-notokr { font-family: 'Noto Sans KR', sans-serif; }
-        .font-batang { font-family: 'Gowun Batang', serif; }
-        .font-gamja { font-family: 'Gamja Flower', cursive; }
-
+        .font-kanit { font-family: 'Kanit', sans-serif !important; }
+        .font-sarabun { font-family: 'Sarabun', sans-serif !important; }
+        .font-mali { font-family: 'Mali', cursive !important; }
+        
         /* Cyrillic, Greek (Latin Ext) */
         @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&family=Noto+Sans:wght@400;700&display=swap');
-        .font-noto { font-family: 'Noto Sans', sans-serif; }
-        .font-notoserif { font-family: 'Noto Serif', serif; }
+        .font-noto { font-family: 'Noto Sans', sans-serif !important; }
+        .font-notoserif { font-family: 'Noto Serif', serif !important; }
 
-        /* Japanese */
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Noto+Serif+JP:wght@400;700&display=swap');
-        .font-sans-jp { font-family: 'Noto Sans JP', sans-serif; }
-        .font-serif-jp { font-family: 'Noto Serif JP', serif; }
+        /* Vietnamese */
+        .font-sans-vn { font-family: 'Noto Sans', sans-serif !important; }
+        .font-serif-vn { font-family: 'Noto Serif', serif !important; }
 
-        /* Hindi (Devanagari) */
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&family=Noto+Serif+Devanagari:wght@400;700&display=swap');
-        .font-sans-in { font-family: 'Noto Sans Devanagari', sans-serif; }
-        .font-serif-in { font-family: 'Noto Serif Devanagari', serif; }
-
-        /* Arabic */
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&display=swap');
-        .font-sans-ar { font-family: 'Noto Sans Arabic', sans-serif; }
-        .font-serif-ar { font-family: 'Noto Naskh Arabic', serif; }
-
-        /* Hebrew */
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@400;700&family=Noto+Serif+Hebrew:wght@400;700&display=swap');
-        .font-sans-he { font-family: 'Noto Sans Hebrew', sans-serif; }
-        .font-serif-he { font-family: 'Noto Serif Hebrew', serif; }
-
-        /* Georgian */
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@400;700&family=Noto+Serif+Georgian:wght@400;700&display=swap');
-        .font-sans-ka { font-family: 'Noto Sans Georgian', sans-serif; }
-        .font-serif-ka { font-family: 'Noto Serif Georgian', serif; }
-
-        /* Armenian */
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Armenian:wght@400;700&family=Noto+Serif+Armenian:wght@400;700&display=swap');
-        .font-sans-hy { font-family: 'Noto Sans Armenian', sans-serif; }
-        .font-serif-hy { font-family: 'Noto Serif Armenian', serif; }
-
-        /* Khmer */
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;700&family=Noto+Serif+Khmer:wght@400;700&display=swap');
-        .font-sans-km { font-family: 'Noto Sans Khmer', sans-serif; }
-        .font-serif-km { font-family: 'Noto Serif Khmer', serif; }
-
-        /* Burmese */
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;700&family=Noto+Serif+Myanmar:wght@400;700&display=swap');
-        .font-sans-my { font-family: 'Noto Sans Myanmar', sans-serif; }
-        .font-serif-my { font-family: 'Noto Serif Myanmar', serif; }
+        /* German */
+        @import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap');
+        .font-blackletter { font-family: 'UnifrakturMaguntia', cursive !important; }
+        .font-sans-de { font-family: 'Noto Sans', sans-serif !important; }
       `}</style>
 
       <Header goBack={() => setCurrentLangId(null)} currentLang={currentLang} />
