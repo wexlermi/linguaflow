@@ -35,10 +35,12 @@ const LanguageModule = ({ config, onBack }) => {
         if (config.id === 'thai') {
             textToSpeak = charData.thaiName || charData.name;
         } else if (config.id === 'vietnamese') {
+            // For Vietnamese, we might want to speak the name or example word if available, 
+            // but for now char is fine.
             textToSpeak = (charData.type === 'Tone' || charData.type === 'Grammar') ? charData.char : charData.char;
         }
 
-        speak(textToSpeak, config.langCode);
+        speak(textToSpeak, config.langCode, charData.audioSrc);
     };
 
     const handleCharClick = (charData) => {

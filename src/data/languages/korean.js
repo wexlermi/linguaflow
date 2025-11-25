@@ -1,0 +1,53 @@
+export const KOREAN = {
+    id: 'korean',
+    name: 'Korean',
+    nativeName: '한글',
+    scriptName: 'Hangul',
+    desc: 'A featural alphabet created by King Sejong.',
+    langCode: 'ko-KR',
+    fontA: 'font-noto',
+    fontB: 'font-notoserif',
+    fontHand: 'font-mali', // Fallback
+    fontOld: 'font-charm', // Fallback
+    exampleText: '안녕하세요',
+    exampleMeaning: 'Annyeonghaseyo (Hello)',
+    styleALabel: 'Modern',
+    styleBLabel: 'Serif',
+    styleHandLabel: 'Cute',
+    styleOldLabel: 'Brush',
+    chars: [
+        // Consonants
+        { char: 'ㄱ', name: 'Giyeok', type: 'Consonant', sound: 'g/k' , audioSrc: '/audio/korean/giyeok.mp3' },
+        { char: 'ㄴ', name: 'Nieun', type: 'Consonant', sound: 'n' , audioSrc: '/audio/korean/nieun.mp3' },
+        { char: 'ㄷ', name: 'Digeut', type: 'Consonant', sound: 'd/t' , audioSrc: '/audio/korean/digeut.mp3' },
+        { char: 'ㄹ', name: 'Rieul', type: 'Consonant', sound: 'r/l' , audioSrc: '/audio/korean/rieul.mp3' },
+        { char: 'ㅁ', name: 'Mieum', type: 'Consonant', sound: 'm' , audioSrc: '/audio/korean/mieum.mp3' },
+        { char: 'ㅂ', name: 'Bieup', type: 'Consonant', sound: 'b/p' , audioSrc: '/audio/korean/bieup.mp3' },
+        { char: 'ㅅ', name: 'Siot', type: 'Consonant', sound: 's' , audioSrc: '/audio/korean/siot.mp3' },
+        { char: 'ㅇ', name: 'Ieung', type: 'Consonant', sound: 'ng/silent' , audioSrc: '/audio/korean/ieung.mp3' },
+        { char: 'ㅈ', name: 'Jieut', type: 'Consonant', sound: 'j' , audioSrc: '/audio/korean/jieut.mp3' },
+        { char: 'ㅊ', name: 'Chieut', type: 'Consonant', sound: 'ch' , audioSrc: '/audio/korean/chieut.mp3' },
+        { char: 'ㅋ', name: 'Kieuk', type: 'Consonant', sound: 'k' , audioSrc: '/audio/korean/kieuk.mp3' },
+        { char: 'ㅌ', name: 'Tieut', type: 'Consonant', sound: 't' , audioSrc: '/audio/korean/tieut.mp3' },
+        { char: 'ㅍ', name: 'Pieup', type: 'Consonant', sound: 'p' , audioSrc: '/audio/korean/pieup.mp3' },
+        { char: 'ㅎ', name: 'Hieut', type: 'Consonant', sound: 'h' , audioSrc: '/audio/korean/hieut.mp3' },
+        // Vowels
+        { char: 'ㅏ', name: 'A', type: 'Vowel', sound: 'ah' , audioSrc: '/audio/korean/a.mp3' },
+        { char: 'ㅑ', name: 'Ya', type: 'Vowel', sound: 'ya' , audioSrc: '/audio/korean/ya.mp3' },
+        { char: 'ㅓ', name: 'Eo', type: 'Vowel', sound: 'uh' , audioSrc: '/audio/korean/eo.mp3' },
+        { char: 'ㅕ', name: 'Yeo', type: 'Vowel', sound: 'yuh' , audioSrc: '/audio/korean/yeo.mp3' },
+        { char: 'ㅗ', name: 'O', type: 'Vowel', sound: 'oh' , audioSrc: '/audio/korean/o.mp3' },
+        { char: 'ㅛ', name: 'Yo', type: 'Vowel', sound: 'yoh' , audioSrc: '/audio/korean/yo.mp3' },
+        { char: 'ㅜ', name: 'U', type: 'Vowel', sound: 'oo' , audioSrc: '/audio/korean/u.mp3' },
+        { char: 'ㅠ', name: 'Yu', type: 'Vowel', sound: 'yoo' , audioSrc: '/audio/korean/yu.mp3' },
+        { char: 'ㅡ', name: 'Eu', type: 'Vowel', sound: 'eu' , audioSrc: '/audio/korean/eu.mp3' },
+        { char: 'ㅣ', name: 'I', type: 'Vowel', sound: 'ee' , audioSrc: '/audio/korean/i.mp3' },
+    ],
+    quiz: [
+        { question: "Which consonant is 'Giyeok' (G/K)?", options: ['ㄱ', 'ㄴ', 'ㄷ', 'ㄹ'], correct: 'ㄱ' },
+        { question: "What sound does 'ㅁ' make?", options: ['m', 'n', 'b', 'ng'], correct: 'm' },
+        { question: "Which letter is silent at the start of a syllable?", options: ['ㅇ', 'ㅎ', 'ㅅ', 'ㅈ'], correct: 'ㅇ' },
+        { question: "Identify the vowel 'A'", options: ['ㅏ', 'ㅑ', 'ㅓ', 'ㅕ'], correct: 'ㅏ' },
+        { question: "Which letter looks like a square?", options: ['ㅁ', 'ㅂ', 'ㅇ', 'ㄷ'], correct: 'ㅁ' },
+    ]
+};
