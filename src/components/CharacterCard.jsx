@@ -23,8 +23,22 @@ const CharacterCard = ({ charData, langConfig, onClick, fontMode, onAudioClick }
                 <Volume2 className="w-3 h-3" />
             </button>
 
-            {charData.type && (
-                <div className="absolute top-2 left-2">
+            <div className="absolute top-2 left-2 flex flex-col gap-1 items-start">
+                {charData.class && (
+                    <span className={`text-[10px] font-bold uppercase px-1.5 py-0.5 rounded ${charData.class === 'High' ? 'bg-red-100 text-red-700' :
+                            charData.class === 'Mid' ? 'bg-green-100 text-green-700' :
+                                'bg-blue-100 text-blue-700'
+                        }`}>
+                        {charData.class} Class
+                    </span>
+                )}
+                {charData.meaning && (charData.meaning.startsWith('Short') || charData.meaning.startsWith('Long')) && (
+                    <span className={`text-[10px] font-bold uppercase px-1.5 py-0.5 rounded ${charData.meaning.startsWith('Short') ? 'bg-orange-100 text-orange-700' : 'bg-teal-100 text-teal-700'
+                        }`}>
+                        {charData.meaning.split(' ')[0]}
+                    </span>
+                )}
+                {!charData.class && !charData.meaning?.startsWith('Short') && !charData.meaning?.startsWith('Long') && charData.type && (
                     <span className={`text-[10px] font-bold uppercase px-1.5 py-0.5 rounded ${charData.type === 'Tone' ? 'bg-yellow-100 text-yellow-700' :
                         charData.type === 'Vowel' ? 'bg-green-100 text-green-700' :
                             charData.type === 'Grammar' || charData.type === 'Rule' ? 'bg-purple-100 text-purple-700' :
@@ -33,8 +47,8 @@ const CharacterCard = ({ charData, langConfig, onClick, fontMode, onAudioClick }
                         }`}>
                         {charData.type}
                     </span>
-                </div>
-            )}
+                )}
+            </div>
 
             <div className="text-center py-1 flex-grow flex flex-col justify-center mt-2">
                 <div className={`text-4xl text-slate-800 mb-2 transition-all duration-300 leading-relaxed ${fontClass}`}>

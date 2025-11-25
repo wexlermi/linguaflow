@@ -72,6 +72,24 @@ const CharacterModal = ({ charData, langConfig, onClose }) => {
                                     </div>
                                 )}
                             </div>
+
+                            {charData.exampleWord && (
+                                <div className="mt-4 pt-4 border-t border-slate-200">
+                                    <h4 className="text-xs font-bold text-slate-400 uppercase mb-2 tracking-wider">Example</h4>
+                                    <div className="flex items-center justify-between">
+                                        <div>
+                                            <div className={`text-xl font-bold text-slate-800 ${langConfig.fontB}`}>{charData.exampleWord}</div>
+                                            <div className="text-sm text-slate-500">{charData.exampleWordMeaning}</div>
+                                        </div>
+                                        <button
+                                            onClick={() => speak(charData.exampleWord, langConfig.langCode, charData.exampleWordAudioSrc)}
+                                            className="p-2 bg-indigo-50 text-indigo-600 rounded-full hover:bg-indigo-100 transition-colors"
+                                        >
+                                            <Volume2 className="w-4 h-4" />
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
                         <div className="space-y-3">

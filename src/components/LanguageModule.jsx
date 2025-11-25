@@ -10,6 +10,7 @@ const LanguageModule = ({ config, onBack }) => {
     const [activeTab, setActiveTab] = useState('lessons');
     const [selectedChar, setSelectedChar] = useState(null);
     const [fontMode, setFontMode] = useState('A'); // 'A' | 'B' | 'Hand' | 'Old'
+    const [sortBy, setSortBy] = useState('alphabet'); // 'alphabet' | 'class'
 
     useEffect(() => {
         const unlockAudio = () => {
@@ -94,26 +95,59 @@ const LanguageModule = ({ config, onBack }) => {
                 <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                     <FontComparison config={config} fontMode={fontMode} setFontMode={setFontMode} />
 
-                    {Object.entries(groupedChars).map(([type, chars]) => (
-                        <div key={type} className="mb-12">
-                            <h3 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-                                <Star className="w-5 h-5 text-yellow-500 fill-current" />
-                                {type === 'General' ? 'Characters' : type + 's'}
-                            </h3>
-                            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                                {chars.map((c, idx) => (
-                                    <CharacterCard
-                                        key={idx}
-                                        charData={c}
-                                        langConfig={config}
-                                        fontMode={fontMode}
-                                        onClick={() => handleCharClick(c)}
-                                        onAudioClick={handlePlayAudio}
-                                    />
-                                ))}
+                    {config.id === 'thai' && (
+                        <div className="flex justify-center mb-8">
+                            <div className="bg-slate-100 p-1 rounded-lg inline-flex items-center">
+                                <span className="text-xs font-bold text-slate-500 px-3 uppercase tracking-wider">Sort Consonants:</span>
+                                <button
+                                    onClick={() => setSortBy('alphabet')}
+                                    className={`px-4 py-1.5 rounded-md text-sm font-bold transition-all ${sortBy === 'alphabet' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+                                >
+                                    Alphabet
+                                </button>
+                                <button
+                                    onClick={() => setSortBy('class')}
+                                    className={`px-4 py-1.5 rounded-md text-sm font-bold transition-all ${sortBy === 'class' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+                                >
+                                    Class
+                                </button>
                             </div>
                         </div>
-                    ))}
+                    )}
+
+                    {Object.entries(groupedChars).map(([type, chars]) => {
+                        let displayChars = chars;
+                        if (config.id === 'thai' && type === 'Consonant' && sortBy === 'class') {
+                            displayChars = [...chars].sort((a, b) => {
+                                const order = { 'Mid': 1, 'High': 2, 'Low': 3 };
+                                const orderA = order[a.class] || 99;
+                                const orderB = order[b.class] || 99;
+                                if (orderA !== orderB) return orderA - orderB;
+                                return 0; // Keep original alphabetical order within class
+                            });
+                        }
+
+                        return (
+                            <div key={type} className="mb-12">
+                                <h3 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+                                    <Star className="w-5 h-5 text-yellow-500 fill-current" />
+                                    {type === 'General' ? 'Characters' : type + 's'}
+                                </h3>
+                                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                                    {displayChars.map((c, idx) => (
+                                        <CharacterCard
+                                            key={idx}
+                                            charData={c}
+                                            langConfig={config}
+                                            fontMode={fontMode}
+                                            onClick={() => handleCharClick(c)}
+                                            onAudioClick={handlePlayAudio}
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+                        );
+                    })}
                 </div>
             ) : (
                 <div className="animate-in fade-in slide-in-from-right-4 duration-500">
