@@ -11,14 +11,14 @@ const CharacterCard = ({ charData, langConfig, onClick, fontMode, onAudioClick }
     return (
         <div
             onClick={onClick}
-            className="relative bg-white p-4 rounded-xl border-2 border-slate-200 hover:border-indigo-400 hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer group select-none flex flex-col items-center justify-between h-44"
+            className="relative bg-white p-4 rounded-xl border-2 border-slate-200 smart-hover-card transition-all cursor-pointer group select-none flex flex-col items-center justify-between h-44"
         >
             <button
                 onClick={(e) => {
                     e.stopPropagation();
                     onAudioClick(charData);
                 }}
-                className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-indigo-50 hover:bg-indigo-100 p-1.5 rounded-full text-indigo-600"
+                className="absolute top-2 right-2 smart-hover-opacity bg-indigo-50 hover:bg-indigo-100 p-1.5 rounded-full text-indigo-600"
             >
                 <Volume2 className="w-3 h-3" />
             </button>
@@ -26,10 +26,10 @@ const CharacterCard = ({ charData, langConfig, onClick, fontMode, onAudioClick }
             {charData.type && (
                 <div className="absolute top-2 left-2">
                     <span className={`text-[10px] font-bold uppercase px-1.5 py-0.5 rounded ${charData.type === 'Tone' ? 'bg-yellow-100 text-yellow-700' :
-                            charData.type === 'Vowel' ? 'bg-green-100 text-green-700' :
-                                charData.type === 'Grammar' || charData.type === 'Rule' ? 'bg-purple-100 text-purple-700' :
-                                    charData.type === 'Diphthong' ? 'bg-orange-100 text-orange-700' :
-                                        'bg-slate-100 text-slate-500'
+                        charData.type === 'Vowel' ? 'bg-green-100 text-green-700' :
+                            charData.type === 'Grammar' || charData.type === 'Rule' ? 'bg-purple-100 text-purple-700' :
+                                charData.type === 'Diphthong' ? 'bg-orange-100 text-orange-700' :
+                                    'bg-slate-100 text-slate-500'
                         }`}>
                         {charData.type}
                     </span>
