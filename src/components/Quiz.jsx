@@ -10,7 +10,7 @@ const Quiz = ({ questions, langCode, onComplete }) => {
     const [selectedOption, setSelectedOption] = useState(null);
 
     useEffect(() => {
-        const shuffled = [...questions].sort(() => 0.5 - Math.random()).slice(0, 5);
+        const shuffled = [...questions].sort(() => 0.5 - Math.random()).slice(0, 20);
         setShuffledQuestions(shuffled);
         setCurrentIndex(0);
         setScore(0);
@@ -22,7 +22,9 @@ const Quiz = ({ questions, langCode, onComplete }) => {
         if (selectedOption) return;
         setSelectedOption(option);
 
-        if (option.length < 15) speak(option, langCode);
+        // Only play audio if the text contains Thai characters (Unicode range \u0E00-\u0E7F)
+        const hasThaiChars = /[\u0E00-\u0E7F]/.test(option);
+        if (option.length < 15 && hasThaiChars) speak(option, langCode);
 
         if (option === shuffledQuestions[currentIndex].correct) setScore(score + 1);
 
@@ -37,7 +39,7 @@ const Quiz = ({ questions, langCode, onComplete }) => {
     };
 
     const restartQuiz = () => {
-        const shuffled = [...questions].sort(() => 0.5 - Math.random()).slice(0, 5);
+        const shuffled = [...questions].sort(() => 0.5 - Math.random()).slice(0, 20);
         setShuffledQuestions(shuffled);
         setCurrentIndex(0);
         setScore(0);
@@ -83,8 +85,8 @@ const Quiz = ({ questions, langCode, onComplete }) => {
                             onClick={() => handleAnswer(option)}
                             disabled={!!selectedOption}
                             className={`w-full p-4 rounded-xl text-left font-medium text-lg transition-all duration-200 border-2 ${selectedOption
-                                    ? (option === q.correct ? "bg-green-50 border-green-500 text-green-700" : option === selectedOption ? "bg-red-50 border-red-500 text-red-700" : "bg-slate-50 border-slate-100 text-slate-400 opacity-50")
-                                    : "bg-white border-slate-200 hover:border-indigo-300 text-slate-700"
+                                ? (option === q.correct ? "bg-green-50 border-green-500 text-green-700" : option === selectedOption ? "bg-red-50 border-red-500 text-red-700" : "bg-slate-50 border-slate-100 text-slate-400 opacity-50")
+                                : "bg-white border-slate-200 hover:border-indigo-300 text-slate-700"
                                 }`}
                         >
                             {option}

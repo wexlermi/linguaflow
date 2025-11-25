@@ -31,7 +31,7 @@ const CharacterModal = ({ charData, langConfig, onClose }) => {
                             <p className="text-indigo-100 text-lg opacity-90">{charData.name}</p>
                             <div className="flex items-center gap-2 mt-3">
                                 <button
-                                    onClick={() => speak(charData.thaiName || (charData.type === 'Tone' ? charData.char : charData.char), langConfig.langCode)}
+                                    onClick={() => speak(charData.thaiName || (charData.type === 'Tone' ? charData.char : charData.char), langConfig.langCode, charData.audioSrc)}
                                     className="flex items-center gap-2 bg-white text-indigo-600 px-4 py-1.5 rounded-full text-sm font-bold shadow-sm hover:bg-indigo-50 transition-colors"
                                 >
                                     <Volume2 className="w-4 h-4" /> Replay
@@ -64,8 +64,8 @@ const CharacterModal = ({ charData, langConfig, onClose }) => {
                                     <div className="flex justify-between text-sm">
                                         <span className="text-slate-500">Class</span>
                                         <span className={`font-bold px-2 py-0.5 rounded text-xs ${charData.class === 'High' ? 'bg-red-100 text-red-600' :
-                                                charData.class === 'Mid' ? 'bg-green-100 text-green-600' :
-                                                    'bg-blue-100 text-blue-600'
+                                            charData.class === 'Mid' ? 'bg-green-100 text-green-600' :
+                                                'bg-blue-100 text-blue-600'
                                             }`}>
                                             {charData.class}
                                         </span>
