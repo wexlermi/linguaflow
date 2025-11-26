@@ -186,5 +186,106 @@ const generateQuiz = (characters) => {
 
 Object.assign(THAI, {
     chars: chars,
-    quiz: generateQuiz(chars)
+    quiz: generateQuiz(chars),
+    vocabulary: [
+        {
+            category: 'Greetings',
+            items: [
+                { thai: 'สวัสดี', roman: 'Sawatdee', meaning: 'Hello', audioSrc: '/audio/thai/vocab/sawatdee.mp3', imageSrc: '/images/thai/sawatdee.jpg' },
+                { thai: 'ขอบคุณ', roman: 'Khop Khun', meaning: 'Thank you', audioSrc: '/audio/thai/vocab/khop_khun.mp3', imageSrc: '/images/thai/khop_khun.jpg' },
+                { thai: 'ขอโทษ', roman: 'Khor Thot', meaning: 'Sorry', audioSrc: '/audio/thai/vocab/khor_thot.mp3', imageSrc: '/images/thai/khor_thot.jpg' },
+                { thai: 'ใช่', roman: 'Chai', meaning: 'Yes', audioSrc: '/audio/thai/vocab/chai.mp3', imageSrc: '/images/thai/chai.jpg' },
+                { thai: 'ไม่', roman: 'Mai', meaning: 'No', audioSrc: '/audio/thai/vocab/mai.mp3', imageSrc: '/images/thai/mai.jpg' }
+            ]
+        },
+        {
+            category: 'Essentials',
+            items: [
+                { thai: 'ห้องน้ำ', roman: 'Hong Nam', meaning: 'Bathroom', audioSrc: '/audio/thai/vocab/hong_nam.mp3', imageSrc: '/images/thai/hong_nam.jpg' },
+                { thai: 'น้ำ', roman: 'Nam', meaning: 'Water', audioSrc: '/audio/thai/vocab/nam.mp3', imageSrc: '/images/thai/nam.jpg' },
+                { thai: 'ข้าว', roman: 'Khao', meaning: 'Rice', audioSrc: '/audio/thai/vocab/khao.mp3', imageSrc: '/images/thai/khao.jpg' },
+                { thai: 'อร่อย', roman: 'Aroi', meaning: 'Delicious', audioSrc: '/audio/thai/vocab/aroi.mp3', imageSrc: '/images/thai/aroi.jpg' },
+                { thai: 'เท่าไหร่', roman: 'Thao Rai', meaning: 'How much?', audioSrc: '/audio/thai/vocab/thao_rai.mp3', imageSrc: '/images/thai/thao_rai.jpg' }
+            ]
+        },
+        {
+            category: 'Colors',
+            items: [
+                { thai: 'สีแดง', roman: 'Si Daeng', meaning: 'Red', audioSrc: '/audio/thai/vocab/si_daeng.mp3', imageSrc: '/images/thai/si_daeng.jpg' },
+                { thai: 'สีเขียว', roman: 'Si Khiao', meaning: 'Green', audioSrc: '/audio/thai/vocab/si_khiao.mp3', imageSrc: '/images/thai/si_khiao.jpg' },
+                { thai: 'สีน้ำเงิน', roman: 'Si Nam Ngoen', meaning: 'Blue', audioSrc: '/audio/thai/vocab/si_nam_ngoen.mp3', imageSrc: '/images/thai/si_nam_ngoen.jpg' },
+                { thai: 'สีขาว', roman: 'Si Khao', meaning: 'White', audioSrc: '/audio/thai/vocab/si_khao.mp3', imageSrc: '/images/thai/si_khao.jpg' },
+                { thai: 'สีดำ', roman: 'Si Dam', meaning: 'Black', audioSrc: '/audio/thai/vocab/si_dam.mp3', imageSrc: '/images/thai/si_dam.jpg' }
+            ]
+        },
+        {
+            category: 'Food',
+            items: [
+                { thai: 'ผัดไทย', roman: 'Pad Thai', meaning: 'Pad Thai', audioSrc: '/audio/thai/vocab/pad_thai.mp3', imageSrc: '/images/thai/pad_thai.jpg' },
+                { thai: 'ส้มตำ', roman: 'Som Tum', meaning: 'Papaya Salad', audioSrc: '/audio/thai/vocab/som_tum.mp3', imageSrc: '/images/thai/som_tum.jpg' },
+                { thai: 'ต้มยำ', roman: 'Tom Yum', meaning: 'Spicy Soup', audioSrc: '/audio/thai/vocab/tom_yum.mp3', imageSrc: '/images/thai/tom_yum.jpg' },
+                { thai: 'ข้าวเหนียวมะม่วง', roman: 'Khao Niao Mamuang', meaning: 'Mango Sticky Rice', audioSrc: '/audio/thai/vocab/khao_niao_mamuang.mp3', imageSrc: '/images/thai/mango_sticky_rice.jpg' }
+            ]
+        },
+        {
+            category: 'Travel',
+            items: [
+                { thai: 'สนามบิน', roman: 'Sanam Bin', meaning: 'Airport', audioSrc: '/audio/thai/vocab/sanam_bin.mp3', imageSrc: '/images/thai/sanam_bin.jpg' },
+                { thai: 'โรงแรม', roman: 'Rong Raem', meaning: 'Hotel', audioSrc: '/audio/thai/vocab/rong_raem.mp3', imageSrc: '/images/thai/rong_raem.jpg' },
+                { thai: 'ตั๋ว', roman: 'Tua', meaning: 'Ticket', audioSrc: '/audio/thai/vocab/tua.mp3', imageSrc: '/images/thai/tua.jpg' },
+                { thai: 'แท็กซี่', roman: 'Taxi', meaning: 'Taxi', audioSrc: '/audio/thai/vocab/taxi.mp3', imageSrc: '/images/thai/tuk_tuk.jpg' },
+                { thai: 'รถเมล์', roman: 'Rot Me', meaning: 'Bus', audioSrc: '/audio/thai/vocab/rot_me.mp3', imageSrc: '/images/thai/rot_me.jpg' }
+            ]
+        },
+        {
+            category: 'Shopping',
+            items: [
+                { thai: 'เงิน', roman: 'Ngoen', meaning: 'Money', audioSrc: '/audio/thai/vocab/ngoen.mp3', imageSrc: '/images/thai/ngoen.jpg' },
+                { thai: 'แพง', roman: 'Phaeng', meaning: 'Expensive', audioSrc: '/audio/thai/vocab/phaeng.mp3', imageSrc: '/images/thai/phaeng.jpg' },
+                { thai: 'ถูก', roman: 'Thuk', meaning: 'Cheap', audioSrc: '/audio/thai/vocab/thuk.mp3', imageSrc: '/images/thai/thuk.jpg' },
+                { thai: 'ลดราคา', roman: 'Lot Rakha', meaning: 'Discount', audioSrc: '/audio/thai/vocab/lot_rakha.mp3', imageSrc: '/images/thai/lot_rakha.jpg' },
+                { thai: 'ร้านค้า', roman: 'Ran Kha', meaning: 'Shop', audioSrc: '/audio/thai/vocab/ran_kha.mp3', imageSrc: '/images/thai/ran_kha.jpg' }
+            ]
+        },
+        {
+            category: 'Family',
+            items: [
+                { thai: 'พ่อ', roman: 'Phor', meaning: 'Father', audioSrc: '/audio/thai/vocab/phor.mp3', imageSrc: '/images/thai/phor.jpg' },
+                { thai: 'แม่', roman: 'Mae', meaning: 'Mother', audioSrc: '/audio/thai/vocab/mae.mp3', imageSrc: '/images/thai/mae.jpg' },
+                { thai: 'พี่ชาย', roman: 'Phi Chai', meaning: 'Older Brother', audioSrc: '/audio/thai/vocab/phi_chai.mp3', imageSrc: '/images/thai/phi_chai.jpg' },
+                { thai: 'น้องสาว', roman: 'Nong Sao', meaning: 'Younger Sister', audioSrc: '/audio/thai/vocab/nong_sao.mp3', imageSrc: '/images/thai/nong_sao.jpg' },
+                { thai: 'ลูก', roman: 'Luk', meaning: 'Child', audioSrc: '/audio/thai/vocab/luk.mp3', imageSrc: '/images/thai/luk.jpg' }
+            ]
+        },
+        {
+            category: 'Time',
+            items: [
+                { thai: 'วันนี้', roman: 'Wan Ni', meaning: 'Today', audioSrc: '/audio/thai/vocab/wan_ni.mp3', imageSrc: '/images/thai/wan_ni.jpg' },
+                { thai: 'พรุ่งนี้', roman: 'Phrung Ni', meaning: 'Tomorrow', audioSrc: '/audio/thai/vocab/phrung_ni.mp3', imageSrc: '/images/thai/phrung_ni.jpg' },
+                { thai: 'เมื่อวาน', roman: 'Muea Wan', meaning: 'Yesterday', audioSrc: '/audio/thai/vocab/muea_wan.mp3', imageSrc: '/images/thai/muea_wan.jpg' },
+                { thai: 'ตอนเช้า', roman: 'Ton Chao', meaning: 'Morning', audioSrc: '/audio/thai/vocab/ton_chao.mp3', imageSrc: '/images/thai/ton_chao.jpg' },
+                { thai: 'ตอนเย็น', roman: 'Ton Yen', meaning: 'Evening', audioSrc: '/audio/thai/vocab/ton_yen.mp3', imageSrc: '/images/thai/ton_yen.jpg' }
+            ]
+        },
+        {
+            category: 'Places',
+            items: [
+                { thai: 'โรงเรียน', roman: 'Rong Rian', meaning: 'School', audioSrc: '/audio/thai/vocab/rong_rian.mp3', imageSrc: '/images/thai/rong_rian.jpg' },
+                { thai: 'โรงพยาบาล', roman: 'Rong Phayaban', meaning: 'Hospital', audioSrc: '/audio/thai/vocab/rong_phayaban.mp3', imageSrc: '/images/thai/rong_phayaban.jpg' },
+                { thai: 'ตลาด', roman: 'Talat', meaning: 'Market', audioSrc: '/audio/thai/vocab/talat.mp3', imageSrc: '/images/thai/talat.jpg' },
+                { thai: 'วัด', roman: 'Wat', meaning: 'Temple', audioSrc: '/audio/thai/vocab/wat.mp3', imageSrc: '/images/thai/thai_temple.jpg' },
+                { thai: 'ทะเล', roman: 'Thale', meaning: 'Sea/Beach', audioSrc: '/audio/thai/vocab/thale.mp3', imageSrc: '/images/thai/thale.jpg' }
+            ]
+        },
+        {
+            category: 'Animals',
+            items: [
+                { thai: 'หมา', roman: 'Ma', meaning: 'Dog', audioSrc: '/audio/thai/vocab/ma.mp3', imageSrc: '/images/thai/ma.jpg' },
+                { thai: 'แมว', roman: 'Maew', meaning: 'Cat', audioSrc: '/audio/thai/vocab/maew.mp3', imageSrc: '/images/thai/maew.jpg' },
+                { thai: 'ช้าง', roman: 'Chang', meaning: 'Elephant', audioSrc: '/audio/thai/vocab/chang.mp3', imageSrc: '/images/thai/elephant.jpg' },
+                { thai: 'นก', roman: 'Nok', meaning: 'Bird', audioSrc: '/audio/thai/vocab/nok.mp3', imageSrc: '/images/thai/nok.jpg' },
+                { thai: 'ปลา', roman: 'Pla', meaning: 'Fish', audioSrc: '/audio/thai/vocab/pla.mp3', imageSrc: '/images/thai/pla.jpg' }
+            ]
+        }
+    ]
 });

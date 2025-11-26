@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { BookOpen, GraduationCap, Star } from 'lucide-react';
+import { BookOpen, GraduationCap, Star, Languages } from 'lucide-react';
 import { speak } from '../utils/audio';
 import CharacterModal from './CharacterModal';
 import CharacterCard from './CharacterCard';
 import Quiz from './Quiz';
 import FontComparison from './FontComparison';
+import VocabularyList from './VocabularyList';
 
 const LanguageModule = ({ config, onBack }) => {
     const [activeTab, setActiveTab] = useState('lessons');
@@ -81,6 +82,15 @@ const LanguageModule = ({ config, onBack }) => {
                     >
                         <BookOpen className="w-4 h-4" /> Lessons
                     </button>
+                    {config.vocabulary && (
+                        <button
+                            onClick={() => setActiveTab('vocabulary')}
+                            className={`flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-bold transition-all ${activeTab === 'vocabulary' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'
+                                }`}
+                        >
+                            <Languages className="w-4 h-4" /> Vocabulary
+                        </button>
+                    )}
                     <button
                         onClick={() => setActiveTab('quiz')}
                         className={`flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-bold transition-all ${activeTab === 'quiz' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'
@@ -91,7 +101,7 @@ const LanguageModule = ({ config, onBack }) => {
                 </div>
             </div>
 
-            {activeTab === 'lessons' ? (
+            {activeTab === 'lessons' && (
                 <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                     <FontComparison config={config} fontMode={fontMode} setFontMode={setFontMode} />
 
@@ -149,7 +159,13 @@ const LanguageModule = ({ config, onBack }) => {
                         );
                     })}
                 </div>
-            ) : (
+            )}
+
+            {activeTab === 'vocabulary' && (
+                <VocabularyList vocabulary={config.vocabulary} langCode={config.langCode} />
+            )}
+
+            {activeTab === 'quiz' && (
                 <div className="animate-in fade-in slide-in-from-right-4 duration-500">
                     <Quiz questions={config.quiz} langCode={config.langCode} onComplete={() => setActiveTab('lessons')} />
                 </div>
