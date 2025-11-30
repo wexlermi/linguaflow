@@ -1,6 +1,4 @@
 import { THAI } from './thai';
-import { VIETNAMESE } from './vietnamese';
-import { GERMAN } from './german';
 import { RUSSIAN } from './russian';
 import { JAPANESE } from './japanese';
 import { KOREAN } from './korean';
@@ -15,8 +13,6 @@ import { BURMESE } from './burmese';
 
 export const LANGUAGES = {
     THAI: { ...THAI, status: 'stable' },
-    VIETNAMESE: { ...VIETNAMESE, status: 'beta' },
-    GERMAN: { ...GERMAN, status: 'beta' },
     RUSSIAN: { ...RUSSIAN, status: 'beta' },
     JAPANESE: { ...JAPANESE, status: 'beta' },
     KOREAN: { ...KOREAN, status: 'beta' },

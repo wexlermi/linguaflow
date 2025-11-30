@@ -26,8 +26,8 @@ const CharacterModal = ({ charData, langConfig, fontMode, onClose }) => {
                     </button>
 
                     <div className="flex items-center gap-6">
-                        <div className="w-24 h-24 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center text-6xl shadow-inner border border-white/30 shrink-0">
-                            {charData.emoji || <div className={`${fontClass} whitespace-nowrap text-4xl overflow-hidden`}>{charData.char.split(' ')[0]}</div>}
+                        <div className="w-32 h-32 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center text-6xl shadow-inner border border-white/30 shrink-0 p-2">
+                            {charData.emoji || <div className={`${fontClass} whitespace-nowrap leading-tight`}>{charData.type === 'Vowel' || charData.type === 'Tone' ? charData.char : charData.char.split(' ')[0]}</div>}
                         </div>
                         <div className="min-w-0">
                             {/* Ensure full name for Thai is shown, remove truncate to prevent clipping */}
