@@ -15,7 +15,23 @@ export const THAI = {
     styleBLabel: 'Modern',
     styleHandLabel: 'Handwritten',
     styleOldLabel: 'Old Fashioned',
+    flashcards: [
+        {
+            id: 'modern-thai',
+            title: 'Modern Thai',
+            description: 'Practice reading modern loopless Thai fonts. Click to flip and see the traditional form.',
+            cards: [] // Will be populated below
+        },
+        {
+            id: 'old-thai',
+            title: 'Old Fashioned Thai',
+            description: 'Practice reading elegant old-fashioned Thai fonts. Click to flip and see the traditional form.',
+            cards: [] // Will be populated below
+        }
+    ]
 };
+
+
 
 const chars = [
     // --- Consonants ---
@@ -64,39 +80,39 @@ const chars = [
     { char: 'อ', name: 'Or Ang', thaiName: 'อ อ่าง', meaning: 'Basin', class: 'Mid', sound: 'o', emoji: '🛁', type: 'Consonant', audioSrc: '/audio/thai/or_ang.mp3', exampleWord: 'อ่าง', exampleWordMeaning: 'Basin', exampleWordAudioSrc: '/audio/thai/examples/ang.mp3' },
     { char: 'ฮ', name: 'Hor Nokhuk', thaiName: 'ฮ นกฮูก', meaning: 'Owl', class: 'Low', sound: 'h', emoji: '🦉', type: 'Consonant', audioSrc: '/audio/thai/hor_nokhuk.mp3', exampleWord: 'นกฮูก', exampleWordMeaning: 'Owl', exampleWordAudioSrc: '/audio/thai/examples/nokhuk.mp3' },
     // --- Vowels ---
-    { char: '−ะ', name: 'Sara A', meaning: 'Short A', sound: 'a', type: 'Vowel', audioSrc: '/audio/thai/sara_a.mp3', exampleWord: 'กะ', exampleWordMeaning: 'Shift/Turn', exampleWordAudioSrc: '/audio/thai/examples/ga.mp3' },
-    { char: '−า', name: 'Sara Aa', meaning: 'Long A', sound: 'aa', type: 'Vowel', audioSrc: '/audio/thai/sara_aa.mp3', exampleWord: 'กา', exampleWordMeaning: 'Crow', exampleWordAudioSrc: '/audio/thai/examples/gaa.mp3' },
-    { char: '−ิ', name: 'Sara I', meaning: 'Short I', sound: 'i', type: 'Vowel', audioSrc: '/audio/thai/sara_i.mp3', exampleWord: 'ติ', exampleWordMeaning: 'Criticize', exampleWordAudioSrc: '/audio/thai/examples/ti.mp3' },
-    { char: '−ี', name: 'Sara Ii', meaning: 'Long I', sound: 'ii', type: 'Vowel', audioSrc: '/audio/thai/sara_ii.mp3', exampleWord: 'ตี', exampleWordMeaning: 'Hit', exampleWordAudioSrc: '/audio/thai/examples/tii.mp3' },
-    { char: '−ึ', name: 'Sara Ue', meaning: 'Short Ue', sound: 'ue', type: 'Vowel', audioSrc: '/audio/thai/sara_ue.mp3', exampleWord: 'หึ', exampleWordMeaning: 'Huh', exampleWordAudioSrc: '/audio/thai/examples/hue.mp3' },
-    { char: '−ื', name: 'Sara Uue', meaning: 'Long Ue', sound: 'uue', type: 'Vowel', audioSrc: '/audio/thai/sara_uue.mp3', exampleWord: 'มือ', exampleWordMeaning: 'Hand', exampleWordAudioSrc: '/audio/thai/examples/mue.mp3' },
-    { char: '−ุ', name: 'Sara U', meaning: 'Short U', sound: 'u', type: 'Vowel', audioSrc: '/audio/thai/sara_u.mp3', exampleWord: 'ดุ', exampleWordMeaning: 'Fierce', exampleWordAudioSrc: '/audio/thai/examples/du.mp3' },
-    { char: '−ู', name: 'Sara Uu', meaning: 'Long U', sound: 'uu', type: 'Vowel', audioSrc: '/audio/thai/sara_uu.mp3', exampleWord: 'ดู', exampleWordMeaning: 'Look', exampleWordAudioSrc: '/audio/thai/examples/duu.mp3' },
-    { char: 'เ−ะ', name: 'Sara E', meaning: 'Short E', sound: 'e', type: 'Vowel', audioSrc: '/audio/thai/sara_e.mp3', exampleWord: 'เตะ', exampleWordMeaning: 'Kick', exampleWordAudioSrc: '/audio/thai/examples/te.mp3' },
-    { char: 'เ−', name: 'Sara Ee', meaning: 'Long E', sound: 'ee', type: 'Vowel', audioSrc: '/audio/thai/sara_ee.mp3', exampleWord: 'เท', exampleWordMeaning: 'Pour', exampleWordAudioSrc: '/audio/thai/examples/the.mp3' },
-    { char: 'แ−ะ', name: 'Sara Ae', meaning: 'Short Ae', sound: 'ae', type: 'Vowel', audioSrc: '/audio/thai/sara_ae.mp3', exampleWord: 'แกะ', exampleWordMeaning: 'Sheep', exampleWordAudioSrc: '/audio/thai/examples/gae.mp3' },
-    { char: 'แ−', name: 'Sara Aae', meaning: 'Long Ae', sound: 'aae', type: 'Vowel', audioSrc: '/audio/thai/sara_aae.mp3', exampleWord: 'แพ', exampleWordMeaning: 'Raft', exampleWordAudioSrc: '/audio/thai/examples/phae.mp3' },
-    { char: 'โ−ะ', name: 'Sara O', meaning: 'Short O', sound: 'o', type: 'Vowel', audioSrc: '/audio/thai/sara_o.mp3', exampleWord: 'โต๊ะ', exampleWordMeaning: 'Table', exampleWordAudioSrc: '/audio/thai/examples/to.mp3' },
-    { char: 'โ−', name: 'Sara Oo', meaning: 'Long O', sound: 'oo', type: 'Vowel', audioSrc: '/audio/thai/sara_oo.mp3', exampleWord: 'โต', exampleWordMeaning: 'Big', exampleWordAudioSrc: '/audio/thai/examples/too.mp3' },
-    { char: 'เ−าะ', name: 'Sara Or', meaning: 'Short Or', sound: 'or', type: 'Vowel', audioSrc: '/audio/thai/sara_or.mp3', exampleWord: 'เกาะ', exampleWordMeaning: 'Island', exampleWordAudioSrc: '/audio/thai/examples/gor.mp3' },
-    { char: '−อ', name: 'Sara Oor', meaning: 'Long Or', sound: 'oor', type: 'Vowel', audioSrc: '/audio/thai/sara_oor.mp3', exampleWord: 'รอ', exampleWordMeaning: 'Wait', exampleWordAudioSrc: '/audio/thai/examples/ror.mp3' },
-    { char: 'เ−อะ', name: 'Sara Oe', meaning: 'Short Oe', sound: 'oe', type: 'Vowel', audioSrc: '/audio/thai/sara_oe.mp3', exampleWord: 'เยอะ', exampleWordMeaning: 'A lot', exampleWordAudioSrc: '/audio/thai/examples/yoe.mp3' },
-    { char: 'เ−อ', name: 'Sara Ooe', meaning: 'Long Oe', sound: 'ooe', type: 'Vowel', audioSrc: '/audio/thai/sara_ooe.mp3', exampleWord: 'เธอ', exampleWordMeaning: 'You', exampleWordAudioSrc: '/audio/thai/examples/thoe.mp3' },
-    { char: 'เ−ียะ', name: 'Sara Ia', meaning: 'Short Ia', sound: 'ia', type: 'Vowel', audioSrc: '/audio/thai/sara_ia.mp3', exampleWord: 'เปี๊ยะ', exampleWordMeaning: 'Spring roll', exampleWordAudioSrc: '/audio/thai/examples/pia.mp3' },
-    { char: 'เ−ีย', name: 'Sara Iia', meaning: 'Long Ia', sound: 'iia', type: 'Vowel', audioSrc: '/audio/thai/sara_iia.mp3', exampleWord: 'เสีย', exampleWordMeaning: 'Broken', exampleWordAudioSrc: '/audio/thai/examples/sia.mp3' },
-    { char: 'เ−ือะ', name: 'Sara Uea', meaning: 'Short Uea', sound: 'uea', type: 'Vowel', audioSrc: '/audio/thai/sara_uea.mp3', exampleWord: 'เอือะ', exampleWordMeaning: 'Sound of vomiting', exampleWordAudioSrc: '/audio/thai/examples/uea.mp3' },
-    { char: 'เ−ือ', name: 'Sara Uuea', meaning: 'Long Uea', sound: 'uuea', type: 'Vowel', audioSrc: '/audio/thai/sara_uuea.mp3', exampleWord: 'เสือ', exampleWordMeaning: 'Tiger', exampleWordAudioSrc: '/audio/thai/examples/suea.mp3' },
-    { char: '−ัวะ', name: 'Sara Ua', meaning: 'Short Ua', sound: 'ua', type: 'Vowel', audioSrc: '/audio/thai/sara_ua.mp3', exampleWord: 'ผัวะ', exampleWordMeaning: 'Sound of hitting', exampleWordAudioSrc: '/audio/thai/examples/ua.mp3' },
-    { char: '−ัว', name: 'Sara Uua', meaning: 'Long Uua', sound: 'uua', type: 'Vowel', audioSrc: '/audio/thai/sara_uua.mp3', exampleWord: 'วัว', exampleWordMeaning: 'Cow', exampleWordAudioSrc: '/audio/thai/examples/wua.mp3' },
-    { char: '−ำ', name: 'Sara Am', meaning: 'Am', sound: 'am', type: 'Vowel', audioSrc: '/audio/thai/sara_am.mp3', exampleWord: 'ทำ', exampleWordMeaning: 'Do', exampleWordAudioSrc: '/audio/thai/examples/tham.mp3' },
-    { char: 'ใ−', name: 'Sara Ai Mai Muan', meaning: 'Ai (Rolled)', sound: 'ai', type: 'Vowel', audioSrc: '/audio/thai/sara_ai_mai_muan.mp3', exampleWord: 'ใจ', exampleWordMeaning: 'Heart', exampleWordAudioSrc: '/audio/thai/examples/jai.mp3' },
-    { char: 'ไ−', name: 'Sara Ai Mai Malai', meaning: 'Ai (Malai)', sound: 'ai', type: 'Vowel', audioSrc: '/audio/thai/sara_ai_mai_malai.mp3', exampleWord: 'ไป', exampleWordMeaning: 'Go', exampleWordAudioSrc: '/audio/thai/examples/pai.mp3' },
-    { char: 'เ−า', name: 'Sara Ao', meaning: 'Ao', sound: 'ao', type: 'Vowel', audioSrc: '/audio/thai/sara_ao.mp3', exampleWord: 'เรา', exampleWordMeaning: 'We', exampleWordAudioSrc: '/audio/thai/examples/rao.mp3' },
+    { char: 'กะ', name: 'Sara A', thaiName: 'สระอะ', ttsName: 'สะระอะ', meaning: 'Short A', sound: 'a', type: 'Vowel', audioSrc: '/audio/thai/sara_a.mp3', exampleWord: 'กะ', exampleWordMeaning: 'Shift/Turn', exampleWordAudioSrc: '/audio/thai/examples/ga.mp3' },
+    { char: 'กา', name: 'Sara Aa', thaiName: 'สระอา', ttsName: 'สะระอา', meaning: 'Long A', sound: 'aa', type: 'Vowel', audioSrc: '/audio/thai/sara_aa.mp3', exampleWord: 'กา', exampleWordMeaning: 'Crow', exampleWordAudioSrc: '/audio/thai/examples/gaa.mp3' },
+    { char: 'กิ', name: 'Sara I', thaiName: 'สระอิ', ttsName: 'สะระอิ', meaning: 'Short I', sound: 'i', type: 'Vowel', audioSrc: '/audio/thai/sara_i.mp3', exampleWord: 'ติ', exampleWordMeaning: 'Criticize', exampleWordAudioSrc: '/audio/thai/examples/ti.mp3' },
+    { char: 'กี', name: 'Sara Ii', thaiName: 'สระอี', ttsName: 'สะระอี', meaning: 'Long I', sound: 'ii', type: 'Vowel', audioSrc: '/audio/thai/sara_ii.mp3', exampleWord: 'ตี', exampleWordMeaning: 'Hit', exampleWordAudioSrc: '/audio/thai/examples/tii.mp3' },
+    { char: 'กึ', name: 'Sara Ue', thaiName: 'สระอึ', ttsName: 'สะระอึ', meaning: 'Short Ue', sound: 'ue', type: 'Vowel', audioSrc: '/audio/thai/sara_ue.mp3', exampleWord: 'หึ', exampleWordMeaning: 'Huh', exampleWordAudioSrc: '/audio/thai/examples/hue.mp3' },
+    { char: 'กือ', name: 'Sara Uue', thaiName: 'สระอือ', ttsName: 'สะระอือ', meaning: 'Long Ue', sound: 'uue', type: 'Vowel', audioSrc: '/audio/thai/sara_uue.mp3', exampleWord: 'มือ', exampleWordMeaning: 'Hand', exampleWordAudioSrc: '/audio/thai/examples/mue.mp3' },
+    { char: 'กุ', name: 'Sara U', thaiName: 'สระอุ', ttsName: 'สะระอุ', meaning: 'Short U', sound: 'u', type: 'Vowel', audioSrc: '/audio/thai/sara_u.mp3', exampleWord: 'ดุ', exampleWordMeaning: 'Fierce', exampleWordAudioSrc: '/audio/thai/examples/du.mp3' },
+    { char: 'กู', name: 'Sara Uu', thaiName: 'สระอู', ttsName: 'สะระอู', meaning: 'Long U', sound: 'uu', type: 'Vowel', audioSrc: '/audio/thai/sara_uu.mp3', exampleWord: 'ดู', exampleWordMeaning: 'Look', exampleWordAudioSrc: '/audio/thai/examples/duu.mp3' },
+    { char: 'เกะ', name: 'Sara E', thaiName: 'สระเอะ', ttsName: 'สะระเอะ', meaning: 'Short E', sound: 'e', type: 'Vowel', audioSrc: '/audio/thai/sara_e.mp3', exampleWord: 'เตะ', exampleWordMeaning: 'Kick', exampleWordAudioSrc: '/audio/thai/examples/te.mp3' },
+    { char: 'เก', name: 'Sara Ee', thaiName: 'สระเอ', ttsName: 'สะระเอ', meaning: 'Long E', sound: 'e', type: 'Vowel', audioSrc: '/audio/thai/sara_ee.mp3', exampleWord: 'เท', exampleWordMeaning: 'Pour', exampleWordAudioSrc: '/audio/thai/examples/the.mp3' },
+    { char: 'แกะ', name: 'Sara Ae', thaiName: 'สระแอะ', ttsName: 'สะระแอะ', meaning: 'Short Ae', sound: 'ae', type: 'Vowel', audioSrc: '/audio/thai/sara_ae.mp3', exampleWord: 'แกะ', exampleWordMeaning: 'Sheep', exampleWordAudioSrc: '/audio/thai/examples/gae.mp3' },
+    { char: 'แก', name: 'Sara Aae', thaiName: 'สระแอ', ttsName: 'สะระแอ', meaning: 'Long Ae', sound: 'ae', type: 'Vowel', audioSrc: '/audio/thai/sara_aae.mp3', exampleWord: 'แพ', exampleWordMeaning: 'Raft', exampleWordAudioSrc: '/audio/thai/examples/phae.mp3' },
+    { char: 'โกะ', name: 'Sara O', thaiName: 'สระโอะ', ttsName: 'สะระโอะ', meaning: 'Short O', sound: 'o', type: 'Vowel', audioSrc: '/audio/thai/sara_o.mp3', exampleWord: 'โต๊ะ', exampleWordMeaning: 'Table', exampleWordAudioSrc: '/audio/thai/examples/to.mp3' },
+    { char: 'โก', name: 'Sara Oo', thaiName: 'สระโอ', ttsName: 'สะระโอ', meaning: 'Long O', sound: 'o', type: 'Vowel', audioSrc: '/audio/thai/sara_oo.mp3', exampleWord: 'โต', exampleWordMeaning: 'Big', exampleWordAudioSrc: '/audio/thai/examples/too.mp3' },
+    { char: 'เกาะ', name: 'Sara Or', thaiName: 'สระเอาะ', ttsName: 'สะระเอาะ', meaning: 'Short Or', sound: 'o', type: 'Vowel', audioSrc: '/audio/thai/sara_or.mp3', exampleWord: 'เกาะ', exampleWordMeaning: 'Island', exampleWordAudioSrc: '/audio/thai/examples/gor.mp3' },
+    { char: 'กอ', name: 'Sara Oor', thaiName: 'สระออ', ttsName: 'สะระออ', meaning: 'Long Or', sound: 'o', type: 'Vowel', audioSrc: '/audio/thai/sara_oor.mp3', exampleWord: 'รอ', exampleWordMeaning: 'Wait', exampleWordAudioSrc: '/audio/thai/examples/ror.mp3' },
+    { char: 'เกอะ', name: 'Sara Oe', thaiName: 'สระเออะ', ttsName: 'สะระเออะ', meaning: 'Short Oe', sound: 'oe', type: 'Vowel', audioSrc: '/audio/thai/sara_oe.mp3', exampleWord: 'เยอะ', exampleWordMeaning: 'A lot', exampleWordAudioSrc: '/audio/thai/examples/yoe.mp3' },
+    { char: 'เกอ', name: 'Sara Ooe', thaiName: 'สระเออ', ttsName: 'สะระเออ', meaning: 'Long Oe', sound: 'oe', type: 'Vowel', audioSrc: '/audio/thai/sara_ooe.mp3', exampleWord: 'เธอ', exampleWordMeaning: 'You', exampleWordAudioSrc: '/audio/thai/examples/thoe.mp3' },
+    { char: 'เกียะ', name: 'Sara Ia', thaiName: 'สระเอียะ', ttsName: 'สะระเอียะ', meaning: 'Short Ia', sound: 'ia', type: 'Vowel', audioSrc: '/audio/thai/sara_ia.mp3', exampleWord: 'เปี๊ยะ', exampleWordMeaning: 'Spring roll', exampleWordAudioSrc: '/audio/thai/examples/pia.mp3' },
+    { char: 'เกีย', name: 'Sara Iia', thaiName: 'สระเอีย', ttsName: 'สะระเอีย', meaning: 'Long Ia', sound: 'ia', type: 'Vowel', audioSrc: '/audio/thai/sara_iia.mp3', exampleWord: 'เสีย', exampleWordMeaning: 'Broken', exampleWordAudioSrc: '/audio/thai/examples/sia.mp3' },
+    { char: 'เกือะ', name: 'Sara Uea', thaiName: 'สระเอือะ', ttsName: 'สะระเอือะ', meaning: 'Short Uea', sound: 'uea', type: 'Vowel', audioSrc: '/audio/thai/sara_uea.mp3', exampleWord: 'เอือะ', exampleWordMeaning: 'Sound of vomiting', exampleWordAudioSrc: '/audio/thai/examples/uea.mp3' },
+    { char: 'เกือ', name: 'Sara Uuea', thaiName: 'สระเอือ', ttsName: 'สะระเอือ', meaning: 'Long Uea', sound: 'uea', type: 'Vowel', audioSrc: '/audio/thai/sara_uuea.mp3', exampleWord: 'เสือ', exampleWordMeaning: 'Tiger', exampleWordAudioSrc: '/audio/thai/examples/suea.mp3' },
+    { char: 'กัวะ', name: 'Sara Ua', thaiName: 'สระอัวะ', ttsName: 'สะระอัวะ', meaning: 'Short Ua', sound: 'ua', type: 'Vowel', audioSrc: '/audio/thai/sara_ua.mp3', exampleWord: 'ผัวะ', exampleWordMeaning: 'Sound of hitting', exampleWordAudioSrc: '/audio/thai/examples/ua.mp3' },
+    { char: 'กัว', name: 'Sara Uua', thaiName: 'สระอัว', ttsName: 'สะระอัว', meaning: 'Long Uua', sound: 'ua', type: 'Vowel', audioSrc: '/audio/thai/sara_uua.mp3', exampleWord: 'วัว', exampleWordMeaning: 'Cow', exampleWordAudioSrc: '/audio/thai/examples/wua.mp3' },
+    { char: 'กำ', name: 'Sara Am', thaiName: 'สระอำ', ttsName: 'สะระอำ', meaning: 'Am', sound: 'am', type: 'Vowel', audioSrc: '/audio/thai/sara_am.mp3', exampleWord: 'ทำ', exampleWordMeaning: 'Do', exampleWordAudioSrc: '/audio/thai/examples/tham.mp3' },
+    { char: 'ใก', name: 'Sara Ai Mai Muan', thaiName: 'สระไอไม้ม้วน', ttsName: 'สะระไอไม้ม้วน', meaning: 'Ai (Rolled)', sound: 'ai', type: 'Vowel', audioSrc: '/audio/thai/sara_ai_mai_muan.mp3', exampleWord: 'ใจ', exampleWordMeaning: 'Heart', exampleWordAudioSrc: '/audio/thai/examples/jai.mp3' },
+    { char: 'ไก', name: 'Sara Ai Mai Malai', thaiName: 'สระไอไม้ม้าลาย', ttsName: 'สะระไอไม้ม้าลาย', meaning: 'Ai (Malai)', sound: 'ai', type: 'Vowel', audioSrc: '/audio/thai/sara_ai_mai_malai.mp3', exampleWord: 'ไป', exampleWordMeaning: 'Go', exampleWordAudioSrc: '/audio/thai/examples/pai.mp3' },
+    { char: 'เกา', name: 'Sara Ao', thaiName: 'สระเอา', ttsName: 'สะระเอา', meaning: 'Ao', sound: 'ao', type: 'Vowel', audioSrc: '/audio/thai/sara_ao.mp3', exampleWord: 'เรา', exampleWordMeaning: 'We', exampleWordAudioSrc: '/audio/thai/examples/rao.mp3' },
     // --- Tones ---
-    { char: '−่', name: 'Mai Ek', thaiName: 'ไม้เอก', meaning: 'Tone Mark 1', sound: 'Low Tone', type: 'Tone', audioSrc: '/audio/thai/mai_ek.mp3', exampleWord: 'แม่', exampleWordMeaning: 'Mother', exampleWordAudioSrc: '/audio/thai/examples/mae.mp3' },
-    { char: '−้', name: 'Mai Tho', thaiName: 'ไม้โท', meaning: 'Tone Mark 2', sound: 'Falling Tone', type: 'Tone', audioSrc: '/audio/thai/mai_tho.mp3', exampleWord: 'ไม้', exampleWordMeaning: 'Wood', exampleWordAudioSrc: '/audio/thai/examples/mai.mp3' },
-    { char: '−๊', name: 'Mai Tri', thaiName: 'ไม้ตรี', meaning: 'Tone Mark 3', sound: 'High Tone', type: 'Tone', audioSrc: '/audio/thai/mai_tri.mp3', exampleWord: 'โต๊ะ', exampleWordMeaning: 'Table', exampleWordAudioSrc: '/audio/thai/examples/to_tri.mp3' },
-    { char: '−๋', name: 'Mai Chattawa', thaiName: 'ไม้จัตวา', meaning: 'Tone Mark 4', sound: 'Rising Tone', type: 'Tone', audioSrc: '/audio/thai/mai_chattawa.mp3', exampleWord: 'ป๋า', exampleWordMeaning: 'Dad (Chinese)', exampleWordAudioSrc: '/audio/thai/examples/pa.mp3' },
+    { char: 'อ่', name: 'Mai Ek', thaiName: 'ไม้เอก', meaning: 'Tone Mark 1', sound: 'Low Tone', type: 'Tone', audioSrc: '/audio/thai/mai_ek.mp3', exampleWord: 'แม่', exampleWordMeaning: 'Mother', exampleWordAudioSrc: '/audio/thai/examples/mae.mp3' },
+    { char: 'อ้', name: 'Mai Tho', thaiName: 'ไม้โท', meaning: 'Tone Mark 2', sound: 'Falling Tone', type: 'Tone', audioSrc: '/audio/thai/mai_tho.mp3', exampleWord: 'ไม้', exampleWordMeaning: 'Wood', exampleWordAudioSrc: '/audio/thai/examples/mai.mp3' },
+    { char: 'อ๊', name: 'Mai Tri', thaiName: 'ไม้ตรี', meaning: 'Tone Mark 3', sound: 'High Tone', type: 'Tone', audioSrc: '/audio/thai/mai_tri.mp3', exampleWord: 'โต๊ะ', exampleWordMeaning: 'Table', exampleWordAudioSrc: '/audio/thai/examples/to_tri.mp3' },
+    { char: 'อ๋', name: 'Mai Chattawa', thaiName: 'ไม้จัตวา', meaning: 'Tone Mark 4', sound: 'Rising Tone', type: 'Tone', audioSrc: '/audio/thai/mai_chattawa.mp3', exampleWord: 'ป๋า', exampleWordMeaning: 'Dad (Chinese)', exampleWordAudioSrc: '/audio/thai/examples/pa.mp3' },
     // --- Numbers ---
     { char: '๐', name: 'Soon', thaiName: 'ศูนย์', meaning: 'Zero', sound: '0', type: 'Number', audioSrc: '/audio/thai/soon.mp3', exampleWord: 'ศูนย์', exampleWordMeaning: 'Zero', exampleWordAudioSrc: '/audio/thai/examples/soon.mp3' },
     { char: '๑', name: 'Nueng', thaiName: 'หนึ่ง', meaning: 'One', sound: '1', type: 'Number', audioSrc: '/audio/thai/nueng.mp3', exampleWord: 'หนึ่ง', exampleWordMeaning: 'One', exampleWordAudioSrc: '/audio/thai/examples/nueng.mp3' },
@@ -289,3 +305,7 @@ Object.assign(THAI, {
         }
     ]
 });
+
+// Populate flashcards with consonants
+THAI.flashcards[0].cards = chars.filter(c => c.type === 'Consonant');
+THAI.flashcards[1].cards = chars.filter(c => c.type === 'Consonant');

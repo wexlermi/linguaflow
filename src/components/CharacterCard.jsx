@@ -26,8 +26,8 @@ const CharacterCard = ({ charData, langConfig, onClick, fontMode, onAudioClick }
             <div className="absolute top-2 left-2 flex flex-col gap-1 items-start">
                 {charData.class && (
                     <span className={`text-[10px] font-bold uppercase px-1.5 py-0.5 rounded ${charData.class === 'High' ? 'bg-red-100 text-red-700' :
-                            charData.class === 'Mid' ? 'bg-green-100 text-green-700' :
-                                'bg-blue-100 text-blue-700'
+                        charData.class === 'Mid' ? 'bg-green-100 text-green-700' :
+                            'bg-blue-100 text-blue-700'
                         }`}>
                         {charData.class} Class
                     </span>

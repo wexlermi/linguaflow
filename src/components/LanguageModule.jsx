@@ -1,17 +1,39 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { BookOpen, GraduationCap, Star, Languages } from 'lucide-react';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { BookOpen, GraduationCap, Star, Languages, Layers } from 'lucide-react';
 import { speak } from '../utils/audio';
 import CharacterModal from './CharacterModal';
 import CharacterCard from './CharacterCard';
 import Quiz from './Quiz';
 import FontComparison from './FontComparison';
 import VocabularyList from './VocabularyList';
+import FlashcardDeck from './FlashcardDeck';
 
-const LanguageModule = ({ config, onBack }) => {
-    const [activeTab, setActiveTab] = useState('lessons');
+const LanguageModule = ({ config }) => {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const { langId } = useParams();
+
     const [selectedChar, setSelectedChar] = useState(null);
     const [fontMode, setFontMode] = useState('A'); // 'A' | 'B' | 'Hand' | 'Old'
     const [sortBy, setSortBy] = useState('alphabet'); // 'alphabet' | 'class'
+
+    // Derive state from URL
+    const pathSegments = location.pathname.split('/').filter(Boolean);
+    // pathSegments[0] is langId
+    // pathSegments[1] is tab
+    // pathSegments[2] is deckId (if flashcards)
+
+    const activeTab = pathSegments[1] || 'lessons';
+    const activeDeckId = activeTab === 'flashcards' ? pathSegments[2] : null;
+    const activeDeck = activeDeckId && config.flashcards ? config.flashcards.find(d => d.id === activeDeckId) : null;
+
+    // Redirect to lessons if no tab specified
+    useEffect(() => {
+        if (pathSegments.length === 1) {
+            navigate(`/${langId}/lessons`, { replace: true });
+        }
+    }, [langId, pathSegments.length, navigate]);
 
     useEffect(() => {
         const unlockAudio = () => {
@@ -35,7 +57,7 @@ const LanguageModule = ({ config, onBack }) => {
         let textToSpeak = charData.char;
 
         if (config.id === 'thai') {
-            textToSpeak = charData.thaiName || charData.name;
+            textToSpeak = charData.ttsName || charData.thaiName || charData.name;
         } else if (config.id === 'vietnamese') {
             // For Vietnamese, we might want to speak the name or example word if available, 
             // but for now char is fine.
@@ -63,7 +85,15 @@ const LanguageModule = ({ config, onBack }) => {
     return (
         <div className="max-w-6xl mx-auto px-4 py-8 relative">
             {selectedChar && (
-                <CharacterModal charData={selectedChar} langConfig={config} onClose={() => setSelectedChar(null)} />
+                <CharacterModal charData={selectedChar} langConfig={config} fontMode={fontMode} onClose={() => setSelectedChar(null)} />
+            )}
+
+            {activeDeck && (
+                <FlashcardDeck
+                    deck={activeDeck}
+                    langConfig={config}
+                    onClose={() => navigate(`/${langId}/flashcards`)}
+                />
             )}
 
             <div className="text-center mb-10">
@@ -74,9 +104,9 @@ const LanguageModule = ({ config, onBack }) => {
             </div>
 
             <div className="flex justify-center mb-8">
-                <div className="bg-white p-1 rounded-xl shadow-sm border border-slate-200 inline-flex">
+                <div className="bg-white p-1 rounded-xl shadow-sm border border-slate-200 inline-flex flex-wrap justify-center gap-1">
                     <button
-                        onClick={() => setActiveTab('lessons')}
+                        onClick={() => navigate(`/${langId}/lessons`)}
                         className={`flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-bold transition-all ${activeTab === 'lessons' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'
                             }`}
                     >
@@ -84,15 +114,24 @@ const LanguageModule = ({ config, onBack }) => {
                     </button>
                     {config.vocabulary && (
                         <button
-                            onClick={() => setActiveTab('vocabulary')}
+                            onClick={() => navigate(`/${langId}/vocabulary`)}
                             className={`flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-bold transition-all ${activeTab === 'vocabulary' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'
                                 }`}
                         >
                             <Languages className="w-4 h-4" /> Vocabulary
                         </button>
                     )}
+                    {config.flashcards && (
+                        <button
+                            onClick={() => navigate(`/${langId}/flashcards`)}
+                            className={`flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-bold transition-all ${activeTab === 'flashcards' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'
+                                }`}
+                        >
+                            <Layers className="w-4 h-4" /> Flashcards
+                        </button>
+                    )}
                     <button
-                        onClick={() => setActiveTab('quiz')}
+                        onClick={() => navigate(`/${langId}/quiz`)}
                         className={`flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-bold transition-all ${activeTab === 'quiz' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-500 hover:bg-slate-50'
                             }`}
                     >
@@ -165,9 +204,34 @@ const LanguageModule = ({ config, onBack }) => {
                 <VocabularyList vocabulary={config.vocabulary} langCode={config.langCode} />
             )}
 
+            {activeTab === 'flashcards' && (
+                <div className="animate-in fade-in slide-in-from-right-4 duration-500">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {config.flashcards.map((deck, idx) => (
+                            <div
+                                key={idx}
+                                onClick={() => navigate(`/${langId}/flashcards/${deck.id}`)}
+                                className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-md hover:border-indigo-300 transition-all cursor-pointer group"
+                            >
+                                <div className="flex items-start justify-between mb-4">
+                                    <div className="p-3 bg-indigo-50 text-indigo-600 rounded-xl group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                                        <Layers className="w-6 h-6" />
+                                    </div>
+                                    <span className="text-xs font-bold text-slate-400 bg-slate-100 px-2 py-1 rounded-full">
+                                        {deck.cards.length} Cards
+                                    </span>
+                                </div>
+                                <h3 className="text-xl font-bold text-slate-800 mb-2">{deck.title}</h3>
+                                <p className="text-slate-600 text-sm">{deck.description}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+
             {activeTab === 'quiz' && (
                 <div className="animate-in fade-in slide-in-from-right-4 duration-500">
-                    <Quiz questions={config.quiz} langCode={config.langCode} onComplete={() => setActiveTab('lessons')} />
+                    <Quiz questions={config.quiz} langCode={config.langCode} onComplete={() => navigate(`/${langId}/lessons`)} />
                 </div>
             )}
         </div>

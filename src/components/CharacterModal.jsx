@@ -2,8 +2,14 @@ import React from 'react';
 import { X, Volume2 } from 'lucide-react';
 import { speak } from '../utils/audio';
 
-const CharacterModal = ({ charData, langConfig, onClose }) => {
+const CharacterModal = ({ charData, langConfig, fontMode, onClose }) => {
     if (!charData) return null;
+
+    // Determine current font class based on fontMode
+    let fontClass = langConfig.fontA;
+    if (fontMode === 'B') fontClass = langConfig.fontB;
+    else if (fontMode === 'Hand') fontClass = langConfig.fontHand;
+    else if (fontMode === 'Old') fontClass = langConfig.fontOld;
 
     return (
         <div
@@ -21,7 +27,7 @@ const CharacterModal = ({ charData, langConfig, onClose }) => {
 
                     <div className="flex items-center gap-6">
                         <div className="w-24 h-24 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center text-6xl shadow-inner border border-white/30 shrink-0">
-                            {charData.emoji || <div className={langConfig.fontB}>{charData.char.split(' ')[0]}</div>}
+                            {charData.emoji || <div className={`${fontClass} whitespace-nowrap text-4xl overflow-hidden`}>{charData.char.split(' ')[0]}</div>}
                         </div>
                         <div className="min-w-0">
                             {/* Ensure full name for Thai is shown, remove truncate to prevent clipping */}
@@ -31,7 +37,7 @@ const CharacterModal = ({ charData, langConfig, onClose }) => {
                             <p className="text-indigo-100 text-lg opacity-90">{charData.name}</p>
                             <div className="flex items-center gap-2 mt-3">
                                 <button
-                                    onClick={() => speak(charData.thaiName || (charData.type === 'Tone' ? charData.char : charData.char), langConfig.langCode, charData.audioSrc)}
+                                    onClick={() => speak(charData.ttsName || charData.thaiName || (charData.type === 'Tone' ? charData.char : charData.char), langConfig.langCode, charData.audioSrc)}
                                     className="flex items-center gap-2 bg-white text-indigo-600 px-4 py-1.5 rounded-full text-sm font-bold shadow-sm hover:bg-indigo-50 transition-colors"
                                 >
                                     <Volume2 className="w-4 h-4" /> Replay
@@ -78,7 +84,7 @@ const CharacterModal = ({ charData, langConfig, onClose }) => {
                                     <h4 className="text-xs font-bold text-slate-400 uppercase mb-2 tracking-wider">Example</h4>
                                     <div className="flex items-center justify-between">
                                         <div>
-                                            <div className={`text-xl font-bold text-slate-800 ${langConfig.fontB}`}>{charData.exampleWord}</div>
+                                            <div className={`text-xl font-bold text-slate-800 ${fontClass}`}>{charData.exampleWord}</div>
                                             <div className="text-sm text-slate-500">{charData.exampleWordMeaning}</div>
                                         </div>
                                         <button
