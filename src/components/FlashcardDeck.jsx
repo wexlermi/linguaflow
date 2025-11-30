@@ -87,6 +87,7 @@ const FlashcardDeck = ({ deck, onClose, langConfig }) => {
             if (e.key === 'ArrowRight') handleNext();
             if (e.key === 'ArrowLeft') handlePrev();
             if (e.key === ' ' || e.key === 'Enter') handleFlip();
+            if (e.key === 'Escape') onClose();
         };
 
         window.addEventListener('keydown', handleKeyDown);
