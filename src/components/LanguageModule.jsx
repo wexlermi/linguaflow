@@ -233,27 +233,66 @@ const LanguageModule = ({ config }) => {
             )}
 
             {activeTab === 'flashcards' && (
-                <div className="animate-in fade-in slide-in-from-right-4 duration-500">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {config.flashcards.map((deck, idx) => (
-                            <div
-                                key={idx}
-                                onClick={() => navigate(`/${langId}/flashcards/${deck.id}`)}
-                                className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-md hover:border-indigo-300 transition-all cursor-pointer group"
-                            >
-                                <div className="flex items-start justify-between mb-4">
-                                    <div className="p-3 bg-indigo-50 text-indigo-600 rounded-xl group-hover:bg-indigo-600 group-hover:text-white transition-colors">
-                                        <Layers className="w-6 h-6" />
+                <div className="animate-in fade-in slide-in-from-right-4 duration-500 space-y-12">
+                    {/* Scripts Section */}
+                    {config.flashcards.some(d => !d.id.startsWith('vocab-')) && (
+                        <div>
+                            <h3 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+                                <BookOpen className="w-5 h-5 text-indigo-600" />
+                                Scripts
+                            </h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {config.flashcards.filter(d => !d.id.startsWith('vocab-')).map((deck, idx) => (
+                                    <div
+                                        key={deck.id}
+                                        onClick={() => navigate(`/${langId}/flashcards/${deck.id}`)}
+                                        className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-md hover:border-indigo-300 transition-all cursor-pointer group"
+                                    >
+                                        <div className="flex items-start justify-between mb-4">
+                                            <div className="p-3 bg-indigo-50 text-indigo-600 rounded-xl group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                                                <Layers className="w-6 h-6" />
+                                            </div>
+                                            <span className="text-xs font-bold text-slate-400 bg-slate-100 px-2 py-1 rounded-full">
+                                                {deck.cards.length} Cards
+                                            </span>
+                                        </div>
+                                        <h3 className="text-xl font-bold text-slate-800 mb-2">{deck.title}</h3>
+                                        <p className="text-slate-600 text-sm">{deck.description}</p>
                                     </div>
-                                    <span className="text-xs font-bold text-slate-400 bg-slate-100 px-2 py-1 rounded-full">
-                                        {deck.cards.length} Cards
-                                    </span>
-                                </div>
-                                <h3 className="text-xl font-bold text-slate-800 mb-2">{deck.title}</h3>
-                                <p className="text-slate-600 text-sm">{deck.description}</p>
+                                ))}
                             </div>
-                        ))}
-                    </div>
+                        </div>
+                    )}
+
+                    {/* Vocabulary Section */}
+                    {config.flashcards.some(d => d.id.startsWith('vocab-')) && (
+                        <div>
+                            <h3 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+                                <Languages className="w-5 h-5 text-emerald-600" />
+                                Vocabulary
+                            </h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {config.flashcards.filter(d => d.id.startsWith('vocab-')).map((deck, idx) => (
+                                    <div
+                                        key={deck.id}
+                                        onClick={() => navigate(`/${langId}/flashcards/${deck.id}`)}
+                                        className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-md hover:border-emerald-300 transition-all cursor-pointer group"
+                                    >
+                                        <div className="flex items-start justify-between mb-4">
+                                            <div className="p-3 bg-emerald-50 text-emerald-600 rounded-xl group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                                                <Layers className="w-6 h-6" />
+                                            </div>
+                                            <span className="text-xs font-bold text-slate-400 bg-slate-100 px-2 py-1 rounded-full">
+                                                {deck.cards.length} Cards
+                                            </span>
+                                        </div>
+                                        <h3 className="text-xl font-bold text-slate-800 mb-2">{deck.title}</h3>
+                                        <p className="text-slate-600 text-sm">{deck.description}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </div>
             )}
 

@@ -207,100 +207,188 @@ Object.assign(THAI, {
         {
             category: 'Greetings',
             items: [
-                { thai: 'สวัสดี', roman: 'sà-wàt-dii', meaning: 'Hello', audioSrc: '/audio/thai/vocab/sawatdee.mp3', imageSrc: '/images/thai/sawatdee.jpg' },
-                { thai: 'ขอบคุณ', roman: 'khàwp-khun', meaning: 'Thank you', audioSrc: '/audio/thai/vocab/khop_khun.mp3', imageSrc: '/images/thai/khop_khun.jpg' },
-                { thai: 'ขอโทษ', roman: 'khǎw-thôot', meaning: 'Sorry', audioSrc: '/audio/thai/vocab/khor_thot.mp3', imageSrc: '/images/thai/khor_thot.jpg' },
-                { thai: 'ใช่', roman: 'châi', meaning: 'Yes', audioSrc: '/audio/thai/vocab/chai.mp3', imageSrc: '/images/thai/chai.jpg' },
-                { thai: 'ไม่', roman: 'mâi', meaning: 'No', audioSrc: '/audio/thai/vocab/mai.mp3', imageSrc: '/images/thai/mai.jpg' }
+                { thai: 'สวัสดี', roman: 'sà-wàt-dii', meaning: 'Hello', audioSrc: '/audio/thai/vocab/sawatdee.mp3', emoji: '👋' },
+                { thai: 'ขอบคุณ', roman: 'khàwp-khun', meaning: 'Thank you', audioSrc: '/audio/thai/vocab/khop_khun.mp3', emoji: '🙏' },
+                { thai: 'ขอโทษ', roman: 'khǎw-thôot', meaning: 'Sorry', audioSrc: '/audio/thai/vocab/khor_thot.mp3', emoji: '😔' },
+                { thai: 'ใช่', roman: 'châi', meaning: 'Yes', audioSrc: '/audio/thai/vocab/chai.mp3', emoji: '✅' },
+                { thai: 'ไม่', roman: 'mâi', meaning: 'No', audioSrc: '/audio/thai/vocab/mai.mp3', emoji: '❌' },
+                { thai: 'ลาก่อน', roman: 'laa-gàwn', meaning: 'Goodbye', audioSrc: '/audio/thai/vocab/laa_gawn.mp3', emoji: '👋' },
+                { thai: 'สบายดีไหม', roman: 'sà-baai-dii-mǎi', meaning: 'How are you?', audioSrc: '/audio/thai/vocab/sabai_dee_mai.mp3', emoji: '❓' }
             ]
         },
         {
-            category: 'Essentials',
+            category: 'Food & Drink',
             items: [
-                { thai: 'ห้องน้ำ', roman: 'hâwng-náam', meaning: 'Bathroom', audioSrc: '/audio/thai/vocab/hong_nam.mp3', imageSrc: '/images/thai/hong_nam.jpg' },
-                { thai: 'น้ำ', roman: 'náam', meaning: 'Water', audioSrc: '/audio/thai/vocab/nam.mp3', imageSrc: '/images/thai/nam.jpg' },
-                { thai: 'ข้าว', roman: 'khâao', meaning: 'Rice', audioSrc: '/audio/thai/vocab/khao.mp3', imageSrc: '/images/thai/khao.jpg' },
-                { thai: 'อร่อย', roman: 'à-ròi', meaning: 'Delicious', audioSrc: '/audio/thai/vocab/aroi.mp3', imageSrc: '/images/thai/aroi.jpg' },
-                { thai: 'เท่าไหร่', roman: 'thâo-rài', meaning: 'How much?', audioSrc: '/audio/thai/vocab/thao_rai.mp3', imageSrc: '/images/thai/thao_rai.jpg' }
-            ]
-        },
-        {
-            category: 'Colors',
-            items: [
-                { thai: 'สีแดง', roman: 'sǐi-daeng', meaning: 'Red', audioSrc: '/audio/thai/vocab/si_daeng.mp3', imageSrc: '/images/thai/si_daeng.jpg' },
-                { thai: 'สีเขียว', roman: 'sǐi-khǐao', meaning: 'Green', audioSrc: '/audio/thai/vocab/si_khiao.mp3', imageSrc: '/images/thai/si_khiao.jpg' },
-                { thai: 'สีน้ำเงิน', roman: 'sǐi-náam-ngen', meaning: 'Blue', audioSrc: '/audio/thai/vocab/si_nam_ngoen.mp3', imageSrc: '/images/thai/si_nam_ngoen.jpg' },
-                { thai: 'สีขาว', roman: 'sǐi-khǎao', meaning: 'White', audioSrc: '/audio/thai/vocab/si_khao.mp3', imageSrc: '/images/thai/si_khao.jpg' },
-                { thai: 'สีดำ', roman: 'sǐi-dam', meaning: 'Black', audioSrc: '/audio/thai/vocab/si_dam.mp3', imageSrc: '/images/thai/si_dam.jpg' }
-            ]
-        },
-        {
-            category: 'Food',
-            items: [
-                { thai: 'ผัดไทย', roman: 'phàt-thai', meaning: 'Pad Thai', audioSrc: '/audio/thai/vocab/pad_thai.mp3', imageSrc: '/images/thai/pad_thai.jpg' },
-                { thai: 'ส้มตำ', roman: 'sôm-tam', meaning: 'Papaya Salad', audioSrc: '/audio/thai/vocab/som_tum.mp3', imageSrc: '/images/thai/som_tum.jpg' },
-                { thai: 'ต้มยำ', roman: 'tôm-yam', meaning: 'Spicy Soup', audioSrc: '/audio/thai/vocab/tom_yum.mp3', imageSrc: '/images/thai/tom_yum.jpg' },
-                { thai: 'ข้าวเหนียวมะม่วง', roman: 'khâao-nǐao-má-mûang', meaning: 'Mango Sticky Rice', audioSrc: '/audio/thai/vocab/khao_niao_mamuang.mp3', imageSrc: '/images/thai/mango_sticky_rice.jpg' }
-            ]
-        },
-        {
-            category: 'Travel',
-            items: [
-                { thai: 'สนามบิน', roman: 'sà-nǎam-bin', meaning: 'Airport', audioSrc: '/audio/thai/vocab/sanam_bin.mp3', imageSrc: '/images/thai/sanam_bin.jpg' },
-                { thai: 'โรงแรม', roman: 'roong-raaem', meaning: 'Hotel', audioSrc: '/audio/thai/vocab/rong_raem.mp3', imageSrc: '/images/thai/rong_raem.jpg' },
-                { thai: 'ตั๋ว', roman: 'tǔa', meaning: 'Ticket', audioSrc: '/audio/thai/vocab/tua.mp3', imageSrc: '/images/thai/tua.jpg' },
-                { thai: 'แท็กซี่', roman: 'tháek-sîi', meaning: 'Taxi', audioSrc: '/audio/thai/vocab/taxi.mp3', imageSrc: '/images/thai/tuk_tuk.jpg' },
-                { thai: 'รถเมล์', roman: 'rót-meh', meaning: 'Bus', audioSrc: '/audio/thai/vocab/rot_me.mp3', imageSrc: '/images/thai/rot_me.jpg' }
-            ]
-        },
-        {
-            category: 'Shopping',
-            items: [
-                { thai: 'เงิน', roman: 'ngen', meaning: 'Money', audioSrc: '/audio/thai/vocab/ngoen.mp3', imageSrc: '/images/thai/ngoen.jpg' },
-                { thai: 'แพง', roman: 'phaaeng', meaning: 'Expensive', audioSrc: '/audio/thai/vocab/phaeng.mp3', imageSrc: '/images/thai/phaeng.jpg' },
-                { thai: 'ถูก', roman: 'thùuk', meaning: 'Cheap', audioSrc: '/audio/thai/vocab/thuk.mp3', imageSrc: '/images/thai/thuk.jpg' },
-                { thai: 'ลดราคา', roman: 'lót-raa-khaa', meaning: 'Discount', audioSrc: '/audio/thai/vocab/lot_rakha.mp3', imageSrc: '/images/thai/lot_rakha.jpg' },
-                { thai: 'ร้านค้า', roman: 'ráan-kháa', meaning: 'Shop', audioSrc: '/audio/thai/vocab/ran_kha.mp3', imageSrc: '/images/thai/ran_kha.jpg' }
-            ]
-        },
-        {
-            category: 'Family',
-            items: [
-                { thai: 'พ่อ', roman: 'phâw', meaning: 'Father', audioSrc: '/audio/thai/vocab/phor.mp3', imageSrc: '/images/thai/phor.jpg' },
-                { thai: 'แม่', roman: 'mâe', meaning: 'Mother', audioSrc: '/audio/thai/vocab/mae.mp3', imageSrc: '/images/thai/mae.jpg' },
-                { thai: 'พี่ชาย', roman: 'phîi-chaai', meaning: 'Older Brother', audioSrc: '/audio/thai/vocab/phi_chai.mp3', imageSrc: '/images/thai/phi_chai.jpg' },
-                { thai: 'น้องสาว', roman: 'náwng-sǎao', meaning: 'Younger Sister', audioSrc: '/audio/thai/vocab/nong_sao.mp3', imageSrc: '/images/thai/nong_sao.jpg' },
-                { thai: 'ลูก', roman: 'lûuk', meaning: 'Child', audioSrc: '/audio/thai/vocab/luk.mp3', imageSrc: '/images/thai/luk.jpg' }
-            ]
-        },
-        {
-            category: 'Time',
-            items: [
-                { thai: 'วันนี้', roman: 'wan-níi', meaning: 'Today', audioSrc: '/audio/thai/vocab/wan_ni.mp3', imageSrc: '/images/thai/wan_ni.jpg' },
-                { thai: 'พรุ่งนี้', roman: 'phrûng-níi', meaning: 'Tomorrow', audioSrc: '/audio/thai/vocab/phrung_ni.mp3', imageSrc: '/images/thai/phrung_ni.jpg' },
-                { thai: 'เมื่อวาน', roman: 'mûea-waan', meaning: 'Yesterday', audioSrc: '/audio/thai/vocab/muea_wan.mp3', imageSrc: '/images/thai/muea_wan.jpg' },
-                { thai: 'ตอนเช้า', roman: 'tawn-cháao', meaning: 'Morning', audioSrc: '/audio/thai/vocab/ton_chao.mp3', imageSrc: '/images/thai/ton_chao.jpg' },
-                { thai: 'ตอนเย็น', roman: 'tawn-yen', meaning: 'Evening', audioSrc: '/audio/thai/vocab/ton_yen.mp3', imageSrc: '/images/thai/ton_yen.jpg' }
-            ]
-        },
-        {
-            category: 'Places',
-            items: [
-                { thai: 'โรงเรียน', roman: 'roong-riian', meaning: 'School', audioSrc: '/audio/thai/vocab/rong_rian.mp3', imageSrc: '/images/thai/rong_rian.jpg' },
-                { thai: 'โรงพยาบาล', roman: 'roong-phá-yaa-baan', meaning: 'Hospital', audioSrc: '/audio/thai/vocab/rong_phayaban.mp3', imageSrc: '/images/thai/rong_phayaban.jpg' },
-                { thai: 'ตลาด', roman: 'tà-làat', meaning: 'Market', audioSrc: '/audio/thai/vocab/talat.mp3', imageSrc: '/images/thai/talat.jpg' },
-                { thai: 'วัด', roman: 'wát', meaning: 'Temple', audioSrc: '/audio/thai/vocab/wat.mp3', imageSrc: '/images/thai/thai_temple.jpg' },
-                { thai: 'ทะเล', roman: 'thá-leh', meaning: 'Sea/Beach', audioSrc: '/audio/thai/vocab/thale.mp3', imageSrc: '/images/thai/thale.jpg' }
+                { thai: 'ผัดไทย', roman: 'phàt-thai', meaning: 'Pad Thai', audioSrc: '/audio/thai/vocab/pad_thai.mp3', emoji: '🍜' },
+                { thai: 'ส้มตำ', roman: 'sôm-tam', meaning: 'Papaya Salad', audioSrc: '/audio/thai/vocab/som_tum.mp3', emoji: '🥗' },
+                { thai: 'ต้มยำ', roman: 'tôm-yam', meaning: 'Spicy Soup', audioSrc: '/audio/thai/vocab/tom_yum.mp3', emoji: '🍲' },
+                { thai: 'ข้าวเหนียวมะม่วง', roman: 'khâao-nǐao-má-mûang', meaning: 'Mango Sticky Rice', audioSrc: '/audio/thai/vocab/khao_niao_mamuang.mp3', emoji: '🥭' },
+                { thai: 'ข้าว', roman: 'khâao', meaning: 'Rice', audioSrc: '/audio/thai/vocab/khao.mp3', emoji: '🍚' },
+                { thai: 'น้ำ', roman: 'náam', meaning: 'Water', audioSrc: '/audio/thai/vocab/nam.mp3', emoji: '💧' },
+                { thai: 'กาแฟ', roman: 'gaa-fɛɛ', meaning: 'Coffee', audioSrc: '/audio/thai/vocab/coffee.mp3', emoji: '☕' },
+                { thai: 'ชา', roman: 'chaa', meaning: 'Tea', audioSrc: '/audio/thai/vocab/tea.mp3', emoji: '🍵' },
+                { thai: 'นม', roman: 'nom', meaning: 'Milk', audioSrc: '/audio/thai/vocab/milk.mp3', emoji: '🥛' },
+                { thai: 'อาหาร', roman: 'aa-hǎan', meaning: 'Food', audioSrc: '/audio/thai/vocab/food.mp3', emoji: '🍽️' },
+                { thai: 'ผลไม้', roman: 'phǒn-lá-mái', meaning: 'Fruit', audioSrc: '/audio/thai/vocab/fruit.mp3', emoji: '🍎' },
+                { thai: 'ขนม', roman: 'khà-nǒm', meaning: 'Dessert/Snack', audioSrc: '/audio/thai/vocab/dessert.mp3', emoji: '🍪' },
+                { thai: 'ขนมปัง', roman: 'khà-nǒm-bpang', meaning: 'Bread', audioSrc: '/audio/thai/vocab/bread.mp3', emoji: '🍞' },
+                { thai: 'เนื้อ', roman: 'núua', meaning: 'Beef', audioSrc: '/audio/thai/vocab/beef.mp3', emoji: '🥩' },
+                { thai: 'หมู', roman: 'mǔu', meaning: 'Pork', audioSrc: '/audio/thai/vocab/pork.mp3', emoji: '🥓' },
+                { thai: 'ไก่', roman: 'gài', meaning: 'Chicken', audioSrc: '/audio/thai/vocab/chicken.mp3', emoji: '🍗' },
+                { thai: 'ปลา', roman: 'plaa', meaning: 'Fish', audioSrc: '/audio/thai/vocab/pla.mp3', emoji: '🐟' },
+                { thai: 'ไข่', roman: 'khài', meaning: 'Egg', audioSrc: '/audio/thai/vocab/egg.mp3', emoji: '🥚' }
             ]
         },
         {
             category: 'Animals',
             items: [
-                { thai: 'หมา', roman: 'mǎa', meaning: 'Dog', audioSrc: '/audio/thai/vocab/ma.mp3', imageSrc: '/images/thai/ma.jpg' },
-                { thai: 'แมว', roman: 'maaeo', meaning: 'Cat', audioSrc: '/audio/thai/vocab/maew.mp3', imageSrc: '/images/thai/maew.jpg' },
-                { thai: 'ช้าง', roman: 'cháang', meaning: 'Elephant', audioSrc: '/audio/thai/vocab/chang.mp3', imageSrc: '/images/thai/elephant.jpg' },
-                { thai: 'นก', roman: 'nók', meaning: 'Bird', audioSrc: '/audio/thai/vocab/nok.mp3', imageSrc: '/images/thai/nok.jpg' },
-                { thai: 'ปลา', roman: 'plaa', meaning: 'Fish', audioSrc: '/audio/thai/vocab/pla.mp3', imageSrc: '/images/thai/pla.jpg' }
+                { thai: 'หมา', roman: 'mǎa', meaning: 'Dog', audioSrc: '/audio/thai/vocab/ma.mp3', emoji: '🐕' },
+                { thai: 'แมว', roman: 'maaeo', meaning: 'Cat', audioSrc: '/audio/thai/vocab/maew.mp3', emoji: '🐈' },
+                { thai: 'ช้าง', roman: 'cháang', meaning: 'Elephant', audioSrc: '/audio/thai/vocab/chang.mp3', emoji: '🐘' },
+                { thai: 'นก', roman: 'nók', meaning: 'Bird', audioSrc: '/audio/thai/vocab/nok.mp3', emoji: '🐦' },
+                { thai: 'ลิง', roman: 'ling', meaning: 'Monkey', audioSrc: '/audio/thai/vocab/ling.mp3', emoji: '🐒' },
+                { thai: 'งู', roman: 'nguu', meaning: 'Snake', audioSrc: '/audio/thai/vocab/ngu.mp3', emoji: '🐍' },
+                { thai: 'เสือ', roman: 'sǔua', meaning: 'Tiger', audioSrc: '/audio/thai/vocab/tiger.mp3', emoji: '🐅' },
+                { thai: 'ม้า', roman: 'máa', meaning: 'Horse', audioSrc: '/audio/thai/vocab/horse.mp3', emoji: '🐎' },
+                { thai: 'วัว', roman: 'wua', meaning: 'Cow', audioSrc: '/audio/thai/vocab/cow.mp3', emoji: '🐄' },
+                { thai: 'หมี', roman: 'mǐi', meaning: 'Bear', audioSrc: '/audio/thai/vocab/bear.mp3', emoji: '🐻' },
+                { thai: 'กบ', roman: 'gòp', meaning: 'Frog', audioSrc: '/audio/thai/vocab/frog.mp3', emoji: '🐸' },
+                { thai: 'เป็ด', roman: 'bpèt', meaning: 'Duck', audioSrc: '/audio/thai/vocab/duck.mp3', emoji: '🦆' },
+                { thai: 'กระต่าย', roman: 'grà-dtàai', meaning: 'Rabbit', audioSrc: '/audio/thai/vocab/rabbit.mp3', emoji: '🐇' },
+                { thai: 'เต่า', roman: 'dtào', meaning: 'Turtle', audioSrc: '/audio/thai/vocab/turtle.mp3', emoji: '🐢' }
+            ]
+        },
+        {
+            category: 'Family',
+            items: [
+                { thai: 'พ่อ', roman: 'phâw', meaning: 'Father', audioSrc: '/audio/thai/vocab/phor.mp3', emoji: '👨' },
+                { thai: 'แม่', roman: 'mâe', meaning: 'Mother', audioSrc: '/audio/thai/vocab/mae.mp3', emoji: '👩' },
+                { thai: 'พี่ชาย', roman: 'phîi-chaai', meaning: 'Older Brother', audioSrc: '/audio/thai/vocab/phi_chai.mp3', emoji: '👦' },
+                { thai: 'น้องสาว', roman: 'náwng-sǎao', meaning: 'Younger Sister', audioSrc: '/audio/thai/vocab/nong_sao.mp3', emoji: '👧' },
+                { thai: 'ลูก', roman: 'lûuk', meaning: 'Child', audioSrc: '/audio/thai/vocab/luk.mp3', emoji: '👶' },
+                { thai: 'ปู่', roman: 'bpùu', meaning: 'Grandfather (paternal)', audioSrc: '/audio/thai/vocab/grandpa.mp3', emoji: '👴' },
+                { thai: 'ย่า', roman: 'yâa', meaning: 'Grandmother (paternal)', audioSrc: '/audio/thai/vocab/grandma.mp3', emoji: '👵' },
+                { thai: 'ครอบครัว', roman: 'khrâwp-khruua', meaning: 'Family', audioSrc: '/audio/thai/vocab/family.mp3', emoji: '👨‍👩‍👧‍👦' }
+            ]
+        },
+        {
+            category: 'Body Parts',
+            items: [
+                { thai: 'หัว', roman: 'hǔa', meaning: 'Head', audioSrc: '/audio/thai/vocab/head.mp3', emoji: '💆' },
+                { thai: 'ตา', roman: 'dtaa', meaning: 'Eye', audioSrc: '/audio/thai/vocab/eye.mp3', emoji: '👁️' },
+                { thai: 'จมูก', roman: 'jà-mùuk', meaning: 'Nose', audioSrc: '/audio/thai/vocab/nose.mp3', emoji: '👃' },
+                { thai: 'ปาก', roman: 'bpàak', meaning: 'Mouth', audioSrc: '/audio/thai/vocab/mouth.mp3', emoji: '👄' },
+                { thai: 'หู', roman: 'hǔu', meaning: 'Ear', audioSrc: '/audio/thai/vocab/ear.mp3', emoji: '👂' },
+                { thai: 'มือ', roman: 'muu', meaning: 'Hand', audioSrc: '/audio/thai/vocab/hand.mp3', emoji: '✋' },
+                { thai: 'เท้า', roman: 'tháao', meaning: 'Foot', audioSrc: '/audio/thai/vocab/foot.mp3', emoji: '🦶' },
+                { thai: 'หัวใจ', roman: 'hǔa-jai', meaning: 'Heart', audioSrc: '/audio/thai/vocab/heart.mp3', emoji: '❤️' }
+            ]
+        },
+        {
+            category: 'Colors',
+            items: [
+                { thai: 'สีแดง', roman: 'sǐi-daeng', meaning: 'Red', audioSrc: '/audio/thai/vocab/si_daeng.mp3', emoji: '🔴' },
+                { thai: 'สีเขียว', roman: 'sǐi-khǐao', meaning: 'Green', audioSrc: '/audio/thai/vocab/si_khiao.mp3', emoji: '🟢' },
+                { thai: 'สีน้ำเงิน', roman: 'sǐi-náam-ngen', meaning: 'Blue', audioSrc: '/audio/thai/vocab/si_nam_ngoen.mp3', emoji: '🔵' },
+                { thai: 'สีขาว', roman: 'sǐi-khǎao', meaning: 'White', audioSrc: '/audio/thai/vocab/si_khao.mp3', emoji: '⚪' },
+                { thai: 'สีดำ', roman: 'sǐi-dam', meaning: 'Black', audioSrc: '/audio/thai/vocab/si_dam.mp3', emoji: '⚫' },
+                { thai: 'สีเหลือง', roman: 'sǐi-lǔuang', meaning: 'Yellow', audioSrc: '/audio/thai/vocab/yellow.mp3', emoji: '🟡' },
+                { thai: 'สีส้ม', roman: 'sǐi-sôm', meaning: 'Orange', audioSrc: '/audio/thai/vocab/orange.mp3', emoji: '🟠' },
+                { thai: 'สีม่วง', roman: 'sǐi-mûang', meaning: 'Purple', audioSrc: '/audio/thai/vocab/purple.mp3', emoji: '🟣' },
+                { thai: 'สีชมพู', roman: 'sǐi-chom-phuu', meaning: 'Pink', audioSrc: '/audio/thai/vocab/pink.mp3', emoji: '🌸' },
+                { thai: 'สีน้ำตาล', roman: 'sǐi-náam-dtaan', meaning: 'Brown', audioSrc: '/audio/thai/vocab/brown.mp3', emoji: '🟤' }
+            ]
+        },
+        {
+            category: 'Weather & Nature',
+            items: [
+                { thai: 'ดวงอาทิตย์', roman: 'duuang-aa-thít', meaning: 'Sun', audioSrc: '/audio/thai/vocab/sun.mp3', emoji: '☀️' },
+                { thai: 'ดวงจันทร์', roman: 'duuang-jan', meaning: 'Moon', audioSrc: '/audio/thai/vocab/moon.mp3', emoji: '🌙' },
+                { thai: 'ดาว', roman: 'daao', meaning: 'Star', audioSrc: '/audio/thai/vocab/star.mp3', emoji: '⭐' },
+                { thai: 'ฝน', roman: 'fǒn', meaning: 'Rain', audioSrc: '/audio/thai/vocab/rain.mp3', emoji: '🌧️' },
+                { thai: 'หิมะ', roman: 'hì-má', meaning: 'Snow', audioSrc: '/audio/thai/vocab/snow.mp3', emoji: '❄️' },
+                { thai: 'ต้นไม้', roman: 'dtôn-máai', meaning: 'Tree', audioSrc: '/audio/thai/vocab/tree.mp3', emoji: '🌳' },
+                { thai: 'ดอกไม้', roman: 'dàwk-máai', meaning: 'Flower', audioSrc: '/audio/thai/vocab/flower.mp3', emoji: '🌺' },
+                { thai: 'ทะเล', roman: 'thá-leh', meaning: 'Sea/Beach', audioSrc: '/audio/thai/vocab/thale.mp3', emoji: '🏖️' },
+                { thai: 'ภูเขา', roman: 'phuu-khǎo', meaning: 'Mountain', audioSrc: '/audio/thai/vocab/mountain.mp3', emoji: '⛰️' },
+                { thai: 'ไฟ', roman: 'fai', meaning: 'Fire', audioSrc: '/audio/thai/vocab/fire.mp3', emoji: '🔥' }
+            ]
+        },
+        {
+            category: 'Time',
+            items: [
+                { thai: 'วันนี้', roman: 'wan-níi', meaning: 'Today', audioSrc: '/audio/thai/vocab/wan_ni.mp3', emoji: '📅' },
+                { thai: 'พรุ่งนี้', roman: 'phrûng-níi', meaning: 'Tomorrow', audioSrc: '/audio/thai/vocab/phrung_ni.mp3', emoji: '➡️' },
+                { thai: 'เมื่อวาน', roman: 'mûea-waan', meaning: 'Yesterday', audioSrc: '/audio/thai/vocab/muea_wan.mp3', emoji: '⬅️' },
+                { thai: 'ตอนเช้า', roman: 'tawn-cháao', meaning: 'Morning', audioSrc: '/audio/thai/vocab/ton_chao.mp3', emoji: '🌅' },
+                { thai: 'ตอนเย็น', roman: 'tawn-yen', meaning: 'Evening', audioSrc: '/audio/thai/vocab/ton_yen.mp3', emoji: '🌆' },
+                { thai: 'กลางคืน', roman: 'glaang-khuun', meaning: 'Night', audioSrc: '/audio/thai/vocab/night.mp3', emoji: '🌙' },
+                { thai: 'เวลา', roman: 'weh-laa', meaning: 'Time', audioSrc: '/audio/thai/vocab/time.mp3', emoji: '⏰' }
+            ]
+        },
+        {
+            category: 'Places',
+            items: [
+                { thai: 'โรงเรียน', roman: 'roong-riian', meaning: 'School', audioSrc: '/audio/thai/vocab/rong_rian.mp3', emoji: '🏫' },
+                { thai: 'โรงพยาบาล', roman: 'roong-phá-yaa-baan', meaning: 'Hospital', audioSrc: '/audio/thai/vocab/rong_phayaban.mp3', emoji: '🏥' },
+                { thai: 'ตลาด', roman: 'tà-làat', meaning: 'Market', audioSrc: '/audio/thai/vocab/talat.mp3', emoji: '🛒' },
+                { thai: 'วัด', roman: 'wát', meaning: 'Temple', audioSrc: '/audio/thai/vocab/wat.mp3', emoji: '🛕' },
+                { thai: 'สนามบิน', roman: 'sà-nǎam-bin', meaning: 'Airport', audioSrc: '/audio/thai/vocab/sanam_bin.mp3', emoji: '✈️' },
+                { thai: 'โรงแรม', roman: 'roong-raaem', meaning: 'Hotel', audioSrc: '/audio/thai/vocab/rong_raem.mp3', emoji: '🏨' },
+                { thai: 'ร้านค้า', roman: 'ráan-kháa', meaning: 'Shop', audioSrc: '/audio/thai/vocab/ran_kha.mp3', emoji: '🏪' },
+                { thai: 'บ้าน', roman: 'bâan', meaning: 'House/Home', audioSrc: '/audio/thai/vocab/home.mp3', emoji: '🏠' },
+                { thai: 'ห้องน้ำ', roman: 'hâwng-náam', meaning: 'Bathroom', audioSrc: '/audio/thai/vocab/hong_nam.mp3', emoji: '🚻' }
+            ]
+        },
+        {
+            category: 'Transport',
+            items: [
+                { thai: 'รถเมล์', roman: 'rót-meh', meaning: 'Bus', audioSrc: '/audio/thai/vocab/rot_me.mp3', emoji: '🚌' },
+                { thai: 'แท็กซี่', roman: 'tháek-sîi', meaning: 'Taxi', audioSrc: '/audio/thai/vocab/taxi.mp3', emoji: '🚕' },
+                { thai: 'ตั๋ว', roman: 'tǔa', meaning: 'Ticket', audioSrc: '/audio/thai/vocab/tua.mp3', emoji: '🎫' },
+                { thai: 'รถไฟ', roman: 'rót-fai', meaning: 'Train', audioSrc: '/audio/thai/vocab/train.mp3', emoji: '🚆' },
+                { thai: 'เครื่องบิน', roman: 'khrûuang-bin', meaning: 'Airplane', audioSrc: '/audio/thai/vocab/airplane.mp3', emoji: '✈️' },
+                { thai: 'เรือ', roman: 'ruua', meaning: 'Boat', audioSrc: '/audio/thai/vocab/boat.mp3', emoji: '🚤' },
+                { thai: 'รถยนต์', roman: 'rót-yon', meaning: 'Car', audioSrc: '/audio/thai/vocab/car.mp3', emoji: '🚗' },
+                { thai: 'จักรยาน', roman: 'jàk-grà-yaan', meaning: 'Bicycle', audioSrc: '/audio/thai/vocab/bicycle.mp3', emoji: '🚲' }
+            ]
+        },
+        {
+            category: 'Emotions',
+            items: [
+                { thai: 'ดีใจ', roman: 'dii-jai', meaning: 'Happy', audioSrc: '/audio/thai/vocab/happy.mp3', emoji: '😊' },
+                { thai: 'เศร้า', roman: 'sâo', meaning: 'Sad', audioSrc: '/audio/thai/vocab/sad.mp3', emoji: '😢' },
+                { thai: 'โกรธ', roman: 'gròht', meaning: 'Angry', audioSrc: '/audio/thai/vocab/angry.mp3', emoji: '😠' },
+                { thai: 'รัก', roman: 'rák', meaning: 'Love', audioSrc: '/audio/thai/vocab/love.mp3', emoji: '❤️' },
+                { thai: 'กลัว', roman: 'gluua', meaning: 'Scared', audioSrc: '/audio/thai/vocab/scared.mp3', emoji: '😱' },
+                { thai: 'เหงา', roman: 'ngǎo', meaning: 'Lonely', audioSrc: '/audio/thai/vocab/lonely.mp3', emoji: '😔' }
+            ]
+        },
+        {
+            category: 'Actions',
+            items: [
+                { thai: 'กิน', roman: 'gin', meaning: 'Eat', audioSrc: '/audio/thai/vocab/eat.mp3', emoji: '🍽️' },
+                { thai: 'ดื่ม', roman: 'dùum', meaning: 'Drink', audioSrc: '/audio/thai/vocab/drink.mp3', emoji: '🥤' },
+                { thai: 'นอน', roman: 'nawn', meaning: 'Sleep', audioSrc: '/audio/thai/vocab/sleep.mp3', emoji: '😴' },
+                { thai: 'เดิน', roman: 'dəən', meaning: 'Walk', audioSrc: '/audio/thai/vocab/walk.mp3', emoji: '🚶' },
+                { thai: 'วิ่ง', roman: 'wîng', meaning: 'Run', audioSrc: '/audio/thai/vocab/run.mp3', emoji: '🏃' },
+                { thai: 'พูด', roman: 'phûut', meaning: 'Speak', audioSrc: '/audio/thai/vocab/speak.mp3', emoji: '🗣️' },
+                { thai: 'อ่าน', roman: 'àan', meaning: 'Read', audioSrc: '/audio/thai/vocab/read.mp3', emoji: '📖' },
+                { thai: 'เขียน', roman: 'khǐan', meaning: 'Write', audioSrc: '/audio/thai/vocab/write.mp3', emoji: '✍️' },
+                { thai: 'ดู', roman: 'duu', meaning: 'Watch/Look', audioSrc: '/audio/thai/vocab/watch.mp3', emoji: '📺' },
+                { thai: 'ฟัง', roman: 'fang', meaning: 'Listen', audioSrc: '/audio/thai/vocab/listen.mp3', emoji: '👂' }
+            ]
+        },
+        {
+            category: 'Shopping',
+            items: [
+                { thai: 'เงิน', roman: 'ngen', meaning: 'Money', audioSrc: '/audio/thai/vocab/ngoen.mp3', emoji: '💵' },
+                { thai: 'แพง', roman: 'phaaeng', meaning: 'Expensive', audioSrc: '/audio/thai/vocab/phaeng.mp3', emoji: '💎' },
+                { thai: 'ถูก', roman: 'thùuk', meaning: 'Cheap', audioSrc: '/audio/thai/vocab/thuk.mp3', emoji: '🏷️' },
+                { thai: 'ลดราคา', roman: 'lót-raa-khaa', meaning: 'Discount', audioSrc: '/audio/thai/vocab/lot_rakha.mp3', emoji: '📉' },
+                { thai: 'เท่าไหร่', roman: 'thâo-rài', meaning: 'How much?', audioSrc: '/audio/thai/vocab/thao_rai.mp3', emoji: '💰' },
+                { thai: 'ซื้อ', roman: 'súu', meaning: 'Buy', audioSrc: '/audio/thai/vocab/buy.mp3', emoji: '🛍️' },
+                { thai: 'ขาย', roman: 'khǎai', meaning: 'Sell', audioSrc: '/audio/thai/vocab/sell.mp3', emoji: '🏪' }
             ]
         }
     ]
@@ -309,3 +397,38 @@ Object.assign(THAI, {
 // Populate flashcards with consonants
 THAI.flashcards[0].cards = chars.filter(c => c.type === 'Consonant');
 THAI.flashcards[1].cards = chars.filter(c => c.type === 'Consonant');
+
+// Generate Vocabulary Flashcards
+// 1. All Vocabulary Deck
+const allVocabCards = THAI.vocabulary.flatMap(category =>
+    category.items.map(item => ({
+        char: item.thai,
+        name: item.roman,
+        thaiName: item.emoji,
+        meaning: item.meaning,
+        audioSrc: item.audioSrc
+    }))
+);
+
+THAI.flashcards.push({
+    id: 'vocab-all',
+    title: 'All Vocabulary',
+    description: `Master all ${allVocabCards.length} words across all categories`,
+    cards: allVocabCards
+});
+
+// 2. Individual Category Decks
+THAI.vocabulary.forEach(category => {
+    THAI.flashcards.push({
+        id: `vocab-${category.category.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`,
+        title: `${category.category}`,
+        description: `Learn ${category.category} words in Thai`,
+        cards: category.items.map(item => ({
+            char: item.thai,
+            name: item.roman,
+            thaiName: item.emoji,
+            meaning: item.meaning,
+            audioSrc: item.audioSrc
+        }))
+    });
+});

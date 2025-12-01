@@ -5,21 +5,7 @@ import { speak } from '../utils/audio';
 const VocabularyModal = ({ item, langCode, onClose }) => {
     if (!item) return null;
 
-    // Emoji mapping for vocabulary words
-    const emojiMap = {
-        'Hello': '👋', 'Thank you': '🙏', 'Sorry': '😔', 'Yes': '✅', 'No': '❌',
-        'Bathroom': '🚻', 'Water': '💧', 'Rice': '🍚', 'Delicious': '😋', 'How much?': '💰',
-        'Red': '🔴', 'Green': '🟢', 'Blue': '🔵', 'White': '⚪', 'Black': '⚫',
-        'Pad Thai': '🍜', 'Papaya Salad': '🥗', 'Spicy Soup': '🍲', 'Mango Sticky Rice': '🥭',
-        'Airport': '✈️', 'Hotel': '🏨', 'Ticket': '🎫', 'Taxi': '🛺', 'Bus': '🚌',
-        'Money': '💵', 'Expensive': '💎', 'Cheap': '🏷️', 'Discount': '🎯', 'Shop': '🏪',
-        'Father': '👨', 'Mother': '👩', 'Older Brother': '👦', 'Younger Sister': '👧', 'Child': '👶',
-        'Today': '📅', 'Tomorrow': '🌅', 'Yesterday': '🌄', 'Morning': '☀️', 'Evening': '🌆',
-        'School': '🏫', 'Hospital': '🏥', 'Market': '🛒', 'Temple': '🛕', 'Sea/Beach': '🏖️',
-        'Dog': '🐕', 'Cat': '🐈', 'Elephant': '🐘', 'Bird': '🐦', 'Fish': '🐟'
-    };
-
-    const emoji = emojiMap[item.meaning];
+    const emoji = item.emoji;
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200" onClick={onClose}>
