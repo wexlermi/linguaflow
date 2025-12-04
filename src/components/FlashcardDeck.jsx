@@ -32,6 +32,9 @@ const FlashcardDeck = ({ deck, onClose, langConfig }) => {
     const currentCard = cards[currentIndex];
 
     // Play audio automatically if direction is Thai -> English (Thai is on front)
+    // Play audio automatically if direction is Thai -> English (Thai is on front)
+    // REMOVED: User wants audio only on the back side (purple side)
+    /*
     useEffect(() => {
         if (isAudioEnabled && direction === 'th-en' && !isFlipped && !hasPlayed) {
             // Small delay to ensure card is visible
@@ -42,11 +45,12 @@ const FlashcardDeck = ({ deck, onClose, langConfig }) => {
             return () => clearTimeout(timer);
         }
     }, [currentIndex, direction, isFlipped, hasPlayed, isAudioEnabled]);
+    */
 
     const handleFlip = () => {
         if (!isFlipped) {
-            // Play audio on reveal if direction is English -> Thai (Thai is on back)
-            if (isAudioEnabled && direction === 'en-th') {
+            // Play audio on reveal (when flipping to back), regardless of direction
+            if (isAudioEnabled) {
                 playAudio();
             }
         }
