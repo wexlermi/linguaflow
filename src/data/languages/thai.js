@@ -137,12 +137,13 @@ const generateQuiz = (characters) => {
                 .filter(x => x.sound !== c.sound && x.type === c.type)
                 .sort(() => 0.5 - Math.random())
                 .slice(0, 3)
-                .map(x => x.sound);
+                .map(x => ({ text: x.sound, audioSrc: x.audioSrc }));
 
             if (distractors.length === 3) {
+                const correctOption = { text: c.sound, audioSrc: c.audioSrc };
                 questions.push({
                     question: `What sound does '${c.char}' make?`,
-                    options: [...distractors, c.sound].sort(() => 0.5 - Math.random()),
+                    options: [...distractors, correctOption].sort(() => 0.5 - Math.random()),
                     correct: c.sound
                 });
             }
@@ -154,12 +155,13 @@ const generateQuiz = (characters) => {
                 .filter(x => x.meaning !== c.meaning && x.type === c.type)
                 .sort(() => 0.5 - Math.random())
                 .slice(0, 3)
-                .map(x => x.meaning);
+                .map(x => ({ text: x.meaning, audioSrc: x.audioSrc }));
 
             if (distractors.length === 3) {
+                const correctOption = { text: c.meaning, audioSrc: c.audioSrc };
                 questions.push({
                     question: `What does '${c.char}' mean?`,
-                    options: [...distractors, c.meaning].sort(() => 0.5 - Math.random()),
+                    options: [...distractors, correctOption].sort(() => 0.5 - Math.random()),
                     correct: c.meaning
                 });
             }
@@ -185,12 +187,13 @@ const generateQuiz = (characters) => {
                 .filter(x => x.char !== c.char && x.type === c.type)
                 .sort(() => 0.5 - Math.random())
                 .slice(0, 3)
-                .map(x => x.char);
+                .map(x => ({ text: x.char, audioSrc: x.audioSrc }));
 
             if (distractors.length === 3) {
+                const correctOption = { text: c.char, audioSrc: c.audioSrc };
                 questions.push({
                     question: `Which character is '${c.name}'?`,
-                    options: [...distractors, c.char].sort(() => 0.5 - Math.random()),
+                    options: [...distractors, correctOption].sort(() => 0.5 - Math.random()),
                     correct: c.char
                 });
             }
