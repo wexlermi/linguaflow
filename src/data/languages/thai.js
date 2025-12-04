@@ -393,6 +393,156 @@ Object.assign(THAI, {
                 { thai: 'ซื้อ', roman: 'súu', meaning: 'Buy', audioSrc: '/audio/thai/vocab/buy.mp3', emoji: '🛍️' },
                 { thai: 'ขาย', roman: 'khǎai', meaning: 'Sell', audioSrc: '/audio/thai/vocab/sell.mp3', emoji: '🏪' }
             ]
+        },
+        {
+            category: 'Fruits',
+            items: [
+                { thai: 'ทุเรียน', roman: 'thú-riian', meaning: 'Durian', audioSrc: '/audio/thai/vocab/durian.mp3', emoji: '🍈' },
+                { thai: 'แตงโม', roman: 'dtaeng-moo', meaning: 'Watermelon', audioSrc: '/audio/thai/vocab/watermelon.mp3', emoji: '🍉' },
+                { thai: 'กล้วย', roman: 'glûuai', meaning: 'Banana', audioSrc: '/audio/thai/vocab/banana.mp3', emoji: '🍌' },
+                { thai: 'องุ่น', roman: 'à-ngùn', meaning: 'Grape', audioSrc: '/audio/thai/vocab/grape.mp3', emoji: '🍇' },
+                { thai: 'สตรอเบอร์รี่', roman: 'sà-dtraw-ber-rîi', meaning: 'Strawberry', audioSrc: '/audio/thai/vocab/strawberry.mp3', emoji: '🍓' },
+                { thai: 'สับปะรด', roman: 'sàp-bpà-rót', meaning: 'Pineapple', audioSrc: '/audio/thai/vocab/pineapple.mp3', emoji: '🍍' },
+                { thai: 'มะพร้าว', roman: 'má-phráao', meaning: 'Coconut', audioSrc: '/audio/thai/vocab/coconut.mp3', emoji: '🥥' },
+                { thai: 'ส้ม', roman: 'sôm', meaning: 'Orange', audioSrc: '/audio/thai/vocab/orange.mp3', emoji: '🍊' },
+                { thai: 'มะนาว', roman: 'má-naao', meaning: 'Lemon', audioSrc: '/audio/thai/vocab/lemon.mp3', emoji: '🍋' },
+                { thai: 'เชอร์รี่', roman: 'cher-rîi', meaning: 'Cherry', audioSrc: '/audio/thai/vocab/cherry.mp3', emoji: '🍒' }
+            ]
+        },
+        {
+            category: 'Vegetables',
+            items: [
+                { thai: 'ข้าวโพด', roman: 'khâao-phôot', meaning: 'Corn', audioSrc: '/audio/thai/vocab/corn.mp3', emoji: '🌽' },
+                { thai: 'แครอท', roman: 'khaae-ràwt', meaning: 'Carrot', audioSrc: '/audio/thai/vocab/carrot.mp3', emoji: '🥕' },
+                { thai: 'มันฝรั่ง', roman: 'man-fà-ràng', meaning: 'Potato', audioSrc: '/audio/thai/vocab/potato.mp3', emoji: '🥔' },
+                { thai: 'มะเขือเทศ', roman: 'má-khǔua-thêet', meaning: 'Tomato', audioSrc: '/audio/thai/vocab/tomato.mp3', emoji: '🍅' },
+                { thai: 'บรอกโคลี', roman: 'bràwk-khoo-lii', meaning: 'Broccoli', audioSrc: '/audio/thai/vocab/broccoli.mp3', emoji: '🥦' },
+                { thai: 'เห็ด', roman: 'hèt', meaning: 'Mushroom', audioSrc: '/audio/thai/vocab/mushroom.mp3', emoji: '🍄' },
+                { thai: 'หัวหอม', roman: 'hǔua-hǎwm', meaning: 'Onion', audioSrc: '/audio/thai/vocab/onion.mp3', emoji: '🧅' },
+                { thai: 'กระเทียม', roman: 'grà-thiiam', meaning: 'Garlic', audioSrc: '/audio/thai/vocab/garlic.mp3', emoji: '🧄' },
+                { thai: 'พริก', roman: 'phrík', meaning: 'Chili', audioSrc: '/audio/thai/vocab/chili.mp3', emoji: '🌶️' },
+                { thai: 'แตงกวา', roman: 'dtaeng-gwaa', meaning: 'Cucumber', audioSrc: '/audio/thai/vocab/cucumber.mp3', emoji: '🥒' }
+            ]
+        },
+        {
+            category: 'Clothes',
+            items: [
+                { thai: 'เสื้อเชิ้ต', roman: 'sûua-chóet', meaning: 'Shirt', audioSrc: '/audio/thai/vocab/shirt.mp3', emoji: '👔' },
+                { thai: 'เสื้อยืด', roman: 'sûua-yûuet', meaning: 'T-shirt', audioSrc: '/audio/thai/vocab/tshirt.mp3', emoji: '👕' },
+                { thai: 'กางเกง', roman: 'gaang-geeng', meaning: 'Pants', audioSrc: '/audio/thai/vocab/pants.mp3', emoji: '👖' },
+                { thai: 'ชุดเดรส', roman: 'chút-dréet', meaning: 'Dress', audioSrc: '/audio/thai/vocab/dress.mp3', emoji: '👗' },
+                { thai: 'กระโปรง', roman: 'grà-bproong', meaning: 'Skirt', audioSrc: '/audio/thai/vocab/skirt.mp3', emoji: '👚' },
+                { thai: 'รองเท้า', roman: 'rawng-tháao', meaning: 'Shoe', audioSrc: '/audio/thai/vocab/shoe.mp3', emoji: '👞' },
+                { thai: 'หมวก', roman: 'mùuak', meaning: 'Hat', audioSrc: '/audio/thai/vocab/hat.mp3', emoji: '🧢' },
+                { thai: 'แว่นตา', roman: 'wâaen-dtaa', meaning: 'Glasses', audioSrc: '/audio/thai/vocab/glasses.mp3', emoji: '👓' },
+                { thai: 'นาฬิกา', roman: 'naa-lí-gaa', meaning: 'Watch', audioSrc: '/audio/thai/vocab/watch_time.mp3', emoji: '⌚' },
+                { thai: 'แหวน', roman: 'wǎaen', meaning: 'Ring', audioSrc: '/audio/thai/vocab/ring.mp3', emoji: '💍' }
+            ]
+        },
+        {
+            category: 'House',
+            items: [
+                { thai: 'เตียง', roman: 'dtiiang', meaning: 'Bed', audioSrc: '/audio/thai/vocab/bed.mp3', emoji: '🛏️' },
+                { thai: 'เก้าอี้', roman: 'gâo-îi', meaning: 'Chair', audioSrc: '/audio/thai/vocab/chair.mp3', emoji: '🪑' },
+                { thai: 'โซฟา', roman: 'soo-faa', meaning: 'Sofa', audioSrc: '/audio/thai/vocab/sofa.mp3', emoji: '🛋️' },
+                { thai: 'ประตู', roman: 'bprà-dtuu', meaning: 'Door', audioSrc: '/audio/thai/vocab/door.mp3', emoji: '🚪' },
+                { thai: 'หน้าต่าง', roman: 'nâa-dtàang', meaning: 'Window', audioSrc: '/audio/thai/vocab/window.mp3', emoji: '🪟' },
+                { thai: 'ชักโครก', roman: 'chák-khrôok', meaning: 'Toilet', audioSrc: '/audio/thai/vocab/toilet.mp3', emoji: '🚽' },
+                { thai: 'ฝักบัว', roman: 'fàk-buua', meaning: 'Shower', audioSrc: '/audio/thai/vocab/shower.mp3', emoji: '🚿' },
+                { thai: 'โคมไฟ', roman: 'khoom-fai', meaning: 'Lamp', audioSrc: '/audio/thai/vocab/lamp.mp3', emoji: '💡' },
+                { thai: 'กุญแจ', roman: 'gun-jaaem', meaning: 'Key', audioSrc: '/audio/thai/vocab/key.mp3', emoji: '🔑' },
+                { thai: 'คอมพิวเตอร์', roman: 'khawm-phiu-dtêer', meaning: 'Computer', audioSrc: '/audio/thai/vocab/computer.mp3', emoji: '💻' }
+            ]
+        },
+        {
+            category: 'Jobs',
+            items: [
+                { thai: 'หมอ', roman: 'mǎw', meaning: 'Doctor', audioSrc: '/audio/thai/vocab/doctor.mp3', emoji: '👨‍⚕️' },
+                { thai: 'พยาบาล', roman: 'phá-yaa-baan', meaning: 'Nurse', audioSrc: '/audio/thai/vocab/nurse.mp3', emoji: '👩‍⚕️' },
+                { thai: 'ครู', roman: 'khruu', meaning: 'Teacher', audioSrc: '/audio/thai/vocab/teacher.mp3', emoji: '👩‍🏫' },
+                { thai: 'นักเรียน', roman: 'nák-riian', meaning: 'Student', audioSrc: '/audio/thai/vocab/student.mp3', emoji: '👨‍🎓' },
+                { thai: 'ตำรวจ', roman: 'dtam-rùuat', meaning: 'Police', audioSrc: '/audio/thai/vocab/police.mp3', emoji: '👮' },
+                { thai: 'พ่อครัว', roman: 'phâw-khruua', meaning: 'Chef', audioSrc: '/audio/thai/vocab/chef.mp3', emoji: '👨‍🍳' },
+                { thai: 'ชาวนา', roman: 'chaao-naa', meaning: 'Farmer', audioSrc: '/audio/thai/vocab/farmer.mp3', emoji: '👨‍🌾' },
+                { thai: 'ศิลปิน', roman: 'sǐn-lá-bpin', meaning: 'Artist', audioSrc: '/audio/thai/vocab/artist.mp3', emoji: '🎨' },
+                { thai: 'นักร้อง', roman: 'nák-ráwng', meaning: 'Singer', audioSrc: '/audio/thai/vocab/singer.mp3', emoji: '🎤' },
+                { thai: 'ทหาร', roman: 'thá-hǎan', meaning: 'Soldier', audioSrc: '/audio/thai/vocab/soldier.mp3', emoji: '💂' }
+            ]
+        },
+        {
+            category: 'Sports',
+            items: [
+                { thai: 'ฟุตบอล', roman: 'fút-bawn', meaning: 'Football', audioSrc: '/audio/thai/vocab/football.mp3', emoji: '⚽' },
+                { thai: 'บาสเกตบอล', roman: 'bàat-gêet-bawn', meaning: 'Basketball', audioSrc: '/audio/thai/vocab/basketball.mp3', emoji: '🏀' },
+                { thai: 'เทนนิส', roman: 'then-nít', meaning: 'Tennis', audioSrc: '/audio/thai/vocab/tennis.mp3', emoji: '🎾' },
+                { thai: 'แบดมินตัน', roman: 'bàaet-min-dtan', meaning: 'Badminton', audioSrc: '/audio/thai/vocab/badminton.mp3', emoji: '🏸' },
+                { thai: 'มวย', roman: 'muuai', meaning: 'Boxing', audioSrc: '/audio/thai/vocab/boxing.mp3', emoji: '🥊' },
+                { thai: 'ว่ายน้ำ', roman: 'wâai-náam', meaning: 'Swimming', audioSrc: '/audio/thai/vocab/swimming.mp3', emoji: '🏊' },
+                { thai: 'วิ่ง', roman: 'wîng', meaning: 'Running', audioSrc: '/audio/thai/vocab/running.mp3', emoji: '🏃' },
+                { thai: 'ปั่นจักรยาน', roman: 'bpàn-jàk-grà-yaan', meaning: 'Cycling', audioSrc: '/audio/thai/vocab/cycling.mp3', emoji: '🚴' },
+                { thai: 'กอล์ฟ', roman: 'gáwf', meaning: 'Golf', audioSrc: '/audio/thai/vocab/golf.mp3', emoji: '⛳' },
+                { thai: 'วอลเลย์บอล', roman: 'won-lee-bawn', meaning: 'Volleyball', audioSrc: '/audio/thai/vocab/volleyball.mp3', emoji: '🏐' }
+            ]
+        },
+        {
+            category: 'Vehicles',
+            items: [
+                { thai: 'มอเตอร์ไซค์', roman: 'maw-dtêer-sai', meaning: 'Motorcycle', audioSrc: '/audio/thai/vocab/motorcycle.mp3', emoji: '🏍️' },
+                { thai: 'ตุ๊กตุ๊ก', roman: 'dtúk-dtúk', meaning: 'Tuk Tuk', audioSrc: '/audio/thai/vocab/tuktuk.mp3', emoji: '🛺' },
+                { thai: 'รถบรรทุก', roman: 'rót-ban-thúk', meaning: 'Truck', audioSrc: '/audio/thai/vocab/truck.mp3', emoji: '🚚' },
+                { thai: 'รถพยาบาล', roman: 'rót-phá-yaa-baan', meaning: 'Ambulance', audioSrc: '/audio/thai/vocab/ambulance.mp3', emoji: '🚑' },
+                { thai: 'รถดับเพลิง', roman: 'rót-dàp-phleeng', meaning: 'Fire Truck', audioSrc: '/audio/thai/vocab/firetruck.mp3', emoji: '🚒' },
+                { thai: 'รถตำรวจ', roman: 'rót-dtam-rùuat', meaning: 'Police Car', audioSrc: '/audio/thai/vocab/policecar.mp3', emoji: '🚓' },
+                { thai: 'เฮลิคอปเตอร์', roman: 'hee-lí-khàwp-dtêer', meaning: 'Helicopter', audioSrc: '/audio/thai/vocab/helicopter.mp3', emoji: '🚁' },
+                { thai: 'จรวด', roman: 'jà-rùuat', meaning: 'Rocket', audioSrc: '/audio/thai/vocab/rocket.mp3', emoji: '🚀' },
+                { thai: 'เรือ', roman: 'ruua', meaning: 'Ship', audioSrc: '/audio/thai/vocab/ship.mp3', emoji: '🚢' },
+                { thai: 'รถไฟใต้ดิน', roman: 'rót-fai-dtâai-din', meaning: 'Subway', audioSrc: '/audio/thai/vocab/subway.mp3', emoji: '🚇' }
+            ]
+        },
+        {
+            category: 'Nature',
+            items: [
+                { thai: 'โลก', roman: 'lôok', meaning: 'Earth', audioSrc: '/audio/thai/vocab/earth.mp3', emoji: '🌍' },
+                { thai: 'ท้องฟ้า', roman: 'tháwng-fáa', meaning: 'Sky', audioSrc: '/audio/thai/vocab/sky.mp3', emoji: '☁️' },
+                { thai: 'เมฆ', roman: 'mêek', meaning: 'Cloud', audioSrc: '/audio/thai/vocab/cloud.mp3', emoji: '☁️' },
+                { thai: 'รุ้ง', roman: 'rúng', meaning: 'Rainbow', audioSrc: '/audio/thai/vocab/rainbow.mp3', emoji: '🌈' },
+                { thai: 'ป่า', roman: 'bpàa', meaning: 'Forest', audioSrc: '/audio/thai/vocab/forest.mp3', emoji: '🌲' },
+                { thai: 'มหาสมุทร', roman: 'má-hǎa-sà-mùt', meaning: 'Ocean', audioSrc: '/audio/thai/vocab/ocean.mp3', emoji: '🌊' },
+                { thai: 'แม่น้ำ', roman: 'mâae-náam', meaning: 'River', audioSrc: '/audio/thai/vocab/river.mp3', emoji: '🏞️' },
+                { thai: 'หิน', roman: 'hǐn', meaning: 'Rock', audioSrc: '/audio/thai/vocab/rock.mp3', emoji: '🪨' },
+                { thai: 'ใบไม้', roman: 'bai-máai', meaning: 'Leaf', audioSrc: '/audio/thai/vocab/leaf.mp3', emoji: '🍃' },
+                { thai: 'กระบองเพชร', roman: 'grà-bawng-phét', meaning: 'Cactus', audioSrc: '/audio/thai/vocab/cactus.mp3', emoji: '🌵' }
+            ]
+        },
+        {
+            category: 'Technology',
+            items: [
+                { thai: 'โทรศัพท์', roman: 'thoo-rá-sàp', meaning: 'Phone', audioSrc: '/audio/thai/vocab/phone.mp3', emoji: '📱' },
+                { thai: 'กล้อง', roman: 'glâwng', meaning: 'Camera', audioSrc: '/audio/thai/vocab/camera.mp3', emoji: '📷' },
+                { thai: 'ทีวี', roman: 'thii-wii', meaning: 'Television', audioSrc: '/audio/thai/vocab/tv.mp3', emoji: '📺' },
+                { thai: 'แบตเตอรี่', roman: 'bàaet-dtêer-rîi', meaning: 'Battery', audioSrc: '/audio/thai/vocab/battery.mp3', emoji: '🔋' },
+                { thai: 'หุ่นยนต์', roman: 'hùn-yon', meaning: 'Robot', audioSrc: '/audio/thai/vocab/robot.mp3', emoji: '🤖' },
+                { thai: 'เกม', roman: 'geem', meaning: 'Game', audioSrc: '/audio/thai/vocab/game.mp3', emoji: '🎮' },
+                { thai: 'หูฟัง', roman: 'hǔu-fang', meaning: 'Headphone', audioSrc: '/audio/thai/vocab/headphone.mp3', emoji: '🎧' },
+                { thai: 'ไมโครโฟน', roman: 'mai-khroo-foon', meaning: 'Microphone', audioSrc: '/audio/thai/vocab/microphone.mp3', emoji: '🎙️' },
+                { thai: 'แล็ปท็อป', roman: 'láep-tháwp', meaning: 'Laptop', audioSrc: '/audio/thai/vocab/laptop.mp3', emoji: '💻' },
+                { thai: 'เครื่องพิมพ์', roman: 'khrûuang-phim', meaning: 'Printer', audioSrc: '/audio/thai/vocab/printer.mp3', emoji: '🖨️' }
+            ]
+        },
+        {
+            category: 'Drinks & Snacks',
+            items: [
+                { thai: 'เบียร์', roman: 'biia', meaning: 'Beer', audioSrc: '/audio/thai/vocab/beer.mp3', emoji: '🍺' },
+                { thai: 'ไวน์', roman: 'waai', meaning: 'Wine', audioSrc: '/audio/thai/vocab/wine.mp3', emoji: '🍷' },
+                { thai: 'น้ำผลไม้', roman: 'náam-phǒn-lá-máai', meaning: 'Juice', audioSrc: '/audio/thai/vocab/juice.mp3', emoji: '🧃' },
+                { thai: 'ไอศกรีม', roman: 'ai-sà-griim', meaning: 'Ice Cream', audioSrc: '/audio/thai/vocab/icecream.mp3', emoji: '🍦' },
+                { thai: 'เค้ก', roman: 'khêek', meaning: 'Cake', audioSrc: '/audio/thai/vocab/cake.mp3', emoji: '🍰' },
+                { thai: 'ช็อกโกแลต', roman: 'chók-goo-láet', meaning: 'Chocolate', audioSrc: '/audio/thai/vocab/chocolate.mp3', emoji: '🍫' },
+                { thai: 'พิซซ่า', roman: 'phít-sâa', meaning: 'Pizza', audioSrc: '/audio/thai/vocab/pizza.mp3', emoji: '🍕' },
+                { thai: 'เบอร์เกอร์', roman: 'ber-gêer', meaning: 'Burger', audioSrc: '/audio/thai/vocab/burger.mp3', emoji: '🍔' },
+                { thai: 'เฟรนช์ฟรายส์', roman: 'freen-fraai', meaning: 'Fries', audioSrc: '/audio/thai/vocab/fries.mp3', emoji: '🍟' },
+                { thai: 'โดนัท', roman: 'doo-nát', meaning: 'Donut', audioSrc: '/audio/thai/vocab/donut.mp3', emoji: '🍩' }
+            ]
         }
     ]
 });
