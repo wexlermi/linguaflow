@@ -11,6 +11,15 @@ const CharacterModal = ({ charData, langConfig, fontMode, onClose }) => {
     else if (fontMode === 'Hand') fontClass = langConfig.fontHand;
     else if (fontMode === 'Old') fontClass = langConfig.fontOld;
 
+    // Handle Escape key
+    React.useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape') onClose();
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [onClose]);
+
     return (
         <div
             className="fixed inset-0 bg-black/50 z-[100] flex items-center justify-center p-4 animate-in fade-in duration-200"
