@@ -341,14 +341,19 @@ const FlashcardDeck = ({ deck, onClose, langConfig }) => {
             </div>
 
             <style jsx>{`
-                .perspective-1000 { perspective: 1000px; }
-                .transform-style-3d { transform-style: preserve-3d; }
-                .backface-hidden { backface-visibility: hidden; }
+                .perspective-1000 { perspective: 1000px; -webkit-perspective: 1000px; }
+                .transform-style-3d { transform-style: preserve-3d; -webkit-transform-style: preserve-3d; }
+                .backface-hidden { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
                 .rotate-y-180 { transform: rotateY(180deg); }
-                .animate-bounce-slow { animation: bounce 3s infinite; }
+                .animate-bounce-slow { 
+                    animation: bounce 3s infinite; 
+                    /* Hardware acceleration hacks for Safari */
+                    transform: translateZ(0);
+                    will-change: transform;
+                }
                 @keyframes bounce {
-                    0%, 100% { transform: translateY(-5%); }
-                    50% { transform: translateY(5%); }
+                    0%, 100% { transform: translateY(-5%) translateZ(0); }
+                    50% { transform: translateY(5%) translateZ(0); }
                 }
             `}</style>
         </div>
