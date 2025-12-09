@@ -147,7 +147,7 @@ const FlashcardDeck = ({ deck, onClose, langConfig }) => {
     // Render Content Helper
     const renderEnglishSide = (isFront) => (
         <div className="flex flex-col items-center justify-center gap-8 relative w-full h-full">
-            <div className="text-8xl animate-bounce-slow">
+            <div className={`text-8xl ${!isFlipped ? 'animate-bounce-slow' : ''}`}>
                 {currentCard.thaiName} {/* Emoji */}
             </div>
             <div className={`text-3xl font-bold ${isFront ? 'text-slate-800' : 'text-indigo-100'} text-center px-4`}>
@@ -291,9 +291,11 @@ const FlashcardDeck = ({ deck, onClose, langConfig }) => {
                     onClick={handleFlip}
                 >
                     <div className={`relative w-full h-full transition-all ${enableTransition ? 'duration-500' : 'duration-0'} transform-style-3d ${isFlipped ? 'rotate-y-180' : ''}`}>
-
                         {/* Front Side */}
-                        <div className="absolute inset-0 backface-hidden bg-white rounded-3xl shadow-2xl flex flex-col items-center justify-center p-8 border-4 border-white">
+                        <div
+                            className="absolute inset-0 backface-hidden bg-white rounded-3xl shadow-2xl flex flex-col items-center justify-center p-8 border-4 border-white"
+                            style={{ zIndex: isFlipped ? 0 : 1 }}
+                        >
                             <div className="absolute top-6 right-6 text-slate-300">
                                 <RotateCw className="w-6 h-6" />
                             </div>
@@ -308,7 +310,10 @@ const FlashcardDeck = ({ deck, onClose, langConfig }) => {
                         </div>
 
                         {/* Back Side */}
-                        <div className="absolute inset-0 backface-hidden rotate-y-180 bg-indigo-600 rounded-3xl shadow-2xl flex flex-col items-center justify-center p-8 text-white border-4 border-indigo-500">
+                        <div
+                            className="absolute inset-0 backface-hidden rotate-y-180 bg-indigo-600 rounded-3xl shadow-2xl flex flex-col items-center justify-center p-8 text-white border-4 border-indigo-500"
+                            style={{ zIndex: isFlipped ? 1 : 0 }}
+                        >
                             {/* Removed fixed audio button from here, now inside renderBack/renderThaiSide */}
 
                             <div className="flex-1 flex flex-col items-center justify-center w-full">
