@@ -288,13 +288,14 @@ const FlashcardDeck = ({ deck, onClose, langConfig }) => {
                 {/* Card Container */}
                 <div
                     className="aspect-[3/4] perspective-1000 cursor-pointer group"
+                    style={{ WebkitTapHighlightColor: 'transparent' }}
                     onClick={handleFlip}
                 >
                     <div className={`relative w-full h-full transition-all ${enableTransition ? 'duration-500' : 'duration-0'} transform-style-3d ${isFlipped ? 'rotate-y-180' : ''}`}>
                         {/* Front Side */}
                         <div
                             className="absolute inset-0 backface-hidden bg-white rounded-3xl shadow-2xl flex flex-col items-center justify-center p-8 border-4 border-white"
-                            style={{ zIndex: isFlipped ? 0 : 1 }}
+                            style={{ transform: 'translateZ(1px)' }}
                         >
                             <div className="absolute top-6 right-6 text-slate-300">
                                 <RotateCw className="w-6 h-6" />
@@ -311,8 +312,8 @@ const FlashcardDeck = ({ deck, onClose, langConfig }) => {
 
                         {/* Back Side */}
                         <div
-                            className="absolute inset-0 backface-hidden rotate-y-180 bg-indigo-600 rounded-3xl shadow-2xl flex flex-col items-center justify-center p-8 text-white border-4 border-indigo-500"
-                            style={{ zIndex: isFlipped ? 1 : 0 }}
+                            className="absolute inset-0 backface-hidden bg-indigo-600 rounded-3xl shadow-2xl flex flex-col items-center justify-center p-8 text-white border-4 border-indigo-500"
+                            style={{ transform: `rotateY(180deg) translateZ(1px)` }}
                         >
                             {/* Removed fixed audio button from here, now inside renderBack/renderThaiSide */}
 
